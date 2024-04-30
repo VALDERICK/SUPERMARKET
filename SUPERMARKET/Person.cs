@@ -17,25 +17,25 @@ namespace SUPERMARKET
         protected bool active = false;
 
         //PROPIEDADES
-        public string FullName
-        {
-            get { return _fullName; }
-        }
+    
         public bool Active
         {
             get { return active; }
             set { active = value; }
         }
+        public string Id { get => _id; }
+        public string FullName { get => _fullName; }
 
         //PROPIEDADES ABSTRACTAS
         public abstract double GetRating {get;  }
+   
 
         // CONSTRUCTORES
 
         protected Person(string id, string fullName, int points)
         {
-            _id = id;
-            _fullName = fullName;
+            Id = id;
+            FullName = fullName;
             _points = points;
             _totalInvoiced = 0; 
             active = false;     
