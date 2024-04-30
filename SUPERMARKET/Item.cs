@@ -44,6 +44,16 @@ namespace SUPERMARKET
             stock = _stock;
             minStock = _minStock;
             onSale = true;
+
+
+            if (_stock <= 0)
+            {
+                stock += 250;
+            }
+            else
+            {
+                stock = _stock;
+            }
         }
         #endregion
 
