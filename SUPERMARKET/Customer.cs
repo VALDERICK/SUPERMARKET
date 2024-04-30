@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
+
     internal class Customer : Person
     {
         //ATRIBUTOS
@@ -42,9 +43,9 @@ namespace SUPERMARKET
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"DNI/NIE->{_id}  NOM->{_fullName}  RATING-> ");
-            sb.Append(GetRating.ToString("F2"));
-            sb.Append(" VENDES->").Append(_totalInvoiced.ToString("F1"));
+            sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
+            sb.Append(GetRating.ToString());
+            sb.Append(" VENDES->").Append(_totalInvoiced.ToString());
             sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
 
             if (active)
@@ -62,4 +63,4 @@ namespace SUPERMARKET
 
 
 }
-}
+

@@ -10,7 +10,6 @@ namespace SUPERMARKET
     {
         #region ATRIBUTES
         private DateTime _joiningDate;
-        public int YearsOfService;
         public int Points;
 
         #endregion
@@ -27,32 +26,67 @@ namespace SUPERMARKET
         {
             Points = pointsToAdd * YearsOfService + 1;
         }
+
+        public int YearsOfService()
+        {
+            get
+            {
+                
+                int years = DateTime.Now.Year - _joiningDate.Year /365;
+
+           
+                if (_joiningDate > DateTime.Now)
+                {
+                    years--;
+                }
+
+                return years;
+            }
+        }
         #endregion
 
         #region PROPERTY
-        public override double GetRating{
-            get
-            {
-                TimeSpan tiempoDeServicio = DateTime.Now - _joiningDate;
+        public override double GetRating()
+        {
+            
+            int antigitat = YearsOfService;
 
-                int años = Convert.ToInt32(tiempoDeServicio.Days / 365);
+            
+            double totalFacturado = _totalInvoice; 
 
+            double total10 = 0.1 * totalFacturado;
 
-                if (_joiningDate.AddYears(años) > DateTime.Now)
-                {
-                    años--;
-                }
+            double rating = antigitat*365 + total10;
 
-                return años;
-            }
+            return rating;
         }
-
         #endregion
 
         public override string ToString()
         {
 
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
+            sb.Append(GetRating.ToString("F2"));
+            sb.Append(" ANTIGUITAT->").Append(_totalInvoiced.ToString("F1"));
+            sb.Append(YearsOfService.ToString("F2"))
+            sb.Append(" VENDES->").Append(_totalInvoiced.ToString("F1"));
+            sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
+
+            if (active)
+            {
+                sb.Append("N");
+            }
+            else
+            {
+                sb.Append("S");
+            }
+
+            return sb.ToString();
+
+
             return base.ToString();
+
         }
 
     }

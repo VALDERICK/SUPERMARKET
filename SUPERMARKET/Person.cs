@@ -68,7 +68,7 @@ namespace SUPERMARKET
         public int CompareTo(Person other)
         {
             if (other == null) return 1;
-            return GetRating().CompareTo(other.GetRating());
+            return GetRating.CompareTo(other.GetRating);
         }
     }
 }
