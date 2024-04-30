@@ -21,7 +21,7 @@
             Points = pointsToAdd * YearsOfService + 1;
         }
 
-        public int YearsOfService()
+        public int YearsOfService
         {
             get
             {
@@ -40,30 +40,40 @@
         #endregion
 
         #region PROPERTY
-        public override double GetRating()
+        public override double GetRating
         {
+
 
             int antigitat = YearsOfService;
 
 
             double totalFacturado = _totalInvoice;
 
+            get { 
+            int antigitat = YearsOfService;
+
+            
+            double totalFacturado = _totalInvoiced; 
+
+
             double total10 = 0.1 * totalFacturado;
 
             double rating = antigitat * 365 + total10;
 
             return rating;
+            }
         }
         #endregion
 
         public override string ToString()
         {
+
             StringBuilder sb = new StringBuilder();
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
-            sb.Append(GetRating.ToString("F2"));
-            sb.Append(" ANTIGUITAT->").Append(_totalInvoiced.ToString("F1"));
-            sb.Append(YearsOfService.ToString("F2"))
-            sb.Append(" VENDES->").Append(_totalInvoiced.ToString("F1"));
+            sb.Append(GetRating.ToString());
+            sb.Append(" ANTIGUITAT->").Append(YearsOfService);
+            sb.Append(YearsOfService.ToString());
+            sb.Append(" VENDES->").Append(_totalInvoiced.ToString());
             sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
 
             if (active)
@@ -76,6 +86,10 @@
             }
 
             return sb.ToString();
+
+
+            return base.ToString();
+
         }
 
     }
