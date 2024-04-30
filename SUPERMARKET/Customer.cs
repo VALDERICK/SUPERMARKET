@@ -42,9 +42,10 @@ namespace SUPERMARKET
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("DNI/NIE->").Append(_id).Append(" NOM->").Append(_fullName).Append(" RATING->")
-              .Append(GetRating.ToString("F2")).Append(" VENDES->").Append(_totalInvoiced.ToString("F1"))
-              .Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
+            sb.Append($"DNI/NIE->{_id}  NOM->{_fullName}  RATING-> ");
+            sb.Append(GetRating.ToString("F2"));
+            sb.Append(" VENDES->").Append(_totalInvoiced.ToString("F1"));
+            sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
 
             if (active)
             {
