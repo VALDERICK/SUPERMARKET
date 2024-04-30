@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SUPERMARKET
+﻿namespace SUPERMARKET
 {
     internal class Cashier : Person
     {
@@ -13,7 +7,7 @@ namespace SUPERMARKET
         public int Points;
 
         #endregion
-       
+
         #region CONSTRUCTOR 
         public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
         {
@@ -31,10 +25,10 @@ namespace SUPERMARKET
         {
             get
             {
-                
-                int years = DateTime.Now.Year - _joiningDate.Year /365;
 
-           
+                int years = DateTime.Now.Year - _joiningDate.Year / 365;
+
+
                 if (_joiningDate > DateTime.Now)
                 {
                     years--;
@@ -48,15 +42,15 @@ namespace SUPERMARKET
         #region PROPERTY
         public override double GetRating()
         {
-            
+
             int antigitat = YearsOfService;
 
-            
-            double totalFacturado = _totalInvoice; 
+
+            double totalFacturado = _totalInvoice;
 
             double total10 = 0.1 * totalFacturado;
 
-            double rating = antigitat*365 + total10;
+            double rating = antigitat * 365 + total10;
 
             return rating;
         }
