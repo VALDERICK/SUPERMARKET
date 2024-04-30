@@ -31,16 +31,24 @@ namespace SUPERMARKET
         {
             get
             {
-                
-                int years = DateTime.Now.Year - _joiningDate.Year /365;
+                DateTime ahora = DateTime.Now;
 
-           
-                if (_joiningDate > DateTime.Now)
+                DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
+                int años = ahora.Year - _joiningDate.Year;
+
+
+                if (antiguedad > ahora)
                 {
-                    years--;
+                    return 0;
                 }
 
-                return years;
+
+                if (antiguedad <= ahora)
+                {
+                    años++;
+                }
+
+                return años;
             }
         }
         #endregion
@@ -70,7 +78,6 @@ namespace SUPERMARKET
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
             sb.Append(GetRating.ToString());
             sb.Append(" ANTIGUITAT->").Append(YearsOfService);
-            sb.Append(YearsOfService.ToString());
             sb.Append(" VENDES->").Append(_totalInvoiced.ToString());
             sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
 
@@ -84,10 +91,6 @@ namespace SUPERMARKET
             }
 
             return sb.ToString();
-
-
-            return base.ToString();
-
         }
 
     }

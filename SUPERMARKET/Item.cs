@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
-    internal class Item
+    internal class Item : IComparable<Item>
     {
+        #region ATRIBUTS
+
+        #endregion
+        public int CompareTo(Item? other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
