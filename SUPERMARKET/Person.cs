@@ -29,7 +29,10 @@ namespace SUPERMARKET
 
         //PROPIEDADES ABSTRACTAS
 
-        public abstract int GetRating {get;  }
+
+        public abstract double GetRating {get;  }
+
+
 
         // CONSTRUCTORES
 
