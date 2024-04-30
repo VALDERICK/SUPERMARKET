@@ -12,14 +12,15 @@ namespace SUPERMARKET
         private DateTime _joiningDate;
         public int YearsOfService;
         public int Points;
+
+        public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
+        {
+            _joiningDate = contracte;
+        }
         #endregion
 
         #region CONSTRUCTOR 
-        public Cashier(DateTime hire_date)
-        {
-            _joiningDate = hire_date;
-            Points = 0;
-        }
+
         #endregion
 
         #region METHODS
@@ -33,10 +34,11 @@ namespace SUPERMARKET
         public override double GetRating{
             get
             {
-               
-                int años = DateTime.Now.Year - _joiningDate.Year;
+                TimeSpan tiempoDeServicio = DateTime.Now - _joiningDate;
 
-               
+                int años = Convert.ToInt32(tiempoDeServicio.Days / 365);
+
+
                 if (_joiningDate > DateTime.Now)
                 {
                     años--;
