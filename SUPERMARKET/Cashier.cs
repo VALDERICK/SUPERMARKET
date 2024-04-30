@@ -64,6 +64,7 @@ namespace SUPERMARKET
 
         public override string ToString()
         {
+
             StringBuilder sb = new StringBuilder();
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
             sb.Append(GetRating.ToString("F2"));
@@ -82,6 +83,10 @@ namespace SUPERMARKET
             }
 
             return sb.ToString();
+
+
+            return base.ToString();
+
         }
 
     }
