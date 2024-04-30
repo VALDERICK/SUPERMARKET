@@ -14,8 +14,8 @@ namespace SUPERMARKET
         private string _fullName;
         protected int _points;
         protected double _totalInvoiced;
-        protected bool active =false;
-        
+        protected bool active = false;
+
         //PROPIEDADES
         public string FullName
         {
@@ -28,7 +28,8 @@ namespace SUPERMARKET
         }
 
         //PROPIEDADES ABSTRACTAS
-        public abstract int GetRating {get;  };
+
+        public abstract int GetRating {get;  }
 
         // CONSTRUCTORES
 
