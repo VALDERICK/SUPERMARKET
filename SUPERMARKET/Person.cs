@@ -28,6 +28,7 @@ namespace SUPERMARKET
         }
 
         //PROPIEDADES ABSTRACTAS
+
         public abstract int GetRating {get;  }
 
         // CONSTRUCTORES
