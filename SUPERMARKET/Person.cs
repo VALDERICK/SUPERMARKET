@@ -34,8 +34,8 @@ namespace SUPERMARKET
 
         protected Person(string id, string fullName, int points)
         {
-            Id = id;
-            FullName = fullName;
+            _id = id;
+            _fullName = fullName;
             _points = points;
             _totalInvoiced = 0; 
             active = false;     
