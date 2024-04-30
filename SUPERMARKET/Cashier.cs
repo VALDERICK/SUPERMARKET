@@ -13,14 +13,13 @@ namespace SUPERMARKET
         public int YearsOfService;
         public int Points;
 
+        #endregion
+       
+        #region CONSTRUCTOR 
         public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
         {
             _joiningDate = contracte;
         }
-        #endregion
-
-        #region CONSTRUCTOR 
-
         #endregion
 
         #region METHODS
@@ -39,7 +38,7 @@ namespace SUPERMARKET
                 int años = Convert.ToInt32(tiempoDeServicio.Days / 365);
 
 
-                if (_joiningDate > DateTime.Now)
+                if (_joiningDate.AddYears(años) > DateTime.Now)
                 {
                     años--;
                 }
@@ -47,7 +46,13 @@ namespace SUPERMARKET
                 return años;
             }
         }
-        
+
         #endregion
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
     }
 }
