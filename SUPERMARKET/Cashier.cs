@@ -42,12 +42,11 @@
         #region PROPERTY
         public override double GetRating
         {
-
-
+            get { 
             int antigitat = YearsOfService;
 
-
-            double totalFacturado = _totalInvoice;
+            
+            double totalFacturado = _totalInvoiced; 
 
             get { 
             int antigitat = YearsOfService;
