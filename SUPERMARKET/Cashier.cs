@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
-    internal class Cashier
+    internal class Cashier : Person
     {
         #region ATRIBUTES
         private DateTime _joibingDate;
         public int YearsOfService;
-        public int Points=0;
+        public int Points;
         #endregion
 
         #region METHODS
         public void AddPoints(int pointsToAdd)
         {
-            
+            Points= pointsToAdd * YearsOfService + 1;
+
         }
         #endregion
 
         #region PROPERTY
-        public override double GetRating()
-        {
-            return null;
+        public override double GetRating{
+            get { }
         }
+        
         #endregion
     }
 }
