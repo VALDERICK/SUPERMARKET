@@ -27,7 +27,7 @@ namespace SUPERMARKET
             Points = pointsToAdd * YearsOfService + 1;
         }
 
-        public int YearsOfService()
+        public int YearsOfService
         {
             get
             {
@@ -46,19 +46,20 @@ namespace SUPERMARKET
         #endregion
 
         #region PROPERTY
-        public override double GetRating()
+        public override double GetRating
         {
-            
+            get { 
             int antigitat = YearsOfService;
 
             
-            double totalFacturado = _totalInvoice; 
+            double totalFacturado = _totalInvoiced; 
 
             double total10 = 0.1 * totalFacturado;
 
             double rating = antigitat*365 + total10;
 
             return rating;
+            }
         }
         #endregion
 
