@@ -6,26 +6,46 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
-    internal class Cashier
+    internal class Cashier : Person
     {
         #region ATRIBUTES
-        private DateTime _joibingDate;
+        private DateTime _joiningDate;
         public int YearsOfService;
-        public int Points=0;
+        public int Points;
+        #endregion
+
+        #region CONSTRUCTOR 
+        public Cashier(DateTime hire_date)
+        {
+            _joiningDate = hire_date;
+            Points = 0;
+        }
         #endregion
 
         #region METHODS
-        public void AddPoints(int pointsToAdd)
+        public override void AddPoints(int pointsToAdd)
         {
-            
+            Points = pointsToAdd * YearsOfService + 1;
         }
         #endregion
 
         #region PROPERTY
-        public override double GetRating()
-        {
-            return null;
+        public override double GetRating{
+            get
+            {
+               
+                int años = DateTime.Now.Year - _joiningDate.Year;
+
+               
+                if (_joiningDate > DateTime.Now)
+                {
+                    años--;
+                }
+
+                return años;
+            }
         }
+        
         #endregion
     }
 }
