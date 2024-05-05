@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SUPERMARKET
+﻿namespace SUPERMARKET
 {
     internal class Cashier : Person
     {
@@ -13,7 +7,7 @@ namespace SUPERMARKET
         public int Points;
 
         #endregion
-       
+
         #region CONSTRUCTOR 
         public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
         {
@@ -31,40 +25,43 @@ namespace SUPERMARKET
         {
             get
             {
-                DateTime ahora = DateTime.Now;
+                    DateTime ahora = DateTime.Now;
 
-                DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
-                int años = ahora.Year - _joiningDate.Year;
-
-
-                if (antiguedad > ahora)
-                {
-                    return 0;
-                }
+                    DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
+                     int años = ahora.Year - _joiningDate.Year;
 
 
-                if (antiguedad <= ahora)
-                {
-                    años++;
-                }
+                     if (antiguedad > ahora)
+                     {
+                         return 0;
+                     }
 
-                return años;
-            }
+
+                     if (antiguedad <= ahora)
+                     {
+                         años++;
+                     }
+
+                     return años;
+              }
         }
         #endregion
 
         #region PROPERTY
         public override double GetRating
         {
+         
+
             get { 
             int antigitat = YearsOfService;
 
             
             double totalFacturado = _totalInvoiced; 
 
+
             double total10 = 0.1 * totalFacturado;
 
-            double rating = antigitat*365 + total10;
+            double rating = antigitat * 365 + total10;
 
             return rating;
             }
