@@ -1,4 +1,6 @@
-﻿namespace SUPERMARKET
+﻿using System.Text;
+
+namespace SUPERMARKET
 {
     internal class Cashier : Person
     {
