@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SUPERMARKET
+﻿namespace SUPERMARKET
 {
     internal class Cashier : Person
     {
@@ -13,7 +7,7 @@ namespace SUPERMARKET
         public int Points;
 
         #endregion
-       
+
         #region CONSTRUCTOR 
         public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
         {
@@ -31,17 +25,11 @@ namespace SUPERMARKET
         {
             get
             {
-                DateTime today = DateTime.Today;
-                int years = today.Year - _joiningDate.Year;
 
-                // Comprobar si aún no se ha cumplido el aniversario de contratación este año
-                if (today.Month < _joiningDate.Month || (today.Month == _joiningDate.Month && today.Day < _joiningDate.Day))
-                {
-                    years--;
-                }
+                int years = DateTime.Now.Year - _joiningDate.Year / 365;
 
-                // Si el cajero fue contratado hoy, el año de servicio es 0
-                if (years == 0)
+
+                if (_joiningDate > DateTime.Now)
                 {
                     return 0;
                 }
@@ -60,9 +48,16 @@ namespace SUPERMARKET
             
             double totalFacturado = _totalInvoiced; 
 
+            get { 
+            int antigitat = YearsOfService;
+
+            
+            double totalFacturado = _totalInvoiced; 
+
+
             double total10 = 0.1 * totalFacturado;
 
-            double rating = antigitat*365 + total10;
+            double rating = antigitat * 365 + total10;
 
             return rating;
             }
