@@ -31,13 +31,19 @@ namespace SUPERMARKET
         {
             get
             {
-                
-                int years = DateTime.Now.Year - _joiningDate.Year /365;
+                DateTime today = DateTime.Today;
+                int years = today.Year - _joiningDate.Year;
 
-           
-                if (_joiningDate > DateTime.Now)
+                // Comprobar si aún no se ha cumplido el aniversario de contratación este año
+                if (today.Month < _joiningDate.Month || (today.Month == _joiningDate.Month && today.Day < _joiningDate.Day))
                 {
                     years--;
+                }
+
+                // Si el cajero fue contratado hoy, el año de servicio es 0
+                if (years == 0)
+                {
+                    return 0;
                 }
 
                 return years;
