@@ -25,28 +25,32 @@
         {
             get
             {
+                    DateTime ahora = DateTime.Now;
 
-                int years = DateTime.Now.Year - _joiningDate.Year / 365;
+                    DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
+                     int años = ahora.Year - _joiningDate.Year;
 
 
-                if (_joiningDate > DateTime.Now)
-                {
-                    return 0;
-                }
+                     if (antiguedad > ahora)
+                     {
+                         return 0;
+                     }
 
-                return years;
-            }
+
+                     if (antiguedad <= ahora)
+                     {
+                         años++;
+                     }
+
+                     return años;
+              }
         }
         #endregion
 
         #region PROPERTY
         public override double GetRating
         {
-            get { 
-            int antigitat = YearsOfService;
-
-            
-            double totalFacturado = _totalInvoiced; 
+         
 
             get { 
             int antigitat = YearsOfService;
@@ -71,7 +75,6 @@
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
             sb.Append(GetRating.ToString());
             sb.Append(" ANTIGUITAT->").Append(YearsOfService);
-            sb.Append(YearsOfService.ToString());
             sb.Append(" VENDES->").Append(_totalInvoiced.ToString());
             sb.Append(" € PUNTS->").Append(_points).Append(" DISPONIBLE->");
 
@@ -85,10 +88,6 @@
             }
 
             return sb.ToString();
-
-
-            return base.ToString();
-
         }
 
     }

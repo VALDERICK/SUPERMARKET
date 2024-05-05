@@ -29,6 +29,19 @@
 
             Console.WriteLine(cashier.ToString());
 
+
+
+
+
+
+            #region ITEMS
+            Item item1 = new Item(1, "Manzanas", 1.5, Item.Category.FRUITS, Item.Packaging.Kg, 0, 10);
+
+            Console.WriteLine("Detalles del artículo antes de la oferta:");
+            Console.WriteLine(item1.ToString());
+
+            Console.ReadLine();
+            #endregion
         }
     }
 }
