@@ -31,7 +31,6 @@ namespace SUPERMARKET
 
                     DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
 
-
                     int años = ahora.Year - _joiningDate.Year;
             
 
