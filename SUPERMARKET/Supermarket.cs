@@ -72,12 +72,12 @@ namespace SUPERMARKET
                 }
             }
         }
-        // Method to initialize checkout lines
+        
         public void InitializeCheckOutLines()
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); // Initialize each checkout line
+                lines[i] = new CheckOutLine(); 
             }
         }
 
