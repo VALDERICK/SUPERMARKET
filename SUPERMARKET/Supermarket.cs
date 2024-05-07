@@ -1,28 +1,28 @@
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-/*namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Supermarket
     {
+
         // Attributes
         private string name;
         private string address;
         public static int MAXLINES = 5;
-        private int activeLines; 
-        private CheckOutLine[] lines = new CheckOutLine[MAXLINES]; 
-        private Dictionary<Item, double> ShoppingCart; 
+        private int activeLines;
+        private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
+        private Dictionary<Item, double> ShoppingCart;
 
         // Constructor
 
         public class CheckOutLine
         {
             private int number;
-            private Queue<ShoppingCart> queue;
+            //private Queue<ShoppingCart> queue;
             private Person cashier;
             private bool active;
         }
@@ -31,9 +31,9 @@
         {
             this.name = name;
             this.address = address;
-            activeLines = 1; 
-            lines = new CheckOutLine[MAXLINES]; 
-            ShoppingCart = new Dictionary<Item, double>(); 
+            activeLines = 1;
+            lines = new CheckOutLine[MAXLINES];
+            ShoppingCart = new Dictionary<Item, double>();
         }
 
         public Supermarket(string name, string address, string fileCustomers, string fileItems, int activeLines) : this(name, address)
@@ -51,100 +51,105 @@
             set { name = value; }
         }
 
-       public string Address
+        public string Address
         {
             get { return address; }
             set { address = value; }
         }
 
-       public int ActiveLines
-       {
-          get { return activeLines; }
-          set
-          {
-               if (value >= 1 && value <= MAXLINES)
-               {
-                  activeLines = value;
-               }
+        public int ActiveLines
+        {
+            get { return activeLines; }
+            set
+            {
+                if (value >= 1 && value <= MAXLINES)
+                {
+                    activeLines = value;
+                }
                 else
                 {
-                   throw new ArgumentException("Active lines must be between 1 and MAXLINES.");
+                    throw new ArgumentException("Active lines must be between 1 and MAXLINES.");
                 }
-          }
-       }
+            }
+        }
+        // Method to initialize checkout lines
+        public void InitializeCheckOutLines()
+        {
+            for (int i = 0; i < MAXLINES; i++)
+            {
+                lines[i] = new CheckOutLine(); // Initialize each checkout line
+            }
+        }
 
+        //METODOS PRIVADOS
 
-//        private Dictionary<string, double> LoadWarehouse(string fileName)
-//        {
-//            Dictionary<string, double> products = new Dictionary<string, double>();
-//            StreamReader sr = new StreamReader(fileName);
+        private Dictionary<string, string> LoadCustomers(string fileName)
+        {
+            Dictionary<string, string> customers = new Dictionary<string, string>();
+            StreamReader sr = new StreamReader(fileName);
 
-//        // Method to initialize checkout lines
-//        public void InitializeCheckOutLines()
-//        {
-//            for (int i = 0; i < MAXLINES; i++)
-//            {
-//                lines[i] = new CheckOutLine(); // Initialize each checkout line
-//            }
-//        }
+            string line;
+            line = sr.ReadLine();
+            while (sr != null)
+            {
+                string[] parts = line.Split(',');
 
-//        //METODOS PRIVADOS
+                customers.Add(parts[0], parts[1]);
 
-//        private Dictionary<string, string> LoadCustomers(string fileName)
-//        {
-//            Dictionary<string, string> customers = new Dictionary<string, string>();
-//            StreamReader sr = new StreamReader(fileName);
+            }
 
-//            string line;
-//            line = sr.ReadLine();
-//            while (sr!=null)
-//            {               
-//                string[] parts = line.Split(',');
+            return customers;
+        }
 
-//                customers.Add(parts[0], parts[1]);
+        private Dictionary<string, string> LoadCashiers(string fileName)
+        {
+            Dictionary<string, string> cashiers = new Dictionary<string, string>();
+            StreamReader sr = new StreamReader(fileName);
 
-//            }
+            string line;
+            line = sr.ReadLine();
+            while (sr != null)
+            {
+                string[] parts = line.Split(',');
 
-//            return customers;
-//        }
+                cashiers.Add(parts[0], parts[1]);
 
-//        private Dictionary<string, string> LoadCashiers(string fileName)
-//        {
-//            Dictionary<string, string> cashiers = new Dictionary<string, string>();
-//            StreamReader sr = new StreamReader(fileName);
+            }
 
-//            string line;
-//            line = sr.ReadLine();
-//            while (sr != null)
-//            {
-//                string[] parts = line.Split(',');
+            return cashiers;
+        }
 
-//                cashiers.Add(parts[0], parts[1]); 
+        private Dictionary<string, double> LoadWarehouse(string fileName)
+        {
+            Dictionary<string, double> products = new Dictionary<string, double>();
+            StreamReader sr = new StreamReader(fileName);
 
-//            }
+            string line;
+            line = sr.ReadLine();
+            while (sr != null)
+            {
+                string[] parts = line.Split(',');
+                products.Add(parts[0], Convert.ToDouble(parts[4]));
+            }
 
-//            return cashiers;
-//        }
+            return products;
+        }
+        private Item.Packaging TranslateToPackaging(char packagingChar)
+        {
+            switch (packagingChar)
+            {
+                case 'K':
+                    return Item.Packaging.Kg;
+                case 'U':
+                    return Item.Packaging.Unit;
+                case 'P':
+                    return Item.Packaging.Package;
+                default:
+                    throw new ArgumentException("Invalid packaging character.");
+            }
 
-//        private Dictionary<string, double> LoadWarehouse(string fileName)
-//        {
-//            Dictionary<string, double> products = new Dictionary<string, double>();
-//            StreamReader sr = new StreamReader(fileName);
+        }
+    }
 
-//            string line;
-//            line = sr.ReadLine();
-//            while (sr!=null)
-//            {               
-//                string[] parts = line.Split(',');                   
-//                products.Add(parts[0], Convert.ToDouble(parts[4]));                                    
-//            }
+}
 
-//            return products;
-//        }
-
-
-//    }
-}*/
-
-
-    
