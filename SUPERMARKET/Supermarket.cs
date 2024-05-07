@@ -16,6 +16,10 @@ namespace SUPERMARKET
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
+        Dictionary<string, Person> staff;
+        Dictionary<string, Person> customers;
+        SortedDictionary<int, Item> warehouse;
+
         #endregion
 
         #region CONSTRUCTORS
@@ -199,10 +203,19 @@ namespace SUPERMARKET
 
 
         #region EnableCshiersOrCustomers
-        //public Person GetAvailableCashier()
-        //{
+        public Person GetAvailableCustomer(Dictionary<string, Customer> customers)
+        {
+            foreach (KeyValuePair<string, Customer> pair in customers)
+            {
+                if (!pair.Value.Active)
+                {
+                    pair.Value.Active = true;
+                    return pair.Value;
+                }
+            }
 
-        //}
+            return null;
+        }
         #endregion
 
     }

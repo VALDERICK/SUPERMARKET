@@ -152,8 +152,8 @@ namespace SUPERMARKET
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append($"CODE->{code,10}  DESCRIPTION->{description,-10}  CATEGORY-> {category,-10}");
-            sb.Append($" STOCK->{stock,10}    MIN_STOCK->{minStock,-10}   PRICE->{Price,-10}€  ON SALE->");
+            sb.Append($"CODE->{code}  DESCRIPTION->{description}  CATEGORY-> {category}");
+            sb.Append($" STOCK->{stock}    MIN_STOCK->{minStock}   PRICE->{Price}€  ON SALE->");
 
             if (onSale)
             {
