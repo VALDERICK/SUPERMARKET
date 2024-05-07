@@ -5,7 +5,9 @@
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             // CREAR CLIENTS
+
             Customer customer1 = new Customer("123456789A", "Yaryna Blanco", 1000);
             customer1.AddInvoiceAmount(500); 
             customer1.Active = true; 
@@ -28,11 +30,6 @@
             // Mostrar información del cajero
 
             Console.WriteLine(cashier.ToString());
-
-
-
-
-
 
             #region ITEMS
             Item item1 = new Item(1, "Manzanas", 1.5, Item.Category.FRUITS, Item.Packaging.Kg, 0, 10);
