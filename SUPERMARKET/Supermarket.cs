@@ -8,34 +8,70 @@
 //{
 //    internal class Supermarket
 //    {
-//        // Attributes
+//        #region ATRIBUTS
 //        private string name;
 //        private string address;
-//        public static int MAXLINES = 5; // Maximum number of queues
-//        private int activeLines; // Number of active queues
-//        private CheckOutLine[] lines =new CheckOutLine[MAXLINES]; // Array to store checkout lines
-//        private Dictionary<Item, double> ShoppingCart; // Shopping cart of some customer
+//        public static int MAXLINES = 5;
+//        private int activeLines;
+//        private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
+//        private Dictionary<string, Person> staff;
+//        private Dictionary<string, Person> customers;
+//        private SortedDictionary<int, Item> warehouse;
 
-//        // Constructor
+//        #endregion
 
-//        public class CheckOutLine
+//        #region METHODS
+//        private Dictionary<string, Person> LoadCustomers(string fileName)
 //        {
-//            private int number;
-//            //private Queue<ShoppingCart> queue;
-//            private Person cashier;
-//            private bool active;
+//            StreamReader sr = new StreamReader(fileName);
+//            string linia;
+
+//            linia = sr.ReadLine();
+
+//            while (linia != null)
+//            {
+//                string[] infoClient = linia.Split(';');
+//                string id = infoClient[0];
+//                string nomComplet = infoClient[1].Trim();
+//                string tarjetaFidelitat;
+//                if (infoClient.Length > 2)
+//                {
+//                    tarjetaFidelitat = infoClient[2];
+//                }
+//                else
+//                {
+//                    tarjetaFidelitat = "";
+//                }
+
+//                Person customer = new Person(id, nomComplet, tarjetaFidelitat);
+//                customers[id] = customer;
+//            }
+
+//        }
+//        private Dictionary<string, Person> LoadCashiers(string fileName)
+//        {
+
+//        }
+//        private Dictionary<string, Person> LoadWarehouse(string fileName)
+//        {
+
 //        }
 
-//        public Supermarket(string name, string address)
+
+//        #endregion
+//        #region CONSTRUCTORS
+//        public Supermarket(string name, string address, string fileCashiers, string fileCostumers, string fileItems, int activeLines)
 //        {
 //            this.name = name;
 //            this.address = address;
 //            activeLines = 1; // Default to 1 active line
 //            lines = new CheckOutLine[MAXLINES]; // Initialize checkout lines
-//            ShoppingCart = new Dictionary<Item, double>(); // Initialize shopping cart
 //        }
+//        #endregion
 
-//        // Properties
+
+
+//        Properties
 //        public string Name
 //        {
 //            get { return name; }
@@ -64,7 +100,7 @@
 //            }
 //        }
 
-//        // Method to initialize checkout lines
+//        Method to initialize checkout lines
 //        public void InitializeCheckOutLines()
 //        {
 //            for (int i = 0; i < MAXLINES; i++)
@@ -73,5 +109,5 @@
 //            }
 //        }
 //    }
-    
+
 //}
