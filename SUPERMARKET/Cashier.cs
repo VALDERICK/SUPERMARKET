@@ -1,4 +1,6 @@
-﻿namespace SUPERMARKET
+﻿using System.Text;
+
+namespace SUPERMARKET
 {
     internal class Cashier : Person
     {
@@ -28,7 +30,10 @@
                     DateTime ahora = DateTime.Now;
 
                     DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
-                     int años = ahora.Year - _joiningDate.Year;
+
+                    int años = ahora.Year - _joiningDate.Year;
+            
+
 
 
                      if (antiguedad > ahora)
@@ -69,8 +74,7 @@
         #endregion
 
         public override string ToString()
-        {
-
+        { 
             StringBuilder sb = new StringBuilder();
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
             sb.Append(GetRating.ToString());
