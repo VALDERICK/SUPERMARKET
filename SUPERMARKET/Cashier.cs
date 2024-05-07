@@ -6,7 +6,7 @@ namespace SUPERMARKET
     {
         #region ATRIBUTES
         private DateTime _joiningDate;
-        public int Points;
+        
 
         #endregion
 
@@ -14,13 +14,14 @@ namespace SUPERMARKET
         public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
         {
             _joiningDate = contracte;
+            
         }
         #endregion
 
         #region METHODS
         public override void AddPoints(int pointsToAdd)
         {
-            Points = (pointsToAdd * YearsOfService) + 1;
+            _points += (pointsToAdd * YearsOfService) + 1; ;
             
         }
 
@@ -59,6 +60,7 @@ namespace SUPERMARKET
                 return rating;
             }
         }
+        
         #endregion
 
         public override string ToString()
