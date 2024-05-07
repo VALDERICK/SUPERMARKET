@@ -133,7 +133,9 @@ namespace SUPERMARKET
 
                 if (onSale)
                 {
-                    precioFinal= price * 0.10; 
+                    precioFinal= price * 0.10;
+                    price = price - precioFinal;
+                    precioFinal = price;
                 }
                 else
                 {
@@ -156,8 +158,8 @@ namespace SUPERMARKET
             if (onSale)
             {
                 double discountedPrice = price * 0.10;
-                double discountAmount = price - discountedPrice;
-                sb.Append($"Y (Descuento: {discountAmount}€)");
+                
+                sb.Append($"Y (Descuento: {discountedPrice}€)");
             }
             else
             {
