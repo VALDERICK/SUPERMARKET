@@ -16,15 +16,15 @@
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");
-            Person cashier1 = new Cashier ("91827364A", "Ferran Chic", 100, new DateTime(2015,4,13));
+            Person cashier1 = new Cashier("91827364A", "Ferran Chic", 100, new DateTime(2015, 4, 13));
             Console.WriteLine(cashier1);
-            
-            Person customer1 = new Customer ("98765432B", "Victor Granados", 73692827);
+
+            Person customer1 = new Customer("98765432B", "Victor Granados", 73692827);
             Console.WriteLine(customer1);
 
             //TEST CASHIER
             Console.WriteLine("--------------------------------CASHIERS------------------------------");
-            Cashier cashier2 = new Cashier("12345678A", "Artur Juve", 100, new DateTime(2014,03,24));
+            Cashier cashier2 = new Cashier("12345678A", "Artur Juve", 100, new DateTime(2014, 03, 24));
             Console.WriteLine(cashier2);
 
             cashier2.AddPoints(50);
@@ -44,24 +44,21 @@
             //TEST SUPERMARKET 
             Console.WriteLine("--------------------------------SUPERMARKET------------------------------");
 
-            
+
             Supermarket supermarket = new Supermarket("BonPreu", "Calle Montilivi");
-          
+
             supermarket.LoadCustomersP("CUSTOMERS.TXT");
             supermarket.LoadCashiersP("CASHIERS.TXT");
             supermarket.LoadWarehouseP("GROCERIES.TXT");
 
-            Console.WriteLine("Supermarket information:");
             Console.WriteLine($"Nom: {supermarket.Name}");
             Console.WriteLine($"Adreça: {supermarket.Address}");
             Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
 
-            
-            /*Console.WriteLine("\nCustomers:");
-            foreach (var customer in )
-            {
-                Console.WriteLine($"ID: {customer.Key}, Name: {customer.Value}");
-            }*/
+            supermarket.ActiveLines = 3;
+            Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
+
+
         }
     }
 }
