@@ -87,7 +87,8 @@ namespace SUPERMARKET
 
         //METODOS PRIVADOS
 
-        
+        #region LECTURA_FITXERS
+
         private Dictionary<string, string> LoadCustomers(string fileName)
         {
             Dictionary<string, string> customers = new Dictionary<string, string>();
@@ -163,6 +164,8 @@ namespace SUPERMARKET
         {
             LoadWarehouse(fileName);
         }
+        #endregion
+
         private Item.Packaging TranslateToPackaging(char packagingChar)
         {
             switch (packagingChar)
@@ -194,6 +197,13 @@ namespace SUPERMARKET
             return itemsByStock;
         }
 
+
+        #region EnableCshiersOrCustomers
+        //public Person GetAvailableCashier()
+        //{
+
+        //}
+        #endregion
 
     }
 

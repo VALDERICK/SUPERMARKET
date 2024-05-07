@@ -32,7 +32,6 @@ namespace SUPERMARKET
         int minStock;
         #endregion
 
-
         #region CONSTRUCTORS
         public Item(int _code, string _description, double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
         {
@@ -53,6 +52,14 @@ namespace SUPERMARKET
             else
             {
                 stock = _stock;
+            }
+            if (_minStock <= 0)
+            {
+                minStock += 1;
+            }
+            else
+            {
+                minStock = _minStock;
             }
         }
         #endregion
@@ -143,8 +150,8 @@ namespace SUPERMARKET
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append($"CODE->{code}  DESCRIPTION->{description}  CATEGORY-> {category}");
-            sb.Append($" STOCK->{stock}    MIN_STOCK->{minStock}   PRICE->{Price}€  ON SALE->");
+            sb.Append($"CODE->{code,10}  DESCRIPTION->{description,-10}  CATEGORY-> {category,-10}");
+            sb.Append($" STOCK->{stock,10}    MIN_STOCK->{minStock,-10}   PRICE->{Price,-10}€  ON SALE->");
 
             if (onSale)
             {

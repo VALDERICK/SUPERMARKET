@@ -8,7 +8,7 @@
             //TEST ITEM
 
             Item item1 = new Item(1, "Manzana", 1.50, Item.Category.FRUITS, Item.Packaging.Unit, 50, 10);
-            Item item2 = new Item(2, "Entrecot", 7.75, Item.Category.MEAT, Item.Packaging.Kg, 100, 20);
+            Item item2 = new Item(2, "Entrecot", 7.75, Item.Category.MEAT, Item.Packaging.Kg, 10, 20);
 
             Console.WriteLine("--------------------------------ITEMS------------------------------");
             Console.WriteLine(item1);
