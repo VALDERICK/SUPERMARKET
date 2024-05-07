@@ -14,10 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CUSTOMERS.TXT">
+    <None Update="CASHIERS.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="GROCERIES.TXT">
+    <None Update="CUSTOMERS.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GROCERIES.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

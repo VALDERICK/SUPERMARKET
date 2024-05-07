@@ -112,20 +112,22 @@ namespace SUPERMARKET
             LoadCustomers(fileName);
         }
 
-        
+
         private Dictionary<string, string> LoadCashiers(string fileName)
         {
             Dictionary<string, string> cashiers = new Dictionary<string, string>();
             StreamReader sr = new StreamReader(fileName);
 
             string line;
-            line = sr.ReadLine();
-            while (sr != null)
+
+            while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
 
-                cashiers.Add(parts[0], parts[1]);
-
+                if (parts.Length >= 2)
+                {
+                    cashiers.Add(parts[0], parts[1]);
+                }
             }
 
             return cashiers;
@@ -135,20 +137,26 @@ namespace SUPERMARKET
             LoadCashiers(fileName);
         }
 
-        
+
         private Dictionary<string, double> LoadWarehouse(string fileName)
         {
             Dictionary<string, double> products = new Dictionary<string, double>();
             StreamReader sr = new StreamReader(fileName);
-
+            
             string line;
-            line = sr.ReadLine();
-            while (sr != null)
+            while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
-                products.Add(parts[0], Convert.ToDouble(parts[4]));
-            }
 
+                    
+                if (parts.Length >= 5)
+                {
+                        
+                    products.Add(parts[0], Convert.ToDouble(parts[4]));
+                }
+                    
+            }
+            
             return products;
         }
         public void LoadWarehouseP(string fileName)
