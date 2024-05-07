@@ -30,7 +30,10 @@ namespace SUPERMARKET
                     DateTime ahora = DateTime.Now;
 
                     DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
-                     int años = ahora.Year - _joiningDate.Year;
+
+                    int años = ahora.Year - _joiningDate.Year;
+            
+
 
 
                      if (antiguedad > ahora)
@@ -71,8 +74,7 @@ namespace SUPERMARKET
         #endregion
 
         public override string ToString()
-        {
-
+        { 
             StringBuilder sb = new StringBuilder();
             sb.Append($"DNI/NIE->{Id}  NOM->{FullName}  RATING-> ");
             sb.Append(GetRating.ToString());
