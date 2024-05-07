@@ -27,27 +27,14 @@ namespace SUPERMARKET
         {
             get
             {
-                    DateTime ahora = DateTime.Now;
+                DateTime ahora = DateTime.Now;
 
-                    DateTime antiguedad = new DateTime(ahora.Year, _joiningDate.Month, _joiningDate.Day);
+                TimeSpan antiguedad = ahora - _joiningDate;
 
-                    int años = ahora.Year - _joiningDate.Year;
-            
+                int años = antiguedad.Days / 365;
 
+                return años;
 
-
-                     if (antiguedad > ahora)
-                     {
-                         return 0;
-                     }
-
-
-                     if (antiguedad <= ahora)
-                     {
-                         años++;
-                     }
-
-                     return años;
               }
         }
         #endregion
