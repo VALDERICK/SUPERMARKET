@@ -20,7 +20,8 @@ namespace SUPERMARKET
         #region METHODS
         public override void AddPoints(int pointsToAdd)
         {
-            Points = pointsToAdd * YearsOfService + 1;
+            Points = (pointsToAdd * YearsOfService) + 1;
+            
         }
 
         public int YearsOfService
