@@ -1,22 +1,23 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-/*namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Supermarket
     {
+
         // Attributes
         private string name;
         private string address;
-        public static int MAXLINES = 5; // Maximum number of queues
-        private int activeLines; // Number of active queues
-        private CheckOutLine[] lines = new CheckOutLine[MAXLINES]; // Array to store checkout lines
-        private Dictionary<Item, double> ShoppingCart; // Shopping cart of some customer
+        public static int MAXLINES = 5;
+        private int activeLines;
+        private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
+        private Dictionary<Item, double> ShoppingCart;
 
-//        // Constructor
+        // Constructor
 
         public class CheckOutLine
         {
@@ -26,14 +27,14 @@
             private bool active;
         }
 
-//        public Supermarket(string name, string address)
-//        {
-//            this.name = name;
-//            this.address = address;
-//            activeLines = 1; // Default to 1 active line
-//            lines = new CheckOutLine[MAXLINES]; // Initialize checkout lines
-//            ShoppingCart = new Dictionary<Item, double>(); // Initialize shopping cart
-//        }
+        public Supermarket(string name, string address)
+        {
+            this.name = name;
+            this.address = address;
+            activeLines = 1;
+            lines = new CheckOutLine[MAXLINES];
+            ShoppingCart = new Dictionary<Item, double>();
+        }
 
         public Supermarket(string name, string address, string fileCustomers, string fileItems, int activeLines) : this(name, address)
         {
@@ -50,28 +51,27 @@
             set { name = value; }
         }
 
-//        public string Address
-//        {
-//            get { return address; }
-//            set { address = value; }
-//        }
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
 
-//        public int ActiveLines
-//        {
-//            get { return activeLines; }
-//            set
-//            {
-//                if (value >= 1 && value <= MAXLINES)
-//                {
-//                    activeLines = value;
-//                }
-//                else
-//                {
-//                    throw new ArgumentException("Active lines must be between 1 and MAXLINES.");
-//                }
-//            }
-//        }
-
+        public int ActiveLines
+        {
+            get { return activeLines; }
+            set
+            {
+                if (value >= 1 && value <= MAXLINES)
+                {
+                    activeLines = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Active lines must be between 1 and MAXLINES.");
+                }
+            }
+        }
         // Method to initialize checkout lines
         public void InitializeCheckOutLines()
         {
@@ -90,8 +90,8 @@
 
             string line;
             line = sr.ReadLine();
-            while (sr!=null)
-            {               
+            while (sr != null)
+            {
                 string[] parts = line.Split(',');
 
                 customers.Add(parts[0], parts[1]);
@@ -112,7 +112,7 @@
             {
                 string[] parts = line.Split(',');
 
-                cashiers.Add(parts[0], parts[1]); 
+                cashiers.Add(parts[0], parts[1]);
 
             }
 
@@ -126,18 +126,30 @@
 
             string line;
             line = sr.ReadLine();
-            while (sr!=null)
-            {               
-                string[] parts = line.Split(',');                   
-                products.Add(parts[0], Convert.ToDouble(parts[4]));                                    
+            while (sr != null)
+            {
+                string[] parts = line.Split(',');
+                products.Add(parts[0], Convert.ToDouble(parts[4]));
             }
 
             return products;
         }
+        private Item.Packaging TranslateToPackaging(char packagingChar)
+        {
+            switch (packagingChar)
+            {
+                case 'K':
+                    return Item.Packaging.Kg;
+                case 'U':
+                    return Item.Packaging.Unit;
+                case 'P':
+                    return Item.Packaging.Package;
+                default:
+                    throw new ArgumentException("Invalid packaging character.");
+            }
 
-
+        }
     }
 
-}*/
+}
 
-    
