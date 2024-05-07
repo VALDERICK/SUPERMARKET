@@ -31,31 +31,31 @@ namespace SUPERMARKET
 
                 TimeSpan antiguedad = ahora - _joiningDate;
 
+
                 int años = antiguedad.Days / 365;
 
                 return años;
 
               }
+
         }
         #endregion
 
         #region PROPERTY
         public override double GetRating
         {
-         
-
             get { 
-            int antigitat = YearsOfService;
+                int antigitat = YearsOfService;
 
             
-            double totalFacturado = _totalInvoiced; 
+                double totalFacturado = _totalInvoiced; 
 
 
-            double total10 = 0.1 * totalFacturado;
+                double total10 = 0.1 * totalFacturado;
 
-            double rating = antigitat * 365 + total10;
+                double rating = antigitat * 365 + total10;
 
-            return rating;
+                return rating;
             }
         }
         #endregion
