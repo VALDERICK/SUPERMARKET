@@ -76,34 +76,43 @@ namespace SUPERMARKET
         #endregion
 
         // Method to initialize checkout lines
+
         public void InitializeCheckOutLines()
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); // Initialize each checkout line
+                lines[i] = new CheckOutLine(); 
             }
         }
 
         //METODOS PRIVADOS
 
+        
         private Dictionary<string, string> LoadCustomers(string fileName)
         {
             Dictionary<string, string> customers = new Dictionary<string, string>();
             StreamReader sr = new StreamReader(fileName);
 
             string line;
-            line = sr.ReadLine();
-            while (sr != null)
+           
+            while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
 
-                customers.Add(parts[0], parts[1]);
-
+                if (parts.Length >= 2)
+                {
+                    customers.Add(parts[0], parts[1]);
+                }
             }
 
             return customers;
         }
+        public void LoadCustomersP(string fileName)
+        {
+            LoadCustomers(fileName);
+        }
 
+        
         private Dictionary<string, string> LoadCashiers(string fileName)
         {
             Dictionary<string, string> cashiers = new Dictionary<string, string>();
@@ -121,7 +130,12 @@ namespace SUPERMARKET
 
             return cashiers;
         }
+        public void LoadCashiersP(string fileName)
+        {
+            LoadCashiers(fileName);
+        }
 
+        
         private Dictionary<string, double> LoadWarehouse(string fileName)
         {
             Dictionary<string, double> products = new Dictionary<string, double>();
@@ -136,6 +150,10 @@ namespace SUPERMARKET
             }
 
             return products;
+        }
+        public void LoadWarehouseP(string fileName)
+        {
+            LoadWarehouse(fileName);
         }
         private Item.Packaging TranslateToPackaging(char packagingChar)
         {
