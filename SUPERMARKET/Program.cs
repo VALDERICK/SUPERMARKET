@@ -44,27 +44,24 @@
             //TEST SUPERMARKET 
             Console.WriteLine("--------------------------------SUPERMARKET------------------------------");
 
-            // Crear un supermercado
+            
             Supermarket supermarket = new Supermarket("BonPreu", "Calle Montilivi");
+          
+            supermarket.LoadCustomersP("CUSTOMERS.TXT");
+            supermarket.LoadCashiersP("CASHIERS.TXT");
+            supermarket.LoadWarehouseP("GROCERIES.TXT");
 
-            // Cargar los datos de los archivos
-            supermarket.LoadCustomers("CUSTOMERS.TXT");
-            supermarket.LoadCashiers("CASHIERS.TXT");
-            supermarket.LoadWarehouse("GROCERIES.TXT");
-
-            // Mostrar información del supermercado
             Console.WriteLine("Supermarket information:");
-            Console.WriteLine($"Name: {supermarket.Name}");
-            Console.WriteLine($"Address: {supermarket.Address}");
-            Console.WriteLine($"Number of active lines: {supermarket.ActiveLines}");
+            Console.WriteLine($"Nom: {supermarket.Name}");
+            Console.WriteLine($"Adreça: {supermarket.Address}");
+            Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
 
-            // Puedes acceder a los diccionarios cargados en el supermercado y hacer operaciones adicionales si es necesario
-            // Por ejemplo, podrías imprimir los nombres de los clientes cargados:
-            Console.WriteLine("\nCustomers:");
-            foreach (var customer in supermarket.Customers)
+            
+            /*Console.WriteLine("\nCustomers:");
+            foreach (var customer in )
             {
                 Console.WriteLine($"ID: {customer.Key}, Name: {customer.Value}");
-            }
+            }*/
         }
     }
 }
