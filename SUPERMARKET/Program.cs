@@ -27,7 +27,7 @@
             Cashier cashier2 = new Cashier("12345678A", "Artur Juve", 100, new DateTime(2014, 03, 24));
             Console.WriteLine(cashier2);
 
-            cashier2.AddPoints(50);
+            cashier2.AddPoints(150);
             Console.WriteLine($"+points: {cashier2}");
 
             //TEST CUSTOMER 
