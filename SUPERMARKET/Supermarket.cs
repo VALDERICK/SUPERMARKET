@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SUPERMARKET
+/*namespace SUPERMARKET
 {
     internal class Supermarket
     {
@@ -73,5 +73,7 @@ namespace SUPERMARKET
             }
         }
     }
+
+}*/
+
     
-}
