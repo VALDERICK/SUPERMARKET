@@ -19,10 +19,16 @@
             Console.WriteLine(customer1.ToString());         
             Console.WriteLine(customer2.ToString());
 
-            // CREAR CAIXER
-  
-            Cashier cashier = new Cashier("123456789X", "Ferran Chic", 100, new DateTime(2010, 5, 15));        
-            cashier.AddPoints(50);
+
+            //CREAR CAIXER
+            Cashier cashier = new Cashier("123456789C", "Elena García", 500, new DateTime(2020, 3, 15));
+
+            // Añadir una cantidad facturada
+            cashier.AddInvoiceAmount(1500);
+            cashier.AddInvoiceAmount(1500);
+
+            // Mostrar información del cajero
+
             Console.WriteLine(cashier.ToString());
 
             #region ITEMS
