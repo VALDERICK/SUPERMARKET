@@ -9,16 +9,16 @@ namespace SUPERMARKET
     internal class Supermarket
     {
 
-        // Attributes
+        #region ATRIBUTS
         private string name;
         private string address;
         public static int MAXLINES = 5;
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
+        #endregion
 
-        // Constructor
-
+        #region CONSTRUCTORS
         public class CheckOutLine
         {
             private int number;
@@ -43,8 +43,9 @@ namespace SUPERMARKET
             LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
+        #endregion
 
-        // Properties
+        #region PROPIETATS
         public string Name
         {
             get { return name; }
@@ -72,7 +73,10 @@ namespace SUPERMARKET
                 }
             }
         }
-        
+        #endregion
+
+        // Method to initialize checkout lines
+
         public void InitializeCheckOutLines()
         {
             for (int i = 0; i < MAXLINES; i++)
@@ -174,6 +178,23 @@ namespace SUPERMARKET
             }
 
         }
+
+        public SortedSet<Item> GetItemByStock()
+        {
+            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+
+            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+
+            foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
+            {
+                Item newItem = new Item(0, product.Key, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
+                itemsByStock.Add(newItem);
+            }
+
+            return itemsByStock;
+        }
+
+
     }
 
 }
