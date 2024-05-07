@@ -1,8 +1,9 @@
-﻿//using System;
+//using System;
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
+
 
 /*namespace SUPERMARKET
 {
@@ -72,72 +73,78 @@
           }
        }
 
-        // Method to initialize checkout lines
-        public void InitializeCheckOutLines()
-        {
-            for (int i = 0; i < MAXLINES; i++)
-            {
-                lines[i] = new CheckOutLine(); // Initialize each checkout line
-            }
-        }
 
-        //METODOS PRIVADOS
+//        private Dictionary<string, double> LoadWarehouse(string fileName)
+//        {
+//            Dictionary<string, double> products = new Dictionary<string, double>();
+//            StreamReader sr = new StreamReader(fileName);
 
-        private Dictionary<string, string> LoadCustomers(string fileName)
-        {
-            Dictionary<string, string> customers = new Dictionary<string, string>();
-            StreamReader sr = new StreamReader(fileName);
+//        // Method to initialize checkout lines
+//        public void InitializeCheckOutLines()
+//        {
+//            for (int i = 0; i < MAXLINES; i++)
+//            {
+//                lines[i] = new CheckOutLine(); // Initialize each checkout line
+//            }
+//        }
 
-            string line;
-            line = sr.ReadLine();
-            while (sr!=null)
-            {               
-                string[] parts = line.Split(',');
+//        //METODOS PRIVADOS
 
-                customers.Add(parts[0], parts[1]);
+//        private Dictionary<string, string> LoadCustomers(string fileName)
+//        {
+//            Dictionary<string, string> customers = new Dictionary<string, string>();
+//            StreamReader sr = new StreamReader(fileName);
 
-            }
+//            string line;
+//            line = sr.ReadLine();
+//            while (sr!=null)
+//            {               
+//                string[] parts = line.Split(',');
 
-            return customers;
-        }
+//                customers.Add(parts[0], parts[1]);
 
-        private Dictionary<string, string> LoadCashiers(string fileName)
-        {
-            Dictionary<string, string> cashiers = new Dictionary<string, string>();
-            StreamReader sr = new StreamReader(fileName);
+//            }
 
-            string line;
-            line = sr.ReadLine();
-            while (sr != null)
-            {
-                string[] parts = line.Split(',');
+//            return customers;
+//        }
 
-                cashiers.Add(parts[0], parts[1]); 
+//        private Dictionary<string, string> LoadCashiers(string fileName)
+//        {
+//            Dictionary<string, string> cashiers = new Dictionary<string, string>();
+//            StreamReader sr = new StreamReader(fileName);
 
-            }
+//            string line;
+//            line = sr.ReadLine();
+//            while (sr != null)
+//            {
+//                string[] parts = line.Split(',');
 
-            return cashiers;
-        }
+//                cashiers.Add(parts[0], parts[1]); 
 
-        private Dictionary<string, double> LoadWarehouse(string fileName)
-        {
-            Dictionary<string, double> products = new Dictionary<string, double>();
-            StreamReader sr = new StreamReader(fileName);
+//            }
 
-            string line;
-            line = sr.ReadLine();
-            while (sr!=null)
-            {               
-                string[] parts = line.Split(',');                   
-                products.Add(parts[0], Convert.ToDouble(parts[4]));                                    
-            }
+//            return cashiers;
+//        }
 
-            return products;
-        }
+//        private Dictionary<string, double> LoadWarehouse(string fileName)
+//        {
+//            Dictionary<string, double> products = new Dictionary<string, double>();
+//            StreamReader sr = new StreamReader(fileName);
+
+//            string line;
+//            line = sr.ReadLine();
+//            while (sr!=null)
+//            {               
+//                string[] parts = line.Split(',');                   
+//                products.Add(parts[0], Convert.ToDouble(parts[4]));                                    
+//            }
+
+//            return products;
+//        }
 
 
-    }
-
+//    }
 }*/
+
 
     
