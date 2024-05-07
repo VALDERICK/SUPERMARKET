@@ -163,14 +163,11 @@ namespace SUPERMARKET
         #endregion
         public int CompareTo(Item? other)
         {
-
             if (other != null)
             {
-                // Comparamos los nombres de este objeto y el otro objeto
-                return this.description.CompareTo(other.description);
+                return this.GetHashCode().CompareTo(other.GetHashCode());
             }
 
-            // Si el otro objeto es nulo, este objeto es mayor
             return 1;
         }
     }
