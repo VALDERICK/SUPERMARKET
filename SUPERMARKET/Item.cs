@@ -36,6 +36,16 @@ namespace SUPERMARKET
         #region CONSTRUCTORS
         public Item(int _code, string _description, double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
         {
+
+            if (_stock <= 0)
+            {
+                stock = 50 ; 
+            }
+            else
+            {
+                stock = _stock;
+            }
+
             code = _code;
             description = _description;
             price = _price;
@@ -46,15 +56,8 @@ namespace SUPERMARKET
             onSale = true;
 
 
-            if (_stock <= 0)
-            {
-                stock += 250;
-            }
-            else
-            {
-                stock = _stock;
-            }
         }
+        
         #endregion
 
         #region GETTERS
@@ -126,7 +129,9 @@ namespace SUPERMARKET
 
                 if (onSale)
                 {
-                    precioFinal= price * 0.10; 
+                    precioFinal= price * 0.10;
+                    price = price - precioFinal;
+                    precioFinal = price;
                 }
                 else
                 {
@@ -149,8 +154,7 @@ namespace SUPERMARKET
             if (onSale)
             {
                 double discountedPrice = price * 0.10;
-                double discountAmount = price - discountedPrice;
-                sb.Append($"Y (Descuento: {discountAmount}€)");
+                sb.Append($"Y (Descuento: {discountedPrice}€)");
             }
             else
             {
@@ -161,6 +165,7 @@ namespace SUPERMARKET
 
         }
         #endregion
+
         public int CompareTo(Item? other)
         {
             if (other != null)
