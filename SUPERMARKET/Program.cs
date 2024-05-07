@@ -21,7 +21,10 @@
 
 
             //CREAR CAIXER
-            Cashier cashier = new Cashier("123456789C", "Paulatena Pozo", 500, new DateTime(2020, 5, 7));
+
+            Cashier cashier = new Cashier("123456789C", "Ferran Chic", 500, new DateTime(2010, 3, 15));
+
+
 
             // Añadir una cantidad facturada
             cashier.AddInvoiceAmount(1500);

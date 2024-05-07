@@ -31,10 +31,13 @@ namespace SUPERMARKET
 
                 TimeSpan antiguedad = ahora - _joiningDate;
 
+
                 int años = antiguedad.Days / 365;
 
                 return años;
-            }
+
+              }
+
         }
         #endregion
 
