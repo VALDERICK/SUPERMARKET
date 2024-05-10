@@ -34,7 +34,7 @@ namespace SUPERMARKET
         #endregion
 
         #region CONSTRUCTORS
-        public Item(int _code, string _description, double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
+        public Item(int _code, string _description,bool _onSale,  double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
         {
             code = _code;
             description = _description;
@@ -43,7 +43,8 @@ namespace SUPERMARKET
             packaging = _packaging;
             stock = _stock;
             minStock = _minStock;
-            onSale = true;
+            onSale = _onSale;
+             
 
 
             if (_stock <= 0)

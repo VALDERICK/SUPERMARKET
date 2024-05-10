@@ -2,7 +2,7 @@
 
 namespace SUPERMARKET
 {
-    internal class Cashier : Person
+    public class Cashier : Person
     {
         #region ATRIBUTES
         private DateTime _joiningDate;
@@ -15,6 +15,10 @@ namespace SUPERMARKET
         {
             _joiningDate = contracte;
             
+        }
+
+        public Cashier(string id, string fullName, DateTime dateTime) : base(id, fullName)
+        {
         }
         #endregion
 

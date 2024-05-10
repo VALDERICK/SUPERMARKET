@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SUPERMARKET
 {
 
-    internal class Customer : Person
+    public class Customer : Person
     {
         //ATRIBUTOS
 
