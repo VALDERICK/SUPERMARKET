@@ -43,9 +43,9 @@ namespace SUPERMARKET
 
         public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
         {
-            customers=LoadCustomers("CUSTOMERS.TXT");
-            staff=LoadCashiers("CASHIERS.TXT");
-            warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers=LoadCustomers("CUSTOMERS.TXT");
+            Staff=LoadCashiers("CASHIERS.TXT");
+            Warehouse=LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -130,7 +130,7 @@ namespace SUPERMARKET
 
                 if (parts.Length >= 2)
                 {
-                    aux.Add(parts[0], new Cashier(parts[0], parts[1],Convert.ToDateTime((parts[3]))));
+                    aux.Add(parts[0], new Cashier(parts[0], parts[1], Convert.ToDateTime(parts[3])));
                 }
             }
             sr.Close();
@@ -156,7 +156,7 @@ namespace SUPERMARKET
                 if (parts.Length >= 5)
                 {
                         
-                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0], Convert.ToDouble(parts[3]),category,pack ,10,1));
+                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0],false, Convert.ToDouble(parts[3]),category,pack ,10,1));
                 }
                     
             }           

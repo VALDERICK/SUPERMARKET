@@ -11,14 +11,10 @@ namespace SUPERMARKET
         #endregion
 
         #region CONSTRUCTOR 
-        public Cashier(string id, string fullName, DateTime contracte) : base(id, fullName, points)
+        public Cashier(string id, string fullName, DateTime contracte) : base(id, fullName)
         {
             _joiningDate = contracte;
             
-        }
-
-        public Cashier(string id, string fullName, DateTime dateTime) : base(id, fullName)
-        {
         }
         #endregion
 

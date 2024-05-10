@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using static SUPERMARKET.Item;
 
-namespace SUPERMARKET
-{
     public enum Category
     { BERVERAGE = 1, FRUITS, VEGETABLES, BREAD, MILK_AND_DERIVATES, GARDEN, MEAT, SWEETS, SAUCES, FROZEN, CLEANING, FISH, OTHER };
 
     public enum Packaging
     { Unit, Kg, Package };
+    namespace SUPERMARKET
+    {
+
     public class Item : IComparable<Item>
     {
 
