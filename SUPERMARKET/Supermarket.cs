@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
-    internal class Supermarket
+    public class Supermarket
     {
 
         #region ATRIBUTS
@@ -17,9 +17,9 @@ namespace SUPERMARKET
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
-        Dictionary<string, Person> staff;
-        Dictionary<string, Person> customers;
-        SortedDictionary<int, Item> warehouse;
+        public Dictionary<string, Person> Staff;
+        public Dictionary<string, Person> Customers;
+        public SortedDictionary<int, Item> Warehouse;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
         {
             LoadCustomers("CUSTOMERS.TXT");
             LoadCashiers("CASHIERS.TXT");
@@ -195,7 +195,7 @@ namespace SUPERMARKET
 
             foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                Item newItem = new Item(0, product.Key, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
+                Item newItem = new Item(0, product.Key,false, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
                 itemsByStock.Add(newItem);
             }
 
@@ -206,7 +206,7 @@ namespace SUPERMARKET
         #region EnableCshiersOrCustomers
         public Person GetAvailableCustomer()
         {
-            foreach (KeyValuePair<string, Person> pair in customers)
+            foreach (KeyValuePair<string, Person> pair in Customers)
             {
                 if (pair.Value is Customer customer && !customer.Active)
                 {

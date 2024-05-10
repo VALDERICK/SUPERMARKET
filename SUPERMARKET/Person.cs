@@ -12,7 +12,7 @@ namespace SUPERMARKET
 
         private string _id;
         private string _fullName;
-        protected int _points;
+        public int _points;
         protected double _totalInvoiced;
         protected bool active = false;
 
