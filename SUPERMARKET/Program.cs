@@ -8,8 +8,8 @@
             //TEST ITEM
 
             Console.WriteLine("--------------------------------ITEMS------------------------------");
-            Item item1 = new Item(1, "Manzana", true, 1.50, Category.FRUITS, Packaging.Unit, 50, 10);
-            Item item2 = new Item(2, "Entrecot", false, 7.75, Category.MEAT, Packaging.Kg, 10, 20);
+            Item item1 = new Item(1, "Manzana",true, 1.50, Category.FRUITS, Packaging.Unit, 50, 10);
+            Item item2 = new Item(2, "Entrecot",false, 7.75, Category.MEAT, Packaging.Kg, 10, 20);
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");

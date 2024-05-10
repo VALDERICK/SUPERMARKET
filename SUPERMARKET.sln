@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SUPERMARKET", "SUPERMARKET\SUPERMARKET.csproj", "{C1D8F571-B3AA-4143-BBA8-1654E3178553}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{ADFB6D90-A04A-4FD4-8B1F-BA2EF4F3AD44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject1\TestProject1.csproj", "{ADFB6D90-A04A-4FD4-8B1F-BA2EF4F3AD44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

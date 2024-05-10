@@ -23,6 +23,11 @@ namespace SUPERMARKET
             get { return active; }
             set { active = value; }
         }
+        public int Points
+        {
+            get { return _points; }
+            set { _points = value; }
+        }
         public string Id { get => _id; }
         public string FullName { get => _fullName; }
 

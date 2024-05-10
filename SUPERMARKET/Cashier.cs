@@ -16,14 +16,12 @@ namespace SUPERMARKET
             _joiningDate = contracte;
             
         }
-
-      
         #endregion
 
         #region METHODS
         public override void AddPoints(int pointsToAdd)
         {
-            _points += (pointsToAdd * YearsOfService) + 1; ;
+            _points += (pointsToAdd * (YearsOfService) + 1); ;
             
         }
 
@@ -31,20 +29,16 @@ namespace SUPERMARKET
         {
             get
             {
-               
-  
-                    int años = 0;
+                DateTime ahora = DateTime.Now;
 
-                    if (_joiningDate != null)
-                    {
-                        TimeSpan diferencia = DateTime.Now - _joiningDate;
-                        años = Convert.ToInt32(diferencia.TotalDays / 365);
-                    }
+                TimeSpan antiguedad = ahora - _joiningDate;
 
-                    return años;
-              
 
-            }
+                int años = antiguedad.Days / 365;
+
+                return años;
+
+              }
 
         }
         #endregion
@@ -52,14 +46,16 @@ namespace SUPERMARKET
         #region PROPERTY
         public override double GetRating
         {
-            get {
+            get { 
+                int antigitat = YearsOfService;
 
-                DateTime ahora = DateTime.Now;
-                DateTime antiguedad =_joiningDate;
-                TimeSpan diferencia = ahora - antiguedad;
-                int dias = Convert.ToInt32(diferencia.TotalDays);
+            
+                double totalFacturado = _totalInvoiced; 
 
-                double rating = dias +  _points*0.1;
+
+                double total10 = 0.1 * totalFacturado;
+
+                double rating = antigitat * 365 + total10;
 
                 return rating;
             }

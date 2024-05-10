@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SUPERMARKET;
+using SUPERMARKET; 
 using System.Collections.Generic;
 
 namespace ProvesSuperMarket
@@ -10,7 +10,7 @@ namespace ProvesSuperMarket
         [TestMethod]
         public void TestPriceArticleOnSale()
         {
-            Item it = new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10);
+            Item it = new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10);
             Assert.AreEqual(it.Price, 9.00);
         }
 
@@ -18,9 +18,9 @@ namespace ProvesSuperMarket
         public void TestComparadorStockPerQuantitat()
         {
             var al = new List<Item>();
-            al.Add(new Item(3, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 30, 10));
-            al.Add(new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10));
-            al.Add(new Item(2, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 20, 10));
+            al.Add(new Item(3, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 30, 10));
+            al.Add(new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10));
+            al.Add(new Item(2, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 20, 10));
             al.Sort();
 
             Assert.AreEqual(al[0].Stock, 10);
@@ -42,11 +42,11 @@ namespace ProvesSuperMarket
         {
             var c = new Customer("1", "Client", null);
             c.AddPoints(10);
-            Assert.AreEqual(0, c._points, "Els punts s'haurien d'haver perdut");
+            Assert.AreEqual(0, c.Points, "Els punts s'haurien d'haver perdut");
             c = new Customer("1", "Client", 23);
             c.AddPoints(10);
             c.AddPoints(20);
-            Assert.AreEqual(30, c._points, "Els punts NO s'haurien d'haver perdut");
+            Assert.AreEqual(30, c.Points, "Els punts NO s'haurien d'haver perdut");
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace ProvesSuperMarket
         [TestMethod]
         public void testCarregaCaixersAmbDatesCorrectes()
         {
-            Supermarket sm = new Supermarket("super", "noimporta", "fca.txt", "fcu.txt", "fi.txt", 2);
+            SuperMarket sm = new SuperMarket("super", "noimporta", "fca.txt", "fcu.txt", "fi.txt", 2);
             Assert.AreEqual(sm.Staff.Count, 3);
             var diff = System.DateTime.Today - new System.DateTime(2015, 2, 1);
             Cashier c = (Cashier)sm.Staff["037276013M"];
