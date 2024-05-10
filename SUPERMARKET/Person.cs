@@ -12,7 +12,7 @@ namespace SUPERMARKET
 
         private string _id;
         private string _fullName;
-        protected int _points;
+        public int _points;
         protected double _totalInvoiced;
         protected bool active = false;
 
@@ -22,6 +22,11 @@ namespace SUPERMARKET
         {
             get { return active; }
             set { active = value; }
+        }
+        public int Points
+        {
+            get { return _points; }
+            set { _points = value; }
         }
         public string Id { get => _id; }
         public string FullName { get => _fullName; }

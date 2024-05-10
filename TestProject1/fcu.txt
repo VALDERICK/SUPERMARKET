@@ -1,0 +1,6 @@
+CASH;Generic Customer;
+040291661P;David Boix Bech;21422
+040272407M;Jaume Rigau Esteve;
+017984889Q;Rosor Aurich Bellapart;
+040302877T;Francisca Vallmajo Trias;22503
+040287642Z;Eduard Sistané Fernández;42819
