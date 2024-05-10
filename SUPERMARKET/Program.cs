@@ -14,7 +14,7 @@
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");
-            Person cashier1 = new Cashier("91827364A", "Ferran Chic", 100, new DateTime(2015, 4, 13));
+            Person cashier1 = new Cashier("91827364A", "Ferran Chic", new DateTime(2015, 4, 13));
             Console.WriteLine(cashier1);
 
             Person customer1 = new Customer("98765432B", "Victor Granados", 73692827);
@@ -22,7 +22,7 @@
 
             //TEST CASHIER
             Console.WriteLine("--------------------------------CASHIERS------------------------------");
-            Cashier cashier2 = new Cashier("12345678A", "Artur Juve", 100, new DateTime(2014, 03, 24));
+            Cashier cashier2 = new Cashier("12345678A", "Artur Juve", new DateTime(2014, 03, 24));
             Console.WriteLine(cashier2);
 
             cashier2.AddPoints(150);
@@ -62,11 +62,11 @@
             Console.WriteLine("--------------------------------ITEMS ORDENATS------------------------------");
 
             //SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
-            //itemsByStock.Add(new Item(1, "Peix", 10.50, Item.Category.FROZEN, Item.Packaging.Unit, 20, 5));
-            //itemsByStock.Add(new Item(2, "Platano", 8.75, Item.Category.FRUITS, Item.Packaging.Unit, 15, 3));
-            //itemsByStock.Add(new Item(3, "Pan", 5.25, Item.Category.BREAD, Item.Packaging.Unit, 25, 10));
-            //itemsByStock.Add(new Item(4, "Pepino", 12.30, Item.Category.VEGETABLES, Item.Packaging.Unit, 18, 6));
-         
+            //itemsByStock.Add(new Item(1, "Peix", false,10.50, Item.Category.FROZEN, Item.Packaging.Unit, 20, 5));
+            //itemsByStock.Add(new Item(2, "Platano", false,8.75, Item.Category.FRUITS, Item.Packaging.Unit, 15, 3));
+            //itemsByStock.Add(new Item(3, "Pan",true, 5.25, Item.Category.BREAD, Item.Packaging.Unit, 25, 10));
+            //itemsByStock.Add(new Item(4, "Pepino",true, 12.30, Item.Category.VEGETABLES, Item.Packaging.Unit, 18, 6));
+
             //Console.WriteLine("Elementos ordenados por stock:");
             //foreach (Item item in itemsByStock)
             //{

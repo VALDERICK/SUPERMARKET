@@ -11,15 +11,13 @@ namespace SUPERMARKET
         #endregion
 
         #region CONSTRUCTOR 
-        public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
+        public Cashier(string id, string fullName, DateTime contracte) : base(id, fullName)
         {
             _joiningDate = contracte;
             
         }
 
-        public Cashier(string id, string fullName, DateTime dateTime) : base(id, fullName)
-        {
-        }
+      
         #endregion
 
         #region METHODS
@@ -33,16 +31,20 @@ namespace SUPERMARKET
         {
             get
             {
-                DateTime ahora = DateTime.Now;
+               
+  
+                    int años = 0;
 
-                TimeSpan antiguedad = ahora - _joiningDate;
+                    if (_joiningDate != null)
+                    {
+                        TimeSpan diferencia = DateTime.Now - _joiningDate;
+                        años = Convert.ToInt32(diferencia.TotalDays / 365);
+                    }
 
+                    return años;
+              
 
-                int años = antiguedad.Days / 365;
-
-                return años;
-
-              }
+            }
 
         }
         #endregion
@@ -50,16 +52,14 @@ namespace SUPERMARKET
         #region PROPERTY
         public override double GetRating
         {
-            get { 
-                int antigitat = YearsOfService;
+            get {
 
-            
-                double totalFacturado = _totalInvoiced; 
+                DateTime ahora = DateTime.Now;
+                DateTime antiguedad =_joiningDate;
+                TimeSpan diferencia = ahora - antiguedad;
+                int dias = Convert.ToInt32(diferencia.TotalDays);
 
-
-                double total10 = 0.1 * totalFacturado;
-
-                double rating = antigitat * 365 + total10;
+                double rating = dias +  _points*0.1;
 
                 return rating;
             }

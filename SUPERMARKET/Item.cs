@@ -176,8 +176,9 @@ namespace SUPERMARKET
             int resultat;
             if (other != null)
             {
-                resultat= this.GetHashCode().CompareTo(other.GetHashCode());
+                resultat = this.stock.CompareTo(other.Stock);
             }
+
             resultat = 1;
             return resultat;
         }

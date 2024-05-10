@@ -15,8 +15,8 @@ namespace SUPERMARKET
         private string address;
         public static int MAXLINES = 5;
         private int activeLines;
-        private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
-        private Dictionary<Item, double> ShoppingCart;
+        public CheckOutLine[] lines = new CheckOutLine[MAXLINES];
+        public Dictionary<Item, double> ShoppingCart;
         public Dictionary<string, Person> Staff;
         public Dictionary<string, Person> Customers;
         public SortedDictionary<int, Item> Warehouse;
@@ -187,20 +187,22 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemByStock()
-        {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+        //public SortedSet<Item> GetItemByStock()
+        //{
 
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+        //    SortedSet<int,Item> warehouse = new SortedSet<int,Item>();
+        //    Item stock;
+        //    StreamReader sr = new StreamReader("GROCERIES.TXT");
 
-            foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
-            {
-                Item newItem = new Item(0, product.Key,false, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
-                itemsByStock.Add(newItem);
-            }
+        //    foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
+        //    {
+        //        Item newItem = new Item(0, product.Key, false, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
+        //        itemsByStock.Add(newItem);
+        //    }
 
-            return itemsByStock;
-        }
+        //    // Devolver el conjunto ordenado de elementos por stock
+        //    return itemsByStock;
+        //}
 
 
         #region EnableCshiersOrCustomers
