@@ -51,11 +51,11 @@ namespace SUPERMARKET
                 DateTime ahora = DateTime.Now;
 
                 TimeSpan antiguedad = ahora - _joiningDate;
-
+                int años = Convert.ToInt32(antiguedad);
 
                 double total10 = 0.1 * _points;
 
-                double rating = antigitat + total10;
+                double rating = años + total10;
 
                 return rating;
             }
