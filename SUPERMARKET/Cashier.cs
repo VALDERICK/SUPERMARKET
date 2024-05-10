@@ -38,7 +38,7 @@ namespace SUPERMARKET
 
                 return años;
 
-              }
+            }
 
         }
         #endregion
@@ -49,13 +49,11 @@ namespace SUPERMARKET
             get {
 
                 DateTime ahora = DateTime.Now;
-
                 TimeSpan antiguedad = ahora - _joiningDate;
+
                 int años = Convert.ToInt32(antiguedad);
 
-                double total10 = 0.1 * _points;
-
-                double rating = años + total10;
+                double rating = años + 0.1 * _points;
 
                 return rating;
             }
