@@ -7,10 +7,9 @@
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             //TEST ITEM
 
-            //Item item1 = new Item(1, "Manzana", 1.50, Item.Category.FRUITS, Item.Packaging.Unit, 50, 10);
-            //Item item2 = new Item(2, "Entrecot", 7.75, Item.Category.MEAT, Item.Packaging.Kg, 10, 20);
-
             Console.WriteLine("--------------------------------ITEMS------------------------------");
+            Item item1 = new Item(1, "Manzana", true, 1.50, Category.FRUITS, Packaging.Unit, 50, 10);
+            Item item2 = new Item(2, "Entrecot", false, 7.75, Category.MEAT, Packaging.Kg, 10, 20);
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");
@@ -45,9 +44,9 @@
 
             Supermarket supermarket = new Supermarket("BonPreu", "Calle Montilivi");
 
-            supermarket.LoadCustomersP("CUSTOMERS.TXT");
-            supermarket.LoadCashiersP("CASHIERS.TXT");
-            supermarket.LoadWarehouseP("GROCERIES.TXT");
+            supermarket.LoadCustomers("CUSTOMERS.TXT");
+            supermarket.LoadCashiers("CASHIERS.TXT");
+            supermarket.LoadWarehouse("GROCERIES.TXT");
 
             Console.WriteLine($"Nom: {supermarket.Name}");
             Console.WriteLine($"Adreça: {supermarket.Address}");
@@ -61,17 +60,17 @@
             //TEST ORDENACIO
             Console.WriteLine("--------------------------------ITEMS ORDENATS------------------------------");
 
-            //SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
-            //itemsByStock.Add(new Item(1, "Peix", false,10.50, Item.Category.FROZEN, Item.Packaging.Unit, 20, 5));
-            //itemsByStock.Add(new Item(2, "Platano", false,8.75, Item.Category.FRUITS, Item.Packaging.Unit, 15, 3));
-            //itemsByStock.Add(new Item(3, "Pan",true, 5.25, Item.Category.BREAD, Item.Packaging.Unit, 25, 10));
-            //itemsByStock.Add(new Item(4, "Pepino",true, 12.30, Item.Category.VEGETABLES, Item.Packaging.Unit, 18, 6));
-
-            //Console.WriteLine("Elementos ordenados por stock:");
-            //foreach (Item item in itemsByStock)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //}
+            /*SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
+            itemsByStock.Add(new Item(1, "Peix",true, 10.50, Category.FROZEN, Packaging.Unit, 20, 5));
+            itemsByStock.Add(new Item(2, "Platano",false,8.75, Category.FRUITS, Packaging.Unit, 15, 3));
+            itemsByStock.Add(new Item(3, "Pan",true, 5.25, Category.BREAD, Packaging.Unit, 25, 10));
+            itemsByStock.Add(new Item(4, "Pepino",false, 12.30, Category.VEGETABLES, Packaging.Unit, 18, 6));
+         
+            Console.WriteLine("Elementos ordenados por stock:");
+            foreach (Item item in itemsByStock)
+            {
+               Console.WriteLine(item.ToString());
+            }*/
 
 
 
