@@ -103,7 +103,7 @@ namespace SUPERMARKET
 
             while ((line = sr.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
 
                 if (parts.Length >= 2)
                 {
@@ -126,7 +126,7 @@ namespace SUPERMARKET
 
             while ((line = sr.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
 
                 if (parts.Length >= 2)
                 {
