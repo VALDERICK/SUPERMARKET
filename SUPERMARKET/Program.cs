@@ -54,7 +54,7 @@
             Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
 
             supermarket.ActiveLines = 3;
-            Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
+            Console.WriteLine($"(+linies)Numero de linies obertes: {supermarket.ActiveLines}");
 
 
 
