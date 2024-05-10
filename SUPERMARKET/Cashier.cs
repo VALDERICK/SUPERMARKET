@@ -46,16 +46,16 @@ namespace SUPERMARKET
         #region PROPERTY
         public override double GetRating
         {
-            get { 
-                int antigitat = YearsOfService;
+            get {
 
-            
-                double totalFacturado = _totalInvoiced; 
+                DateTime ahora = DateTime.Now;
+
+                TimeSpan antiguedad = ahora - _joiningDate;
 
 
-                double total10 = 0.1 * totalFacturado;
+                double total10 = 0.1 * _points;
 
-                double rating = antigitat * 365 + total10;
+                double rating = antigitat + total10;
 
                 return rating;
             }
