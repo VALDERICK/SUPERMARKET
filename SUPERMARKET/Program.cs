@@ -11,8 +11,6 @@
             Item item2 = new Item(2, "Entrecot", 7.75, Item.Category.MEAT, Item.Packaging.Kg, 10, 20);
 
             Console.WriteLine("--------------------------------ITEMS------------------------------");
-            Console.WriteLine(item1);
-            Console.WriteLine(item2);
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");

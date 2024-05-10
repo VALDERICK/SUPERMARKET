@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -203,18 +204,22 @@ namespace SUPERMARKET
 
 
         #region EnableCshiersOrCustomers
-        public Person GetAvailableCustomer(Dictionary<string, Customer> customers)
+        public Person GetAvailableCustomer()
         {
-            foreach (KeyValuePair<string, Customer> pair in customers)
+            foreach (KeyValuePair<string, Person> pair in customers)
             {
-                if (!pair.Value.Active)
+                if (pair.Value is Customer customer && !customer.Active)
                 {
-                    pair.Value.Active = true;
-                    return pair.Value;
+                    customer.Active = true;
+                    return customer;
                 }
             }
 
+            // Si no se encuentra ningún cliente disponible, devuelve null
             return null;
+
+        
+
         }
         #endregion
 

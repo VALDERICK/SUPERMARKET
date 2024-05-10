@@ -172,12 +172,28 @@ namespace SUPERMARKET
         #endregion
         public int CompareTo(Item? other)
         {
+            int resultat;
             if (other != null)
             {
-                return this.GetHashCode().CompareTo(other.GetHashCode());
+                resultat= this.GetHashCode().CompareTo(other.GetHashCode());
+            }
+            resultat = 1;
+            return resultat;
+        }
+        public override bool Equals(object obj)
+        {
+            bool resultado = false;
+
+            if (obj != null && GetType() == obj.GetType())
+            {
+                Item otherItem = (Item)obj;
+
+                resultado = this.code == otherItem.code &&
+                            this.category == otherItem.category &&
+                            this.description == otherItem.description;
             }
 
-            return 1;
+            return resultado;
         }
     }
 }
