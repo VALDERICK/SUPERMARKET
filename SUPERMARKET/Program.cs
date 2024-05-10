@@ -45,9 +45,9 @@
 
             Supermarket supermarket = new Supermarket("BonPreu", "Calle Montilivi");
 
-            supermarket.LoadCustomersP("CUSTOMERS.TXT");
-            supermarket.LoadCashiersP("CASHIERS.TXT");
-            supermarket.LoadWarehouseP("GROCERIES.TXT");
+            supermarket.LoadCustomers("CUSTOMERS.TXT");
+            supermarket.LoadCashiers("CASHIERS.TXT");
+            supermarket.LoadWarehouse("GROCERIES.TXT");
 
             Console.WriteLine($"Nom: {supermarket.Name}");
             Console.WriteLine($"Adreça: {supermarket.Address}");
