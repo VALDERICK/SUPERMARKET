@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,10 @@ namespace SUPERMARKET
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
+        Dictionary<string, Person> staff;
+        Dictionary<string, Person> customers;
+        SortedDictionary<int, Item> warehouse;
+
         #endregion
 
         #region CONSTRUCTORS
@@ -199,10 +204,23 @@ namespace SUPERMARKET
 
 
         #region EnableCshiersOrCustomers
-        //public Person GetAvailableCashier()
-        //{
+        public Person GetAvailableCustomer()
+        {
+            foreach (KeyValuePair<string, Person> pair in customers)
+            {
+                if (pair.Value is Customer customer && !customer.Active)
+                {
+                    customer.Active = true;
+                    return customer;
+                }
+            }
 
-        //}
+            // Si no se encuentra ningún cliente disponible, devuelve null
+            return null;
+
+        
+
+        }
         #endregion
 
     }

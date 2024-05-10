@@ -152,8 +152,8 @@ namespace SUPERMARKET
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append($"CODE->{code,10}  DESCRIPTION->{description,-10}  CATEGORY-> {category,-10}");
-            sb.Append($" STOCK->{stock,10}    MIN_STOCK->{minStock,-10}   PRICE->{Price,-10}€  ON SALE->");
+            sb.Append($"CODE->{code}  DESCRIPTION->{description}  CATEGORY-> {category}");
+            sb.Append($" STOCK->{stock}    MIN_STOCK->{minStock}   PRICE->{Price}€  ON SALE->");
 
             if (onSale)
             {
@@ -172,12 +172,28 @@ namespace SUPERMARKET
         #endregion
         public int CompareTo(Item? other)
         {
+            int resultat;
             if (other != null)
             {
-                return this.GetHashCode().CompareTo(other.GetHashCode());
+                resultat= this.GetHashCode().CompareTo(other.GetHashCode());
+            }
+            resultat = 1;
+            return resultat;
+        }
+        public override bool Equals(object obj)
+        {
+            bool resultado = false;
+
+            if (obj != null && GetType() == obj.GetType())
+            {
+                Item otherItem = (Item)obj;
+
+                resultado = this.code == otherItem.code &&
+                            this.category == otherItem.category &&
+                            this.description == otherItem.description;
             }
 
-            return 1;
+            return resultado;
         }
     }
 }

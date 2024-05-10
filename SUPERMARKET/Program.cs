@@ -11,8 +11,6 @@
             Item item2 = new Item(2, "Entrecot", 7.75, Item.Category.MEAT, Item.Packaging.Kg, 10, 20);
 
             Console.WriteLine("--------------------------------ITEMS------------------------------");
-            Console.WriteLine(item1);
-            Console.WriteLine(item2);
 
             //TEST PERSON 
             Console.WriteLine("--------------------------------PERSONS------------------------------");
@@ -57,6 +55,24 @@
 
             supermarket.ActiveLines = 3;
             Console.WriteLine($"(+linies)Numero de linies obertes: {supermarket.ActiveLines}");
+
+
+
+            //TEST ORDENACIO
+            Console.WriteLine("--------------------------------ITEMS ORDENATS------------------------------");
+
+            SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
+            itemsByStock.Add(new Item(1, "Peix", 10.50, Item.Category.FROZEN, Item.Packaging.Unit, 20, 5));
+            itemsByStock.Add(new Item(2, "Platano", 8.75, Item.Category.FRUITS, Item.Packaging.Unit, 15, 3));
+            itemsByStock.Add(new Item(3, "Pan", 5.25, Item.Category.BREAD, Item.Packaging.Unit, 25, 10));
+            itemsByStock.Add(new Item(4, "Pepino", 12.30, Item.Category.VEGETABLES, Item.Packaging.Unit, 18, 6));
+         
+            Console.WriteLine("Elementos ordenados por stock:");
+            foreach (Item item in itemsByStock)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
 
 
         }
