@@ -10,7 +10,7 @@ namespace ProvesSuperMarket
         [TestMethod]
         public void TestPriceArticleOnSale()
         {
-            Item it = new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10);
+            Item it = new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10);
             Assert.AreEqual(it.Price, 9.00);
         }
 
@@ -18,9 +18,9 @@ namespace ProvesSuperMarket
         public void TestComparadorStockPerQuantitat()
         {
             var al = new List<Item>();
-            al.Add(new Item(3, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 30, 10));
-            al.Add(new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10));
-            al.Add(new Item(2, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 20, 10));
+            al.Add(new Item(3, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 30, 10));
+            al.Add(new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10));
+            al.Add(new Item(2, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 20, 10));
             al.Sort();
 
             Assert.AreEqual(al[0].Stock, 10);

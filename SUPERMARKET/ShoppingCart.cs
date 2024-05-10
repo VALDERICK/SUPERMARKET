@@ -49,7 +49,7 @@ namespace SUPERMARKET
             if (shoppingList.ContainsKey(item))
             {
                 
-                if (item.PackagingType == Item.Packaging.Unit || item.PackagingType == Item.Packaging.Package)
+                if (item.PackagingType == Packaging.Unit || item.PackagingType == Packaging.Package)
                 {
                     qty = Math.Round(qty); 
                 }
@@ -58,7 +58,7 @@ namespace SUPERMARKET
             else
             {
                 
-                if (item.PackagingType == Item.Packaging.Unit || item.PackagingType == Item.Packaging.Package)
+                if (item.PackagingType == Packaging.Unit || item.PackagingType == Packaging.Package)
                 {
                     qty = Math.Round(qty); 
                 }
