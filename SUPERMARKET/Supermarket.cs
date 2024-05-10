@@ -105,10 +105,16 @@ namespace SUPERMARKET
             {
                 string[] parts = line.Split(';');
 
-                if (parts.Length >= 2)
+                // Ensure parts has at least 4 elements before accessing parts[3]
+                if (parts.Length >= 4)
                 {
                     aux.Add(parts[0], new Customer(parts[0], parts[1], Convert.ToInt32(parts[3])));
-
+                }
+                else
+                {
+                    // Log or handle lines with insufficient parts
+                    // For example:
+                    Console.WriteLine("Line '{0}' does not have enough parts.", line);
                 }
             }
             sr.Close();
