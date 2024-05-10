@@ -145,9 +145,10 @@ namespace SUPERMARKET
             StreamReader sr = new StreamReader(fileName);
             Packaging pack;
             string line;
-            while ((line = sr.ReadLine()) != null)
+            line = sr.ReadLine();
+            while ( line != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
                 Category category = (Category)Convert.ToInt32(parts[1]);
                 if (parts[2] == "K") pack = Packaging.Kg;
                 else if (parts[2] == "U") pack = Packaging.Unit;
@@ -181,20 +182,20 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemByStock()
+        /*public SortedSet<Item> GetItemByStock()
         {
             Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
             SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
 
-            foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
+            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                Item newItem = new Item(0, product.Key,false, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
+                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
                 itemsByStock.Add(newItem);
             }
 
             return itemsByStock;
-        }
+        }*/
 
 
         #region EnableCshiersOrCustomers
