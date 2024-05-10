@@ -64,6 +64,22 @@ namespace SUPERMARKET
                 }
                 shoppingList.Add(item, qty); 
             }
+
+        }
+        public void AddAllRandomly(SortedDictionary<int, Item> warehouse)
+        {
+            Random random = new Random();
+            int numItems = random.Next(1, 11);
+            int contador = 0;
+
+            foreach (var kvp in warehouse) 
+            {
+                if (contador >= numItems) 
+                    break;
+                double qty = random.Next(1, 6); 
+                AddOne(kvp.Value, qty); 
+                contador++;
+            }
         }
     }
 }
