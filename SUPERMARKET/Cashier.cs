@@ -2,7 +2,7 @@
 
 namespace SUPERMARKET
 {
-    internal class Cashier : Person
+    public class Cashier : Person
     {
         #region ATRIBUTES
         private DateTime _joiningDate;
@@ -11,7 +11,7 @@ namespace SUPERMARKET
         #endregion
 
         #region CONSTRUCTOR 
-        public Cashier(string id, string fullName, int points, DateTime contracte) : base(id, fullName, points)
+        public Cashier(string id, string fullName, DateTime contracte) : base(id, fullName)
         {
             _joiningDate = contracte;
             
@@ -21,7 +21,7 @@ namespace SUPERMARKET
         #region METHODS
         public override void AddPoints(int pointsToAdd)
         {
-            _points += (pointsToAdd * YearsOfService) + 1; ;
+            _points += (pointsToAdd * (YearsOfService) + 1); ;
             
         }
 
