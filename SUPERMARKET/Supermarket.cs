@@ -168,6 +168,11 @@ namespace SUPERMARKET
             return itemsByStock;
         }
 
+        public Person GetAbaiableCashier()
+        {
+
+        }
+
 
     }
 
