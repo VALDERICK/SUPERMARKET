@@ -1,6 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUPERMARKET;
-using System.Collections.Generic;
 
 namespace ProvesSuperMarket
 {
@@ -10,7 +8,7 @@ namespace ProvesSuperMarket
         [TestMethod]
         public void TestPriceArticleOnSale()
         {
-            Item it = new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10);
+            Item it = new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10);
             Assert.AreEqual(it.Price, 9.00);
         }
 
@@ -18,9 +16,9 @@ namespace ProvesSuperMarket
         public void TestComparadorStockPerQuantitat()
         {
             var al = new List<Item>();
-            al.Add(new Item(3, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 30, 10));
-            al.Add(new Item(1, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 10, 10));
-            al.Add(new Item(2, "a", true, 10, Item.Category.BEVERAGE, Item.Packaging.Unit, 20, 10));
+            al.Add(new Item(3, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 30, 10));
+            al.Add(new Item(1, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 10, 10));
+            al.Add(new Item(2, "a", true, 10, Category.BERVERAGE, Packaging.Unit, 20, 10));
             al.Sort();
 
             Assert.AreEqual(al[0].Stock, 10);
@@ -55,11 +53,11 @@ namespace ProvesSuperMarket
             var dataJoin = new System.DateTime(2001, 01, 01);
             var diff = System.DateTime.Today - dataJoin;
             Cashier c = new Cashier("1", "A", new System.DateTime(2001, 01, 01));
-            Assert.AreEqual(diff.Days/365, c.YearsOfService, "Els anys de servei no quadren...");
+            Assert.AreEqual(diff.Days / 365, c.YearsOfService, "Els anys de servei no quadren...");
 
             c.AddInvoiceAmount(10);
 
-            Assert.AreEqual(c.GetRating, diff.Days + 10 * 0.1, "Els punts haurien de ser anys + 10*0.1"); 
+            Assert.AreEqual(c.GetRating, diff.Days + 10 * 0.1, "Els punts haurien de ser anys + 10*0.1");
         }
 
         [TestMethod]
@@ -89,7 +87,7 @@ namespace ProvesSuperMarket
             var diff = System.DateTime.Today - new System.DateTime(2015, 2, 1);
             Cashier c = (Cashier)sm.Staff["037276013M"];
             Assert.AreEqual(c.FullName.Trim().ToLower(), "caterina font vitales");
-            Assert.AreEqual(c.YearsOfService, diff.Days /365);
+            Assert.AreEqual(c.YearsOfService, diff.Days / 365);
 
             diff = System.DateTime.Today - new System.DateTime(2021, 11, 1);
             c = (Cashier)sm.Staff["040317067E"];
