@@ -84,5 +84,72 @@ namespace SUPERMARKET
                 contador++;
             }
         }
+        public int RawPointsObtainedAtCheckout(double totalInvoiced)
+        {
+            
+            int PuntObtinguts = (int)(totalInvoiced / 100);
+
+            return PuntObtinguts;
+        }
+
+        public static double ProcessItems(ShoppingCart carro)
+        {
+            double granTotalFacturado = 0;
+
+           
+            foreach (KeyValuePair<Item, double> par in carro.shoppingList)
+            {
+                Item producto = par.Key;
+                double cantidadEnCarrito = par.Value;
+
+                // Decidir la cantidad final del producto comprado
+                double cantidadFinal = cantidadEnCarrito;
+
+                // Obtener el stock actual del producto
+                double stockDisponible = producto.Stock;
+
+                // Si el stock del artículo es menor que la cantidad en el carrito,
+                // ajustar la cantidad al stock actual
+                if (stockDisponible < cantidadEnCarrito)
+                {
+                    cantidadFinal = stockDisponible;
+                }
+
+                // Disminuir el stock del producto
+                Item.UpdateStock(producto, stockDisponible - cantidadFinal);
+
+                // Calcular el precio total del producto y acumularlo al gran total facturado
+                double precioTotalProducto = cantidadFinal * producto.Price;
+                granTotalFacturado += precioTotalProducto;
+            }
+
+            // Retornar el gran total facturado con 2 decimales
+            return Math.Round(granTotalFacturado, 2);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("***********");
+            sb.AppendLine($"INFO CARRITO DE COMPRA CLIENT-> {customer.FullName}");
+
+            foreach (KeyValuePair<Item, double> par in shoppingList)
+            {
+                Item producto = par.Key;
+                double cantidad = par.Value;
+
+                sb.AppendLine($"{producto.Description} -CAT→{producto.GetCategory} -QTY→{cantidad} -UNIT PRICE → {producto.Price} €");
+            }
+
+            sb.AppendLine("****FI CARRITO COMPRA****");
+
+            return sb.ToString();
+        }
+
+
+
+
+
     }
 }

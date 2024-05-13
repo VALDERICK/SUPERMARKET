@@ -1,8 +1,7 @@
-﻿namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Program
     {
-        
         public static void MostrarMenu()
         {
             Console.WriteLine("1- UN CLIENT ENTRA AL SUPER I OMPLE EL SEU CARRO DE LA COMPRA");
@@ -21,9 +20,9 @@
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-
+            
             Supermarket super = new Supermarket("HIPERCAR", "C/Barna 99", "CASHIERS.TXT", "CUSTOMERS.TXT", "GROCERIES.TXT", 2);
-            //
+            
             Dictionary<Customer, ShoppingCart> carrosPassejant = new Dictionary<Customer, ShoppingCart>();
 
             ConsoleKeyInfo tecla;
@@ -69,9 +68,9 @@
 
                         break;
 
-                    case ConsoleKey.D9:
-                        SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
-                        DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
+                    //case ConsoleKey.D9:
+                    //    SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
+                    //    DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
 
                         break;
                     case ConsoleKey.A:
@@ -230,18 +229,6 @@
         {
             Console.Clear();
             Console.WriteLine(header);
-
-            Supermarket supermarket = new Supermarket("Bon preu", "sant pere");
-
-            // Obtener los elementos ordenados por stock
-            SortedSet<Item> sortedItems = supermarket.GetItemByStock();
-
-            // Imprimir los elementos ordenados por stock
-            Console.WriteLine("Elementos ordenados por stock:");
-            foreach (Item item in sortedItems)
-            {
-                Console.WriteLine(item.ToString());
-            }
 
 
             MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
