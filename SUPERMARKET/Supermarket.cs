@@ -103,7 +103,7 @@ namespace SUPERMARKET
            
             while ((line = sr.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
 
                 if (parts.Length >= 2)
                 {
@@ -126,7 +126,7 @@ namespace SUPERMARKET
 
             while ((line = sr.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
 
                 if (parts.Length >= 2)
                 {
@@ -181,43 +181,61 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemByStock()
-        {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+        //public SortedSet<Item> GetItemByStock()
+        //{
+        //    Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+        //    SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
 
-            foreach (KeyValuePair<string, double> product in LoadWarehouse("GROCERIES.TXT"))
-            {
-                Item newItem = new Item(0, product.Key,false, 0, Item.Category.OTHER, Item.Packaging.Unit, product.Value, 0);
-                itemsByStock.Add(newItem);
-            }
+        //    foreach (KeyValuePair<int, SUPERMARKET.Item> product in LoadWarehouse("GROCERIES.TXT"))
+        //    {
+        //        string keyAsString = product.Key.ToString();
 
-            return itemsByStock;
-        }
+        //        string description = $"Producto con código: {keyAsString}";
 
-        public Person GetAbaiableCashier()
-        {
+        //        SUPERMARKET.Item newItem = new SUPERMARKET.Item(product.Key, description, false, 0, SUPERMARKET.Item.Category.OTHER, SUPERMARKET.Item.Packaging.Unit, product.Value, 0);
+        //        itemsByStock.Add(newItem);
+        //    }
+        //    return itemsByStock;
+        //}
 
-        }
-
+       
 
         #region EnableCshiersOrCustomers
         public Person GetAvailableCustomer()
         {
-            foreach (KeyValuePair<string, Person> pair in Customers)
+            Random r = new Random();
+            Person selectedCustomer;
+            int llargada = Customers.Count();
+
+          
+            if (llargada == 0)
             {
-                if (pair.Value is Customer customer && !customer.Active)
-                {
-                    customer.Active = true;
-                    return customer;
-                }
+                throw new Exception("NO HI HA CAP CLIENT DISPONIBLE!!");
             }
 
-            // Si no se encuentra ningún cliente disponible, devuelve null
-            return null;
+            else
+            {
+                List<Person> availableCustomers = new List<Person>();
 
-        
+                foreach (Person customer in availableCustomers)
+                {
+                    if (!customer.Active)
+                    {
+                        availableCustomers.Add(customer);
+                    }
+                }
+
+                List<Person> availableCustomersList = availableCustomers.ToList();
+
+                int randomIndex = r.Next(availableCustomers.Count);
+
+                selectedCustomer = availableCustomersList[randomIndex];
+                selectedCustomer.Active = true;
+
+            }
+
+            return selectedCustomer;
 
         }
         #endregion
