@@ -41,11 +41,11 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
-            Customers=LoadCustomers("CUSTOMERS.TXT");
-            Staff=LoadCashiers("CASHIERS.TXT");
-            Warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers = LoadCustomers("CUSTOMERS.TXT");
+            Staff = LoadCashiers("CASHIERS.TXT");
+            Warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -86,7 +86,7 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); 
+                lines[i] = new CheckOutLine();
             }
         }
 
@@ -97,24 +97,36 @@ namespace SUPERMARKET
         public Dictionary<string, Person> LoadCustomers(string fileName)
         {
             Dictionary<string, Person> aux = new Dictionary<string, Person>();
+            Customer cust;
             StreamReader sr = new StreamReader(fileName);
 
             string line;
-           
-            while ((line = sr.ReadLine()) != null)
-            {
-                string[] parts = line.Split(',');
+            line = sr.ReadLine();
 
-                if (parts.Length >= 2)
+            while (line  != null)
+            {
+                string[] parts = line.Split(';');
+
+                if (parts[0] is not "CASH")
                 {
-                    aux.Add(parts[0], new Customer(parts[0], parts[1],Convert.ToInt32( parts[3])));
-                    
+                    if (parts[2] is not "")
+                    {
+                        cust=new Customer(parts[0], parts[1], Convert.ToInt32(parts[2]));
+                    }
+
+                    else
+                    {
+                        cust = new Customer(parts[0], parts[1], null);
+                    }
+                    aux.Add(parts[0],cust);
+
                 }
+                line = sr.ReadLine();
             }
             sr.Close();
             return aux;
         }
-        
+
 
 
         public Dictionary<string, Person> LoadCashiers(string fileName)
@@ -127,16 +139,20 @@ namespace SUPERMARKET
             while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(';');
+                string[] extracHora = parts[3].Split(" ");
+                string[] dataFinal = extracHora[0].Split("/");
 
-                if (parts.Length >= 2)
-                {
-                    aux.Add(parts[0], new Cashier(parts[0], parts[1], Convert.ToDateTime(parts[3])));
-                }
+                DateTime hire = new DateTime(Convert.ToInt32(dataFinal[2]), Convert.ToInt32(dataFinal[1]), Convert.ToInt32(dataFinal[0]));
+                Cashier cashier = new Cashier(parts[0], parts[1], hire);
+
+                aux.Add(parts[0], cashier);
+
+
             }
             sr.Close();
             return aux;
         }
-        
+
 
 
         public SortedDictionary<int, Item> LoadWarehouse(string fileName)
@@ -146,24 +162,24 @@ namespace SUPERMARKET
             Packaging pack;
             string line;
             line = sr.ReadLine();
-            while ( line != null)
+            while (line != null)
             {
                 string[] parts = line.Split(';');
                 Category category = (Category)Convert.ToInt32(parts[1]);
                 if (parts[2] == "K") pack = Packaging.Kg;
                 else if (parts[2] == "U") pack = Packaging.Unit;
                 else pack = Packaging.Package;
-                    
+
                 if (parts.Length >= 5)
                 {
-                        
-                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0],false, Convert.ToDouble(parts[3]),category,pack ,10,1));
+
+                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0], false, Convert.ToDouble(parts[3]), category, pack, 10, 1));
                 }
-                    
-            }           
+
+            }
             return aux;
         }
-      
+
         #endregion
 
         private Packaging TranslateToPackaging(char packagingChar)
@@ -190,7 +206,7 @@ namespace SUPERMARKET
 
             foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+                Item newItem = new Item(0, product.Key, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
                 itemsByStock.Add(newItem);
             }
 
@@ -210,10 +226,10 @@ namespace SUPERMARKET
                 }
             }
 
-            // Si no se encuentra ningún cliente disponible, devuelve null
+            // Si no se encuentra ningÃºn cliente disponible, devuelve null
             return null;
 
-        
+
 
         }
         #endregion
@@ -221,4 +237,3 @@ namespace SUPERMARKET
     }
 
 }
-
