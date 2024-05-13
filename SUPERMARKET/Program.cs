@@ -1,7 +1,8 @@
-namespace SUPERMARKET
+﻿namespace SUPERMARKET
 {
     internal class Program
     {
+        
         public static void MostrarMenu()
         {
             Console.WriteLine("1- UN CLIENT ENTRA AL SUPER I OMPLE EL SEU CARRO DE LA COMPRA");
@@ -68,9 +69,9 @@ namespace SUPERMARKET
 
                         break;
 
-                    //case ConsoleKey.D9:
-                    //    SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
-                    //    DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
+                    case ConsoleKey.D9:
+                        SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
+                        DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
 
                         break;
                     case ConsoleKey.A:
@@ -117,7 +118,7 @@ namespace SUPERMARKET
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder seleccionar un article del magatzem</param>
-        public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, SuperMarket super)
         {
             Console.Clear();
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
@@ -135,7 +136,7 @@ namespace SUPERMARKET
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder encuar un carro a una linia de caixa</param>
-        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, SuperMarket super)
         {
             Console.Clear();
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
