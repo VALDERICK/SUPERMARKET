@@ -139,17 +139,14 @@ namespace SUPERMARKET
             while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(';');
+                string[] extracHora = parts[3].Split(" ");
+                string[] dataFinal = extracHora[0].Split("/");
 
-                if (parts.Length >= 4)
-                {
-                    string[] extracHora = parts[3].Split(" ");
-                    string[] dataFinal = extracHora[0].Split("/");
+                DateTime hire = new DateTime(Convert.ToInt32(dataFinal[2]), Convert.ToInt32(dataFinal[1]), Convert.ToInt32(dataFinal[0]));
+                Cashier cashier = new Cashier(parts[0], parts[1], hire);
 
-                    if (dataFinal.Length >= 4)
-                    {
-                        aux.Add(parts[0], new Cashier(parts[0], parts[1], Convert.ToDateTime(dataFinal[3])));
-                    }
-                }
+                aux.Add(parts[0], cashier);
+
             }
             sr.Close();
             return aux;
