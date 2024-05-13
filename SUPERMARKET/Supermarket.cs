@@ -157,6 +157,7 @@ namespace SUPERMARKET
 
         public SortedDictionary<int, Item> LoadWarehouse(string fileName)
         {
+            
             SortedDictionary<int, Item> aux = new SortedDictionary<int, Item>();
             StreamReader sr = new StreamReader(fileName);
             Packaging pack;
@@ -169,14 +170,18 @@ namespace SUPERMARKET
                 if (parts[2] == "K") pack = Packaging.Kg;
                 else if (parts[2] == "U") pack = Packaging.Unit;
                 else pack = Packaging.Package;
+                
 
                 if (parts.Length >= 5)
                 {
 
-                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0], false, Convert.ToDouble(parts[3]), category, pack, 10, 1));
+                    aux.Add(Convert.ToInt32(parts[1]), new Item(Convert.ToInt32(parts[1]), parts[0], true, Convert.ToDouble(parts[3]), category, pack, 10, 1));
                 }
-
+                line = sr.ReadLine();
             }
+            Console.WriteLine("probant");
+
+
             return aux;
         }
 
@@ -198,20 +203,20 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemByStock()
-        {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+        //public SortedSet<Item> GetItemByStock()
+        //{
+        //    Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+        //    SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
 
-            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
-            {
-                Item newItem = new Item(0, product.Key, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
-                itemsByStock.Add(newItem);
-            }
+        //    foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
+        //    {
+        //        Item newItem = new Item(0, product.Key, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+        //        itemsByStock.Add(newItem);
+        //    }
 
-            return itemsByStock;
-        }
+        //    return itemsByStock;
+        //}
 
 
         #region EnableCshiersOrCustomers

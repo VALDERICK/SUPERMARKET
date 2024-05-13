@@ -20,9 +20,9 @@ namespace SUPERMARKET
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-
+            
             Supermarket super = new Supermarket("HIPERCAR", "C/Barna 99", "CASHIERS.TXT", "CUSTOMERS.TXT", "GROCERIES.TXT", 2);
-            //
+            
             Dictionary<Customer, ShoppingCart> carrosPassejant = new Dictionary<Customer, ShoppingCart>();
 
             ConsoleKeyInfo tecla;
