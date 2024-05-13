@@ -48,6 +48,8 @@
             supermarket.LoadCashiers("CASHIERS.TXT");
             supermarket.LoadWarehouse("GROCERIES.TXT");
 
+            Console.WriteLine("hola");
+
             Console.WriteLine($"Nom: {supermarket.Name}");
             Console.WriteLine($"Adreça: {supermarket.Address}");
             Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
@@ -60,7 +62,7 @@
             //TEST ORDENACIO
             Console.WriteLine("--------------------------------ITEMS ORDENATS------------------------------");
 
-            /*SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
+            SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
             itemsByStock.Add(new Item(1, "Peix",true, 10.50, Category.FROZEN, Packaging.Unit, 20, 5));
             itemsByStock.Add(new Item(2, "Platano",false,8.75, Category.FRUITS, Packaging.Unit, 15, 3));
             itemsByStock.Add(new Item(3, "Pan",true, 5.25, Category.BREAD, Packaging.Unit, 25, 10));
@@ -70,7 +72,7 @@
             foreach (Item item in itemsByStock)
             {
                Console.WriteLine(item.ToString());
-            }*/
+            }
 
 
 

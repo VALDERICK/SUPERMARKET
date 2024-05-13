@@ -126,7 +126,7 @@ namespace SUPERMARKET
 
             while ((line = sr.ReadLine()) != null)
             {
-                string[] parts = line.Split(',');
+                string[] parts = line.Split(';');
 
                 if (parts.Length >= 2)
                 {
@@ -182,7 +182,7 @@ namespace SUPERMARKET
 
         }
 
-        /*public SortedSet<Item> GetItemByStock()
+        public SortedSet<Item> GetItemByStock()
         {
             Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
@@ -195,7 +195,7 @@ namespace SUPERMARKET
             }
 
             return itemsByStock;
-        }*/
+        }
 
 
         #region EnableCshiersOrCustomers

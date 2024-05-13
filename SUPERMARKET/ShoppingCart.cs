@@ -81,5 +81,17 @@ namespace SUPERMARKET
                 contador++;
             }
         }
+        public static double ProcessItems(ShoppingCart cart)
+        {
+            double totalInvoiced = 0;         
+            foreach (KeyValuePair<Item, double> kvp in cart.ShoppingList)
+            {
+                totalInvoiced += kvp.Key.Price * kvp.Value; 
+            }           
+            double points = Math.Truncate(totalInvoiced * 0.01);
+
+            return points;
+        }
+
     }
 }
