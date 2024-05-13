@@ -47,11 +47,10 @@ namespace SUPERMARKET
         public override double GetRating
         {
             get {
-
                 DateTime ahora = DateTime.Now;
                 TimeSpan antiguedad = ahora - _joiningDate;
 
-                int años = Convert.ToInt32(antiguedad);
+                int años = (int)(antiguedad.TotalDays);
 
                 double rating = años + 0.1 * _points;
 

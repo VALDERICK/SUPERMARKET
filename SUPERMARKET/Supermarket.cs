@@ -97,25 +97,31 @@ namespace SUPERMARKET
         public Dictionary<string, Person> LoadCustomers(string fileName)
         {
             Dictionary<string, Person> aux = new Dictionary<string, Person>();
+            Customer cust;
             StreamReader sr = new StreamReader(fileName);
 
             string line;
+            line = sr.ReadLine();
 
-            while ((line = sr.ReadLine()) != null)
+            while (line  != null)
             {
                 string[] parts = line.Split(';');
 
-                // Ensure parts has at least 4 elements before accessing parts[3]
-                if (parts.Length >= 4)
+                if (parts[0] is not "CASH")
                 {
-                    aux.Add(parts[0], new Customer(parts[0], parts[1], Convert.ToInt32(parts[3])));
+                    if (parts[2] is not "")
+                    {
+                        cust=new Customer(parts[0], parts[1], Convert.ToInt32(parts[2]));
+                    }
+
+                    else
+                    {
+                        cust = new Customer(parts[0], parts[1], null);
+                    }
+                    aux.Add(parts[0],cust);
+
                 }
-                else
-                {
-                    // Log or handle lines with insufficient parts
-                    // For example:
-                    Console.WriteLine("Line '{0}' does not have enough parts.", line);
-                }
+                line = sr.ReadLine();
             }
             sr.Close();
             return aux;
@@ -133,10 +139,12 @@ namespace SUPERMARKET
             while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(';');
+                string[] extracHora = parts[3].Split(" ");
+                string[] dataFinal = extracHora[0].Split("/");
 
                 if (parts.Length >= 2)
                 {
-                    aux.Add(parts[0], new Cashier(parts[0], parts[1], Convert.ToDateTime(parts[3])));
+                    aux.Add(parts[0], new Cashier(parts[0], parts[1], Convert.ToDateTime(dataFinal[3])));
                 }
             }
             sr.Close();
