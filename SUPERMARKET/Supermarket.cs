@@ -197,7 +197,7 @@ namespace SUPERMARKET
 
         }
 
-        /*public SortedSet<Item> GetItemByStock()
+        public SortedSet<Item> GetItemByStock()
         {
             Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
@@ -205,12 +205,12 @@ namespace SUPERMARKET
 
             foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+                Item newItem = new Item(0, product.Key, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
                 itemsByStock.Add(newItem);
             }
 
             return itemsByStock;
-        }*/
+        }
 
 
         #region EnableCshiersOrCustomers
