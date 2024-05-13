@@ -7,17 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using static SUPERMARKET.Item;
 
-namespace SUPERMARKET
-{
-    internal class Item : IComparable<Item>
+    public enum Category
+    { BERVERAGE = 1, FRUITS, VEGETABLES, BREAD, MILK_AND_DERIVATES, GARDEN, MEAT, SWEETS, SAUCES, FROZEN, CLEANING, FISH, OTHER };
+
+    public enum Packaging
+    { Unit, Kg, Package };
+    namespace SUPERMARKET
+    {
+
+    public class Item : IComparable<Item>
     {
 
         #region ENUMS
-        public enum Category
-        { BERVERAGE = 1, FRUITS, VEGETABLES, BREAD, MILK_AND_DERIVATES, GARDEN, MEAT, SWEETS, SAUCES, FROZEN, CLEANING, FISH, OTHER };
-
-        public enum Packaging
-        { Unit, Kg, Package };
+       
         #endregion
 
         #region ATRIBUTS
@@ -32,20 +34,9 @@ namespace SUPERMARKET
         int minStock;
         #endregion
 
-
         #region CONSTRUCTORS
-        public Item(int _code, string _description, double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
+        public Item(int _code, string _description,bool _onSale,  double _price, Category _category, Packaging _packaging, double _stock, int _minStock)
         {
-
-            if (_stock <= 0)
-            {
-                stock = 50 ; 
-            }
-            else
-            {
-                stock = _stock;
-            }
-
             code = _code;
             description = _description;
             price = _price;
@@ -53,11 +44,27 @@ namespace SUPERMARKET
             packaging = _packaging;
             stock = _stock;
             minStock = _minStock;
-            onSale = true;
+            onSale = _onSale;
+             
 
 
+            if (_stock <= 0)
+            {
+                stock += 250;
+            }
+            else
+            {
+                stock = _stock;
+            }
+            if (_minStock <= 0)
+            {
+                minStock += 1;
+            }
+            else
+            {
+                minStock = _minStock;
+            }
         }
-        
         #endregion
 
         #region GETTERS
@@ -154,6 +161,7 @@ namespace SUPERMARKET
             if (onSale)
             {
                 double discountedPrice = price * 0.10;
+                
                 sb.Append($"Y (Descuento: {discountedPrice}€)");
             }
             else
@@ -165,15 +173,30 @@ namespace SUPERMARKET
 
         }
         #endregion
-
         public int CompareTo(Item? other)
         {
+            int resultat;
             if (other != null)
             {
-                return this.GetHashCode().CompareTo(other.GetHashCode());
+                resultat= this.GetHashCode().CompareTo(other.GetHashCode());
+            }
+            resultat = 1;
+            return resultat;
+        }
+        public override bool Equals(object obj)
+        {
+            bool resultado = false;
+
+            if (obj != null && GetType() == obj.GetType())
+            {
+                Item otherItem = (Item)obj;
+
+                resultado = this.code == otherItem.code &&
+                            this.category == otherItem.category &&
+                            this.description == otherItem.description;
             }
 
-            return 1;
+            return resultado;
         }
     }
 }
