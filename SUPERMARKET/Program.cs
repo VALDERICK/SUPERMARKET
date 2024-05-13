@@ -1,4 +1,4 @@
-﻿namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Program
     {
