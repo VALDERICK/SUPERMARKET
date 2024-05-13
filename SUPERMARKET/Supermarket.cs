@@ -181,25 +181,19 @@ namespace SUPERMARKET
 
         }
 
-        //public SortedSet<Item> GetItemByStock()
-        //{
-        //    Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+        public SortedSet<Item> GetItemByStock()
+        {
+            SortedSet<Item> itemsByStock = new SortedSet<Item>();
 
-        //    SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+            foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            {
 
-        //    foreach (KeyValuePair<int, SUPERMARKET.Item> product in LoadWarehouse("GROCERIES.TXT"))
-        //    {
-        //        string keyAsString = product.Key.ToString();
+                itemsByStock.Add(product);
+            }
+            return itemsByStock;
+        }
 
-        //        string description = $"Producto con código: {keyAsString}";
 
-        //        SUPERMARKET.Item newItem = new SUPERMARKET.Item(product.Key, description, false, 0, SUPERMARKET.Item.Category.OTHER, SUPERMARKET.Item.Packaging.Unit, product.Value, 0);
-        //        itemsByStock.Add(newItem);
-        //    }
-        //    return itemsByStock;
-        //}
-
-       
 
         #region EnableCshiersOrCustomers
         public Person GetAvailableCustomer()
