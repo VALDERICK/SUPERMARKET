@@ -52,7 +52,7 @@ namespace SUPERMARKET
 
                 int años = (int)(antiguedad.TotalDays);
 
-                double rating = años + 0.1 * _points;
+                double rating = años + 10 *0.1;
 
                 return rating;
             }
