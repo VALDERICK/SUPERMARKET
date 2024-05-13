@@ -231,6 +231,18 @@
             Console.Clear();
             Console.WriteLine(header);
 
+            Supermarket supermarket = new Supermarket("Bon preu", "sant pere");
+
+            // Obtener los elementos ordenados por stock
+            SortedSet<Item> sortedItems = supermarket.GetItemByStock();
+
+            // Imprimir los elementos ordenados por stock
+            Console.WriteLine("Elementos ordenados por stock:");
+            foreach (Item item in sortedItems)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
 
             MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
         }

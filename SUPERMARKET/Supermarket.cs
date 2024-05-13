@@ -183,13 +183,16 @@ namespace SUPERMARKET
 
         public SortedSet<Item> GetItemByStock()
         {
-            SortedSet<Item> itemsByStock = new SortedSet<Item>();
+            SortedSet<Item> itemsByStock = new SortedSet<Item>(Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock)));
 
             foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
+                
+                Item newItem = new Item(0, product.Value.Description, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
 
-                itemsByStock.Add(product);
+                itemsByStock.Add(newItem);
             }
+
             return itemsByStock;
         }
 
