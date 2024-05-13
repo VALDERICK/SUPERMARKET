@@ -118,7 +118,7 @@
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder seleccionar un article del magatzem</param>
-        public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, SuperMarket super)
+        public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
             Console.Clear();
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
@@ -136,7 +136,7 @@
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder encuar un carro a una linia de caixa</param>
-        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, SuperMarket super)
+        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
             Console.Clear();
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
