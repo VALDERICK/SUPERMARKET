@@ -216,6 +216,7 @@ public SortedDictionary<int, Item> LoadWarehouse(string fileName)
 
                 itemsByStock.Add(newItem);
             }
+            return itemsByStock;
         }
 
 

@@ -68,9 +68,9 @@ namespace SUPERMARKET
 
                         break;
 
-                    //case ConsoleKey.D9:
-                    //    SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
-                    //    DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
+                    case ConsoleKey.D9:
+                        SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
+                        DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
 
                         break;
                     case ConsoleKey.A:
@@ -101,7 +101,29 @@ namespace SUPERMARKET
         /// <param name="super">necessari per poder seleccionar un client inactiu</param>
         public static void DoNewShoppingCart(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
+           
             Console.Clear();
+
+            Customer inactiveCustomer = super.Active();
+
+            if (inactiveCustomer != null)
+            {
+               
+                ShoppingCart newCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+
+                newCart.AddAllRandomly(super.LoadWarehouse("GROCERIES.TXT"));
+
+                carros.Add(inactiveCustomer, newCart);
+
+                Console.WriteLine("Nuevo carro de la compra creado y agregado con éxito.");
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra.");
+            }
+
+            Console.WriteLine("Presiona una tecla para volver al menú principal...");
+            Console.ReadKey();
 
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
         }
