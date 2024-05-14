@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SUPERMARKET
 {
-    internal class ShoppingCart
+    public class ShoppingCart
     {
         // ATRIBUTOS
 
