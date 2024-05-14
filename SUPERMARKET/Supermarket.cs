@@ -27,7 +27,7 @@ namespace SUPERMARKET
         public class CheckOutLine
         {
             private int number;
-            //private Queue<ShoppingCart> queue;
+            private Queue<ShoppingCart> queue;
             private Person cashier;
             private bool active;
         }
@@ -203,20 +203,29 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemByStock()
+        public SortedSet<Item> GetItemsByStock()
         {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+            // Comparador personalizado para ordenar por stock
+            IComparer<Item> stockComparer = Comparer<Item>.Create(new Comparison<Item>(CompareItemsByStock));
 
+            // Conjunto ordenado de elementos por stock
             SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
 
-            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            // Agregar todos los elementos del almacén al conjunto
+            foreach (KeyValuePair<int, Item> product in Warehouse)
             {
-                Item newItem = new Item(0, product.Key, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
-                itemsByStock.Add(newItem);
+                itemsByStock.Add(product.Value);
             }
 
             return itemsByStock;
         }
+
+        // Método de comparación para ordenar los elementos por stock
+        private int CompareItemsByStock(Item item1, Item item2)
+        {
+            return item1.Stock.CompareTo(item2.Stock);
+        }
+
 
 
         #region EnableCshiersOrCustomers
@@ -233,10 +242,9 @@ namespace SUPERMARKET
 
             // Si no se encuentra ningún cliente disponible, devuelve null
             return null;
-
-
-
         }
+
+
         #endregion
 
     }
