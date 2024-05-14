@@ -145,6 +145,38 @@ namespace SUPERMARKET
         public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
             Console.Clear();
+            Random random = new Random();
+
+            Person inactivePerson = super.GetAvailableCustomer();
+
+            if (inactivePerson is Customer)
+            {
+                Customer inactiveCustomer = (Customer)inactivePerson;
+
+                int randomIndex = random.Next(carros.Count);
+
+                ShoppingCart randomCart = carros.AddOneItem(randomIndex);
+
+                // Seleccionar un artículo del supermercado al azar
+                int randomItemId = random.Next(1, super.Warehouse.Count + 1);
+                Item randomWarehouseItem = super.Warehouse[randomItemId];
+
+                // Agregar el artículo seleccionado al carro de la compra
+                double quantity = random.Next(1, 6);
+                randomCart.AddOne(randomWarehouseItem, quantity);
+
+                // Mostrar el carro de la compra antes y después de agregar el artículo
+                Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
+                // Mostrar carro después de agregar el artículo
+                Console.WriteLine($"Carro de la compra seleccionado después de agregar el artículo:\n{randomCart.ToString()}\n");
+
+                Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
+            }
+
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
 
         }
