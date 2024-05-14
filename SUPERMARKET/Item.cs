@@ -26,7 +26,7 @@ using static SUPERMARKET.Item;
         char currency = '\u20AC';
         int code;
         string description;
-        bool onSale=true;
+        bool onSale;
         double price;
         Category category;
         Packaging packaging;
@@ -50,7 +50,8 @@ using static SUPERMARKET.Item;
 
             if (_stock <= 0)
             {
-                stock += 250;
+                Random r = new Random();
+                stock += r.Next(0,10000);
             }
             else
             {
@@ -68,6 +69,15 @@ using static SUPERMARKET.Item;
         #endregion
 
         #region GETTERS
+
+        public double Code
+        {
+            get
+            {
+                return code;
+            }
+        }
+
         public double Stock
         {
             get
@@ -112,6 +122,12 @@ using static SUPERMARKET.Item;
         {
             get
             {
+                if (stock > stock / 2)
+                {
+                    onSale = true;
+                }
+                else onSale = false;
+
                 return onSale;
             }
         }
@@ -148,6 +164,8 @@ using static SUPERMARKET.Item;
                 return precioFinal;
             }
         }
+
+        
         #endregion
 
         #region ToString
@@ -182,6 +200,8 @@ using static SUPERMARKET.Item;
             }
 
             resultat= this.stock.CompareTo(other.Stock);
+            if (resultat == 0)
+                resultat = code.CompareTo(other.code);
             return resultat;
         }
         public override bool Equals(object obj)

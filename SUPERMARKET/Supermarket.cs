@@ -153,7 +153,6 @@ namespace SUPERMARKET
 
                 aux.Add(parts[0], cashier);
 
-
             }
             sr.Close();
             return aux;
@@ -163,24 +162,29 @@ namespace SUPERMARKET
 
         public SortedDictionary<int, Item> LoadWarehouse(string fileName)
         {
-            SortedDictionary<int, Item> aux = new SortedDictionary<int, Item>();
-            StreamReader sr = new StreamReader(fileName);
-            string line = sr.ReadLine();
+            SortedDictionary<int, Item> warehouse = new SortedDictionary<int, Item>();
 
-            while (line != null)
+            StreamReader sr = new StreamReader(fileName);
+
+            string line;
+            while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(';');
+
+                int id = warehouse.Count + 1;
+                string description = parts[0];
                 Category category = (Category)Convert.ToInt32(parts[1]);
-                Packaging pack = TranslateToPackaging(Convert.ToChar(parts[2]));
+                Packaging packaging = TranslateToPackaging(Convert.ToChar(parts[2]));
+                double price = Convert.ToDouble(parts[3].Replace(',', '.'));
 
-                double price = Convert.ToDouble(parts[3].Replace(',', '.')); // Reemplaza la coma por un punto en el precio
+                Item newItem = new Item(id, description, true, price, category, packaging, 0, 1);
 
-                aux.Add(aux.Count + 1, new Item(aux.Count + 1, parts[0], true, price, category, pack, 10, 1));
-
-                line = sr.ReadLine(); // Lee la siguiente línea del archivo
+                warehouse.Add(id, newItem);
             }
+
             sr.Close();
-            return aux;
+
+            return warehouse;
         }
 
 
@@ -204,15 +208,18 @@ namespace SUPERMARKET
 
         public SortedSet<Item> GetItemByStock()
         {
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock)));
+            SortedSet<Item> itemsByStock = new SortedSet<Item>();
 
-            foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            if (Warehouse == null)
             {
-
-                Item newItem = new Item(0, product.Value.Description, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
-
-                itemsByStock.Add(newItem);
+                throw new InvalidOperationException("DICCIONARI BUIT");
             }
+
+            foreach (KeyValuePair<int, Item> product in Warehouse)
+            {
+                itemsByStock.Add(product.Value);
+            }
+
             return itemsByStock;
         }
 

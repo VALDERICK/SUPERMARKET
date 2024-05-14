@@ -1,3 +1,5 @@
+using System;
+
 namespace SUPERMARKET
 {
     internal class Program
@@ -40,8 +42,8 @@ namespace SUPERMARKET
                         DoAfegirUnArticleAlCarro(carrosPassejant, super);
 
                         break;
-                    case ConsoleKey.D3:
-                        DoCheckIn(carrosPassejant, super);
+                    //case ConsoleKey.D3:
+                    //    DoCheckIn(carrosPassejant, super);
 
                         break;
                     case ConsoleKey.D4:
@@ -146,31 +148,38 @@ namespace SUPERMARKET
         {
             Console.Clear();
             Random random = new Random();
+            Person activePerson = super.GetAvailableCustomer();
 
-            // Obtener una persona inactiva de la lista de carros
-            Person inactivePerson = super.GetAvailableCustomer();
-
-            if (inactivePerson is Customer)
+            if (activePerson is Customer)
             {
-                Customer inactiveCustomer = (Customer)inactivePerson;
-                ShoppingCart randomCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+                Customer activeCustomer = (Customer)activePerson;
 
-                int randomIndex = random.Next(carros.Count);
+                if (carros.Count > 0)
+                {
+                    var randomCartEntry = carros.ElementAt(random.Next(carros.Count));
+                    ShoppingCart randomCart = randomCartEntry.Value;
 
-                // Seleccionar un artículo del supermercado al azar
-                int randomItemId = random.Next(1, super.Warehouse.Count + 1);
-                Item randomWarehouseItem = super.Warehouse[randomItemId];
+                    Console.WriteLine($"CARRO ORIGINAL:\n{randomCart}");
 
-                // Agregar el artículo seleccionado al carro de la compra
-                double quantity = random.Next(1, 6);
-                randomCart.AddOne(randomWarehouseItem, quantity);
+                    if (super.Warehouse.Count > 0)
+                    {
+                        int randomItemId = random.Next(0, super.Warehouse.Count);
+                        Item randomWarehouseItem = super.Warehouse[randomItemId];
 
-                // Mostrar el carro de la compra antes de agregar el artículo
-                Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
+                        double quantity = random.Next(1, 6);
+                        randomCart.AddOne(randomWarehouseItem, quantity);
 
-                // Mostrar el carro de la compra después de agregar el artículo
-                Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
-
+                        Console.WriteLine($"CARRO MODIFICADO:\n{randomCart}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("El almacén está vacío. No se pueden agregar artículos al carro.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No hay carros de compra disponibles para agregar un artículo.");
+                }
             }
             else
             {
@@ -178,8 +187,8 @@ namespace SUPERMARKET
             }
 
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-
         }
+
         // OPCIO 3 : Un dels carros que van pululant pel super  s'encua a una cua activa
         // La selecció del carro i de la cua és aleatòria
         /// <summary>
@@ -192,11 +201,62 @@ namespace SUPERMARKET
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder encuar un carro a una linia de caixa</param>
-        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
-        {
-            Console.Clear();
-            MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-        }
+        //public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        //{
+        //    //Console.Clear();
+            //Random random = new Random();
+            //Person activePerson = super.GetAvailableCustomer();
+            //super.InitializeCheckOutLines();
+
+            //if (super.ActiveLines <= 0)
+            //{
+            //    Console.WriteLine("NO  HI HA CAP CUA DE PAGAMENT ACTIVA");
+            //}
+            //else if (carros.Count <= 0)
+            //{
+            //    Console.WriteLine("NO  HI HA CAP CLIENT ACTIU");
+            //}
+            //else
+            //{
+                // Obtenim una línia de caixa disponible del supermercat
+                //CheckOutLine availableLine = super.GetAvailableCheckoutLine();
+
+                //// Si no hi ha cap línia de caixa disponible, mostrem un missatge
+                ////if (availableLine == null)
+                //{
+                //    Console.WriteLine("NO HI HA CAP CAIXA DE PAGAMENT DISPONIBLE");
+                //    MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
+                //    return;
+                //}
+
+                //// Seleccionem un carro aleatori de la llista de carros que passegen
+                //List<Customer> activeCustomers = new List<Customer>(carros.Keys);
+                //Customer randomCustomer = activeCustomers[random.Next(activeCustomers.Count)];
+                //ShoppingCart randomCart = carros[randomCustomer];
+
+                //// Encuem el carro a la línia de caixa disponible
+                ////bool checkedIn = availableLine.CheckIn(randomCart);
+
+                ////if (checkedIn)
+                //{
+                //    // Eliminem el carro seleccionat de la llista de carros que passegen
+                //    carros.Remove(randomCustomer);
+
+                //    // Mostrem un missatge d'èxit
+                //    //Console.WriteLine($"El carro del client {randomCustomer.Name} s'ha encuat a la línia de caixa {availableLine.Number}.");
+
+                //    // Mostrem la informació actualitzada de la línia de caixa
+                //    //Console.WriteLine(availableLine);
+                //}
+                //else
+                //{
+                //    // Si no es pot fer el check-in, mostrem un missatge d'error
+                //    Console.WriteLine("No es pot fer el check-in en aquest moment.");
+                //}
+
+                //MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
+        //    }
+        //}
 
         // OPCIO 4 - CHECK OUT D'UNA CUA TRIADA PER L'USUARI
         /// <summary>
@@ -287,6 +347,10 @@ namespace SUPERMARKET
             Console.Clear();
             Console.WriteLine(header);
 
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.ToString());
+            }
 
             MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
         }
