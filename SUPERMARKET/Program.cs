@@ -101,29 +101,32 @@ namespace SUPERMARKET
         /// <param name="super">necessari per poder seleccionar un client inactiu</param>
         public static void DoNewShoppingCart(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
-           
             Console.Clear();
 
-            Customer inactiveCustomer = super.Active();
+            Person inactivePerson = super.GetAvailableCustomer();
 
-            if (inactiveCustomer != null)
+            if (inactivePerson != null && inactivePerson is Customer)
             {
-               
+
+                Customer inactiveCustomer = (Customer)inactivePerson;
+
                 ShoppingCart newCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
 
-                newCart.AddAllRandomly(super.LoadWarehouse("GROCERIES.TXT"));
+                super.LoadWarehouse("GROCERIES.TXT");
+
+                newCart.AddAllRandomly(super.Warehouse);
 
                 carros.Add(inactiveCustomer, newCart);
 
-                Console.WriteLine("Nuevo carro de la compra creado y agregado con éxito.");
+                Console.WriteLine(newCart.ToString());
+
+                Console.WriteLine("Se ha creado un nuevo carro de la compra y se ha asignado al cliente inactivo.");
             }
             else
             {
-                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra.");
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
             }
 
-            Console.WriteLine("Presiona una tecla para volver al menú principal...");
-            Console.ReadKey();
 
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
         }
