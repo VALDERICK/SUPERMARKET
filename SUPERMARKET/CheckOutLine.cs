@@ -9,10 +9,10 @@ namespace SUPERMARKET
     public class CheckOutLine
     {
         //ATRIBUTS
-        private int number;
-        private Queue<ShoppingCart> queue;
-        private Person cashier;
-        private bool active;
+        public int number;
+        public Queue<ShoppingCart> queue;
+        public Person cashier;
+        public bool active;
 
         //CONSTRUCTOR
         public CheckOutLine(Person cashier, int number)
