@@ -38,7 +38,7 @@ namespace SUPERMARKET
 
                 return años;
 
-              }
+            }
 
         }
         #endregion
@@ -46,16 +46,13 @@ namespace SUPERMARKET
         #region PROPERTY
         public override double GetRating
         {
-            get { 
-                int antigitat = YearsOfService;
+            get {
+                DateTime ahora = DateTime.Now;
+                TimeSpan antiguedad = ahora - _joiningDate;
 
-            
-                double totalFacturado = _totalInvoiced; 
+                int años = (int)(antiguedad.TotalDays);
 
-
-                double total10 = 0.1 * totalFacturado;
-
-                double rating = antigitat * 365 + total10;
+                double rating = años + 10 *0.1;
 
                 return rating;
             }

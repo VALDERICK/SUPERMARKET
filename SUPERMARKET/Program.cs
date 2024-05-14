@@ -1,79 +1,134 @@
-﻿namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Program
     {
+        public static void MostrarMenu()
+        {
+            Console.WriteLine("1- UN CLIENT ENTRA AL SUPER I OMPLE EL SEU CARRO DE LA COMPRA");
+            Console.WriteLine("2- AFEGIR UN ARTICLE A UN CARRO DE LA COMPRA");
+            Console.WriteLine("3- UN CARRO PASSA A CUA DE CAIXA (CHECKIN)");
+            Console.WriteLine("4- CHECKOUT DE CUA TRIADA PER L'USUARI");
+            Console.WriteLine("5- OBRIR SEGÜENT CUA DISPONIBLE");
+            Console.WriteLine("6- INFO CUES");
+            Console.WriteLine("7- CLIENTS VOLTANT PEL SUPERMERCAT");
+            Console.WriteLine("8- LLISTAR CLIENTS PER RATING (DESCENDENT)");
+            Console.WriteLine("9- LLISTAR ARTICLES PER STOCK (DE  - A  +)");
+            Console.WriteLine("A- CLOSE QUEUE");
+            Console.WriteLine("0- EXIT");
+        }
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            //TEST ITEM
 
-            Console.WriteLine("--------------------------------ITEMS------------------------------");
-            Item item1 = new Item(1, "Manzana",true, 1.50, Category.FRUITS, Packaging.Unit, 50, 10);
-            Item item2 = new Item(2, "Entrecot",false, 7.75, Category.MEAT, Packaging.Kg, 10, 20);
+            
+            Supermarket super = new Supermarket("HIPERCAR", "C/Barna 99", "CASHIERS.TXT", "CUSTOMERS.TXT", "GROCERIES.TXT", 2);
+            
+            Dictionary<Customer, ShoppingCart> carrosPassejant = new Dictionary<Customer, ShoppingCart>();
 
-            //TEST PERSON 
-            Console.WriteLine("--------------------------------PERSONS------------------------------");
-            Person cashier1 = new Cashier("91827364A", "Ferran Chic", new DateTime(2015, 4, 13));
-            Console.WriteLine(cashier1);
-
-            Person customer1 = new Customer("98765432B", "Victor Granados", 73692827);
-            Console.WriteLine(customer1);
-
-            //TEST CASHIER
-            Console.WriteLine("--------------------------------CASHIERS------------------------------");
-            Cashier cashier2 = new Cashier("12345678A", "Artur Juve", new DateTime(2014, 03, 24));
-            Console.WriteLine(cashier2);
-
-            cashier2.AddPoints(150);
-            Console.WriteLine($"+points: {cashier2}");
-
-            //TEST CUSTOMER 
-            Console.WriteLine("--------------------------------CUSTOMERS------------------------------");
-            Customer customer2 = new Customer("98765432B", "Yaryna Blanco", 9872432);
-            Console.WriteLine(customer2);
-
-            customer2.AddPoints(50);
-            Console.WriteLine($"+points: {customer2}");
-
-            customer2.AddInvoiceAmount(100.50);
-            Console.WriteLine($"+invoice: {customer2}");
-
-            //TEST SUPERMARKET 
-            Console.WriteLine("--------------------------------SUPERMARKET------------------------------");
-
-
-            Supermarket supermarket = new Supermarket("BonPreu", "Calle Montilivi");
-
-            supermarket.LoadCustomers("CUSTOMERS.TXT");
-            supermarket.LoadCashiers("CASHIERS.TXT");
-            supermarket.LoadWarehouse("GROCERIES.TXT");
-
-            Console.WriteLine($"Nom: {supermarket.Name}");
-            Console.WriteLine($"Adreça: {supermarket.Address}");
-            Console.WriteLine($"Numero de linies obertes: {supermarket.ActiveLines}");
-
-            supermarket.ActiveLines = 3;
-            Console.WriteLine($"(+linies)Numero de linies obertes: {supermarket.ActiveLines}");
-
-
-
-            //TEST ORDENACIO
-            Console.WriteLine("--------------------------------ITEMS ORDENATS------------------------------");
-
-            /*SortedSet<Item> itemsByStock = supermarket.GetItemByStock();
-            itemsByStock.Add(new Item(1, "Peix",true, 10.50, Category.FROZEN, Packaging.Unit, 20, 5));
-            itemsByStock.Add(new Item(2, "Platano",false,8.75, Category.FRUITS, Packaging.Unit, 15, 3));
-            itemsByStock.Add(new Item(3, "Pan",true, 5.25, Category.BREAD, Packaging.Unit, 25, 10));
-            itemsByStock.Add(new Item(4, "Pepino",false, 12.30, Category.VEGETABLES, Packaging.Unit, 18, 6));
-         
-            Console.WriteLine("Elementos ordenados por stock:");
-            foreach (Item item in itemsByStock)
+            ConsoleKeyInfo tecla;
+            do
             {
-               Console.WriteLine(item.ToString());
-            }*/
+                Console.Clear();
+                MostrarMenu();
+                tecla = Console.ReadKey();
+                switch (tecla.Key)
+                {
+                    case ConsoleKey.D1:
+                        DoNewShoppingCart(carrosPassejant, super);
+                        break;
+                    case ConsoleKey.D2:
+                        DoAfegirUnArticleAlCarro(carrosPassejant, super);
+
+                        break;
+                    case ConsoleKey.D3:
+                        DoCheckIn(carrosPassejant, super);
+
+                        break;
+                    case ConsoleKey.D4:
+                        if (DoCheckOut(super)) Console.WriteLine("BYE BYE. HOPE 2 SEE YOU AGAIN!");
+                        else Console.WriteLine("NO S'HA POGUT TANCAR CAP COMPRA");
+
+                        break;
+                    case ConsoleKey.D5:
+                        DoOpenCua(super);
+
+                        break;
+                    case ConsoleKey.D6:
+                        DoInfoCues(super);
+
+                        break;
+
+                    case ConsoleKey.D7:
+                        DoClientsComprant(carrosPassejant);
 
 
+                        break;
+                    case ConsoleKey.D8:
+                        DoListCustomers(super);
 
+                        break;
+
+                    case ConsoleKey.D9:
+                        SortedSet<Item> articlesOrdenatsPerEstoc = super.GetItemByStock();
+                        DoListArticlesByStock("LLISTAT D'ARTICLES - DATA " + DateTime.Now, articlesOrdenatsPerEstoc);
+
+                        break;
+                    case ConsoleKey.A:
+                        DoCloseQueue(super);
+
+                        break;
+
+                    case ConsoleKey.D0:
+                        MsgNextScreen("PRESS ANY KEY 2 EXIT");
+                        break;
+                    default:
+                        MsgNextScreen("Error. Prem una tecla per tornar al menú...");
+                        break;
+                }
+
+            } while (tecla.Key != ConsoleKey.D0);
+
+
+        }
+        //OPCIO 1 - Entra un nou client i se li assigna un carro de la compra. S'omple el carro de la compra
+        /// <summary>
+        /// Crea un nou carro de la compra assignat a un Customer inactiu
+        /// L'omple d'articles aleatòriament 
+        /// i l'afegeix als carros que estan passejant pel super
+        /// </summary>
+        /// <param name="carros">Llista de carros que encara no han entrat a cap 
+        /// cua de pagament</param>
+        /// <param name="super">necessari per poder seleccionar un client inactiu</param>
+        public static void DoNewShoppingCart(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        {
+            Console.Clear();
+
+            Person inactivePerson = super.GetAvailableCustomer();
+
+            if (inactivePerson != null && inactivePerson is Customer)
+            {
+
+                Customer inactiveCustomer = (Customer)inactivePerson;
+
+                ShoppingCart newCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+
+                super.LoadWarehouse("GROCERIES.TXT");
+
+                newCart.AddAllRandomly(super.Warehouse);
+
+                carros.Add(inactiveCustomer, newCart);
+
+                Console.WriteLine(newCart.ToString());
+
+                Console.WriteLine("Se ha creado un nuevo carro de la compra y se ha asignado al cliente inactivo.");
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
+            }
+
+
+            MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
         }
 
         //OPCIO 2 - AFEGIR UN ARTICLE ALEATORI A UN CARRO DE LA COMPRA ALEATORI DELS QUE ESTAN VOLTANT PEL SUPER
@@ -89,38 +144,38 @@
         /// <param name="super">necessari per poder seleccionar un article del magatzem</param>
         public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
-            //Console.Clear();
-            //Random random = new Random();
+            Console.Clear();
+            Random random = new Random();
 
-            //Person inactivePerson = super.GetAvailableCustomer();
+            // Obtener una persona inactiva de la lista de carros
+            Person inactivePerson = super.GetAvailableCustomer();
 
-            //if (inactivePerson is Customer)
-            //{
-            //    Customer inactiveCustomer = (Customer)inactivePerson;
+            if (inactivePerson is Customer)
+            {
+                Customer inactiveCustomer = (Customer)inactivePerson;
 
-            //    int randomIndex = random.Next(carros.Count);
+                int randomIndex = random.Next(carros.Count);
+                ShoppingCart randomCart = carros.Values.ElementAt(randomIndex);
 
-            //    ShoppingCart randomCart = carros.AddOneItem(randomIndex);
+                // Seleccionar un artículo del supermercado al azar
+                int randomItemId = random.Next(1, super.Warehouse.Count + 1);
+                Item randomWarehouseItem = super.Warehouse[randomItemId];
 
-            //    // Seleccionar un artículo del supermercado al azar
-            //    int randomItemId = random.Next(1, super.Warehouse.Count + 1);
-            //    Item randomWarehouseItem = super.Warehouse[randomItemId];
+                // Agregar el artículo seleccionado al carro de la compra
+                double quantity = random.Next(1, 6);
+                randomCart.AddOne(randomWarehouseItem, quantity);
 
-            //    // Agregar el artículo seleccionado al carro de la compra
-            //    double quantity = random.Next(1, 6);
-            //    randomCart.AddOne(randomWarehouseItem, quantity);
+                // Mostrar el carro de la compra antes de agregar el artículo
+                Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
 
-            //    // Mostrar el carro de la compra antes y después de agregar el artículo
-            //    Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
-            //    // Mostrar carro después de agregar el artículo
-            //    Console.WriteLine($"Carro de la compra seleccionado después de agregar el artículo:\n{randomCart.ToString()}\n");
+                // Mostrar el carro de la compra después de agregar el artículo
+                Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
 
-            //    Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
-            //}
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
+            }
 
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
 
@@ -262,6 +317,5 @@
             Console.WriteLine(msg);
             Console.ReadKey();
         }
-
     }
 }

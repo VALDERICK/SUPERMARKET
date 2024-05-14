@@ -176,11 +176,12 @@ using static SUPERMARKET.Item;
         public int CompareTo(Item? other)
         {
             int resultat;
-            if (other != null)
+            if (other == null)
             {
-                resultat= this.GetHashCode().CompareTo(other.GetHashCode());
+                resultat= 1; 
             }
-            resultat = 1;
+
+            resultat= this.stock.CompareTo(other.Stock);
             return resultat;
         }
         public override bool Equals(object obj)
