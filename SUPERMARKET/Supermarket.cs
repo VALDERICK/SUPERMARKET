@@ -44,7 +44,7 @@ namespace SUPERMARKET
         {
             this.name = name;
             this.address = address;
-            activeLines = 1;
+            ActiveLines1 = 1;
             lines = new CheckOutLine[MAXLINES];
             ShoppingCart = new Dictionary<Item, double>();
         }
@@ -55,7 +55,7 @@ namespace SUPERMARKET
             customers = LoadCustomers("CUSTOMERS.TXT");
             staff = LoadCashiers("CASHIERS.TXT");
             warehouse = LoadWarehouse("GROCERIES.TXT");
-            this.activeLines = activeLines; // Actualizar el número de líneas activas
+            this.ActiveLines1 = activeLines; // Actualizar el número de líneas activas
             for (int i = 0; i < activeLines; i++) lines[i] = new CheckOutLine(GetAvailableCashier(), i + 1);
             this.name = name;
             this.address = address;
@@ -77,21 +77,13 @@ namespace SUPERMARKET
 
         public int ActiveLines
         {
-            get { return activeLines; }
+            get { return ActiveLines1; }
         }
+
+        public int ActiveLines1 { get => activeLines; set => activeLines = value; }
+        public int ActiveLines2 { get => activeLines; set => activeLines = value; }
         #endregion
 
-        // Method to initialize checkout lines
-
-        public void InitializeCheckOutLines()
-        {
-            for (int i = 0; i < MAXLINES; i++)
-            {
-                Person cashier = GetAvailableCashier();
-
-                lines[i] = new CheckOutLine(cashier, i + 1);
-            }
-        }
 
         //METODOS PRIVADOS
 
@@ -187,6 +179,8 @@ namespace SUPERMARKET
 
         #endregion
 
+        #region Pkaging_Ordre_Items
+
         private Packaging TranslateToPackaging(char packagingChar)
         {
             switch (packagingChar)
@@ -219,7 +213,7 @@ namespace SUPERMARKET
 
             return itemsByStock;
         }
-
+        #endregion
 
 
         #region EnableCshiersOrCustomers
@@ -297,6 +291,29 @@ namespace SUPERMARKET
             }
         }
         #endregion
+
+        #region CUES
+        public void InitializeCheckOutLines()
+        {
+            for (int i = 0; i < MAXLINES; i++)
+            {
+                Person cashier = GetAvailableCashier();
+
+                lines[i] = new CheckOutLine(cashier, i + 1);
+            }
+        }
+
+        public void SetNumberOfActiveLines(int numberOfActiveLines)
+        {
+            if (numberOfActiveLines >= 0 && numberOfActiveLines <= MAXLINES)
+            {
+                ActiveLines1 = numberOfActiveLines;
+            }
+            else
+            {
+                Console.WriteLine("Número de líneas activas no válido.");
+            }
+        }
         public CheckOutLine GetCheckOutLine(int lineNumber)
         {
             CheckOutLine line = null;
@@ -356,6 +373,7 @@ namespace SUPERMARKET
 
             return success; // Devolver el resultado de la operación de checkout
         }
+        #endregion
 
         public override string ToString()
         {
