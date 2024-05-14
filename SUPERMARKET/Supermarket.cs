@@ -41,11 +41,11 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
-            Customers=LoadCustomers("CUSTOMERS.TXT");
-            Staff=LoadCashiers("CASHIERS.TXT");
-            Warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers = LoadCustomers("CUSTOMERS.TXT");
+            Staff = LoadCashiers("CASHIERS.TXT");
+            Warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -86,7 +86,7 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); 
+                lines[i] = new CheckOutLine();
             }
         }
 
@@ -196,20 +196,17 @@ namespace SUPERMARKET
 
         }
 
-
-        public SortedSet<Item> GetItemByStock()
+        /*public SortedSet<Item> GetItemByStock()
         {
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock)));
+            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
 
-            foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
+
+            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-
-                Item newItem = new Item(0, product.Value.Description, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
-
+                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
                 itemsByStock.Add(newItem);
             }
-            return itemsByStock;
-        }
 
 
 
@@ -237,25 +234,15 @@ namespace SUPERMARKET
                     }
                 }
 
-                // Verifica si hay clientes disponibles
-                if (availableCustomers.Count > 0)
-                {
-                    int randomIndex = r.Next(availableCustomers.Count);
-                    selectedCustomer = availableCustomers[randomIndex];
-                    selectedCustomer.Active = true;
-                }
-                else
-                {
-                    throw new Exception("NO HAY CLIENTES DISPONIBLES PARA ASIGNAR.");
-                }
-            }
+            // Si no se encuentra ningún cliente disponible, devuelve null
+            return null;
 
-            return selectedCustomer;
+        
 
-        }
         #endregion
 
+            }
+        }
     }
-
 }
 

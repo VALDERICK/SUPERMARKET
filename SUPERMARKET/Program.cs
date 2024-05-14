@@ -317,6 +317,5 @@ namespace SUPERMARKET
             Console.WriteLine(msg);
             Console.ReadKey();
         }
-
     }
 }
