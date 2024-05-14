@@ -17,11 +17,34 @@ namespace SUPERMARKET
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
-        public Dictionary<string, Person> Staff;
-        public Dictionary<string, Person> Customers;
-        public SortedDictionary<int, Item> Warehouse;
+        private Dictionary<string, Person> Staff;
+        private Dictionary<string, Person> Customers;
+        private SortedDictionary<int, Item> Warehouse;
 
         #endregion
+
+        //PROPIEDADES
+
+        public SortedDictionary<int, Item> warehouse { get { return Warehouse; } }
+
+        
+        public Dictionary<string, Person> staff { get { return Staff; } }
+
+        
+        public Dictionary<string, Person> customers { get { return Customers; } }
+
+        public int ActivLines
+        {
+            get { return activeLines; }
+            set
+            {
+                if (value >= 1 && value <= MAXLINES)
+                {
+                    activeLines = value;
+                }
+            }
+        }
+
 
         #region CONSTRUCTORS
         public class CheckOutLine
@@ -284,7 +307,107 @@ namespace SUPERMARKET
             Console.WriteLine($"CheckOutLine {line2Open} has been opened with cashier {lines[lineIndex].cashier.FullName}.");
         }
 
+        public CheckOutLine GetCheckOutLine(int lineNumber)
+        {
+            CheckOutLine line = null;
+            if (lineNumber >= 1 && lineNumber <= MAXLINES)
+            {
+                line = lines[lineNumber - 1];
+            }
+            return line;
+        }
 
+        public bool JoinTheQueue(ShoppingCart theCart, int line)
+        {
+            bool success = false; // Inicializamos la variable de éxito como false
+
+            // Verificar si el número de línea está dentro de los límites del array
+            if (line >= 1 && line <= MAXLINES)
+            {
+                // Obtener el índice correspondiente al número de línea
+                int lineIndex = line - 1;
+
+                // Verificar si la línea está activa
+                if (lines[lineIndex].active)
+                {
+                    // Agregar el carrito a la cola de la línea
+                    lines[lineIndex].CheckIn(theCart);
+                    success = true; // Marcamos la operación como exitosa
+                }
+            }
+
+            return success; // Devolvemos el resultado de la operación
+        }
+
+        public bool Checkout(int line)
+        {
+            bool success = false; // Inicializamos la variable de éxito como false
+
+            // Verificar si el número de línea está dentro de los límites del array
+            if (line >= 1 && line <= MAXLINES)
+            {
+                // Obtener el índice correspondiente al número de línea
+                int lineIndex = line - 1;
+
+                // Realizar el checkout en la línea especificada
+                success = lines[lineIndex].CheckOut();
+            }
+
+            return success; // Devolver el resultado de la operación de checkout
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"{name}");
+            sb.AppendLine($"{address}");
+
+            // Iterar sobre cada línea de caja
+            for (int i = 0; i < MAXLINES; i++)
+            {
+                // Obtener el número de la línea actual
+                int lineNumber = i + 1;
+
+                sb.AppendLine($"NUMERO DE CAIXA -> {lineNumber}");
+
+                // Obtener la línea de caja actual
+                CheckOutLine currentLine = lines[i];
+
+                if (currentLine != null)
+                {
+                    // Obtener el cajero o cajera responsable de la línea
+                    Person cashier = currentLine.Cashier;
+
+                    sb.AppendLine($"CAIXER/A AL CARREC ->{cashier.FullName}");
+
+                    // Obtener el contenido del carrito de compras de la línea
+                    Queue<ShoppingCart> queue = currentLine.Queue;
+
+                    if (queue.Count == 0)
+                    {
+                        sb.AppendLine("CUA BUIDA");
+                    }
+                    else
+                    {
+                        sb.AppendLine("************");
+
+                        // Iterar sobre cada carrito de compras en la cola
+                        foreach (ShoppingCart cart in queue)
+                        {
+                            sb.AppendLine(cart.ToString());
+                            sb.AppendLine("********************");
+                        }
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("CUA BUIDA");
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }
 
