@@ -75,13 +75,20 @@ namespace SUPERMARKET
             int numItems = random.Next(1, 11);
             int contador = 0;
 
-            foreach (var kvp in warehouse) 
+            if (warehouse != null && warehouse.Count > 0)
             {
-                if (contador >= numItems) 
-                    break;
-                double qty = random.Next(1, 6); 
-                AddOne(kvp.Value, qty); 
-                contador++;
+                foreach (var kvp in warehouse)
+                {
+                    if (contador >= numItems)
+                        break;
+                    double qty = random.Next(1, 6);
+                    AddOne(kvp.Value, qty);
+                    contador++;
+                }
+            }
+            else
+            {
+                Console.WriteLine("El almacén está vacío o no contiene elementos.");
             }
         }
         public int RawPointsObtainedAtCheckout(double totalInvoiced)
