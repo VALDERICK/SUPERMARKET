@@ -58,7 +58,10 @@ namespace SUPERMARKET
             else
             {
                 
+
+
                 if (item.PackagingType == Packaging.Unit || item.PackagingType == Packaging.Package)
+
                 {
                     qty = Math.Round(qty); 
                 }
