@@ -41,11 +41,11 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
-            Customers=LoadCustomers("CUSTOMERS.TXT");
-            Staff=LoadCashiers("CASHIERS.TXT");
-            Warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers = LoadCustomers("CUSTOMERS.TXT");
+            Staff = LoadCashiers("CASHIERS.TXT");
+            Warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -86,7 +86,7 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); 
+                lines[i] = new CheckOutLine();
             }
         }
 
@@ -94,8 +94,8 @@ namespace SUPERMARKET
 
         #region LECTURA_FITXERS
 
-       public Dictionary<string, Person> LoadCustomers(string fileName)
-       {
+        public Dictionary<string, Person> LoadCustomers(string fileName)
+        {
             Dictionary<string, Person> aux = new Dictionary<string, Person>();
             Customer cust;
             StreamReader sr = new StreamReader(fileName);
@@ -103,7 +103,7 @@ namespace SUPERMARKET
             string line;
             line = sr.ReadLine();
 
-            while (line  != null)
+            while (line != null)
             {
                 string[] parts = line.Split(';');
 
@@ -111,21 +111,21 @@ namespace SUPERMARKET
                 {
                     if (parts[2] is not "")
                     {
-                        cust=new Customer(parts[0], parts[1], Convert.ToInt32(parts[2]));
+                        cust = new Customer(parts[0], parts[1], Convert.ToInt32(parts[2]));
                     }
 
                     else
                     {
                         cust = new Customer(parts[0], parts[1], null);
                     }
-                    aux.Add(parts[0],cust);
+                    aux.Add(parts[0], cust);
 
                 }
                 line = sr.ReadLine();
             }
             sr.Close();
             return aux;
-       }
+        }
 
 
 
@@ -159,7 +159,7 @@ namespace SUPERMARKET
         {
             SortedDictionary<int, Item> aux = new SortedDictionary<int, Item>();
             StreamReader sr = new StreamReader(fileName);
-            string line = sr.ReadLine(); 
+            string line = sr.ReadLine();
 
             while (line != null)
             {
@@ -223,7 +223,7 @@ namespace SUPERMARKET
         public Person GetAvailableCustomer()
         {
             Random r = new Random();
-            Person selectedCustomer = null; 
+            Person selectedCustomer = null;
             int llargada = Customers.Count();
 
             if (llargada == 0)
@@ -243,15 +243,16 @@ namespace SUPERMARKET
                     }
                 }
 
-            // Si no se encuentra ningún cliente disponible, devuelve null
-            return null;
+                // Si no se encuentra ningún cliente disponible, devuelve null
+                return null;
 
 
-            return selectedCustomer;
+                return selectedCustomer;
 
-        #endregion
+                #endregion
 
+            }
+        }
     }
-
 }
 
