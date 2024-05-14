@@ -116,7 +116,7 @@ namespace SUPERMARKET
 
                 super.LoadWarehouse("GROCERIES.TXT");
 
-                newCart.AddAllRandomly(super.warehouse);
+                newCart.AddAllRandomly(super.Warehouse);
 
                 carros.Add(inactiveCustomer, newCart);
 
@@ -161,10 +161,10 @@ namespace SUPERMARKET
 
                     Console.WriteLine($"CARRO ORIGINAL:\n{randomCart}");
 
-                    if (super.warehouse.Count > 0)
+                    if (super.Warehouse.Count > 0)
                     {
-                        int randomItemId = random.Next(0, super.warehouse.Count);
-                        Item randomWarehouseItem = super.warehouse[randomItemId];
+                        int randomItemId = random.Next(0, super.Warehouse.Count);
+                        Item randomWarehouseItem = super.Warehouse[randomItemId];
 
                         double quantity = random.Next(1, 6);
                         randomCart.AddOne(randomWarehouseItem, quantity);
