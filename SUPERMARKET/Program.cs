@@ -201,62 +201,59 @@ namespace SUPERMARKET
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder encuar un carro a una linia de caixa</param>
-        //public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
-        //{
-        //    //Console.Clear();
-            //Random random = new Random();
-            //Person activePerson = super.GetAvailableCustomer();
-            //super.InitializeCheckOutLines();
+        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        {
+            Console.Clear();
 
-            //if (super.ActiveLines <= 0)
-            //{
-            //    Console.WriteLine("NO  HI HA CAP CUA DE PAGAMENT ACTIVA");
-            //}
-            //else if (carros.Count <= 0)
-            //{
-            //    Console.WriteLine("NO  HI HA CAP CLIENT ACTIU");
-            //}
-            //else
-            //{
-                // Obtenim una línia de caixa disponible del supermercat
-                //CheckOutLine availableLine = super.GetAvailableCheckoutLine();
+            // Verificamos si hay líneas de caja activas
+            if (super.ActiveLines <= 0)
+            {
+                Console.WriteLine("NO HAY NINGUNA LÍNEA DE CAJA ACTIVA");
+                return; // Salimos del método si no hay líneas de caja activas
+            }
 
-                //// Si no hi ha cap línia de caixa disponible, mostrem un missatge
-                ////if (availableLine == null)
-                //{
-                //    Console.WriteLine("NO HI HA CAP CAIXA DE PAGAMENT DISPONIBLE");
-                //    MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-                //    return;
-                //}
+            // Verificamos si hay carros que aún no han sido encuados en ninguna cola de pago
+            if (carros.Count == 0)
+            {
+                Console.WriteLine("NO HAY NINGÚN CARRO DISPONIBLE PARA ENCOLAR");
+                return; // Salimos del método si no hay carros disponibles
+            }
 
-                //// Seleccionem un carro aleatori de la llista de carros que passegen
-                //List<Customer> activeCustomers = new List<Customer>(carros.Keys);
-                //Customer randomCustomer = activeCustomers[random.Next(activeCustomers.Count)];
-                //ShoppingCart randomCart = carros[randomCustomer];
+            // Seleccionamos aleatoriamente un carro y su cliente asociado
+            Random random = new Random();
+            var randomIndex = random.Next(0, carros.Count);
+            var selectedCustomer = carros.Keys.ElementAt(randomIndex);
+            var selectedShoppingCart = carros[selectedCustomer];
 
-                //// Encuem el carro a la línia de caixa disponible
-                ////bool checkedIn = availableLine.CheckIn(randomCart);
+            // Verificamos si el cliente seleccionado está activo (no ha sido atendido todavía)
+            if (!selectedCustomer.Active)
+            {
+                Console.WriteLine("EL CLIENTE SELECCIONADO YA HA SIDO ATENDIDO");
+                return; // Salimos del método si el cliente seleccionado ya ha sido atendido
+            }
 
-                ////if (checkedIn)
-                //{
-                //    // Eliminem el carro seleccionat de la llista de carros que passegen
-                //    carros.Remove(randomCustomer);
+            // Seleccionamos aleatoriamente una línea de caja activa
+            var selectedLineIndex = random.Next(0, super.ActiveLines);
+            var selectedLine = super.GetCheckOutLine(selectedLineIndex + 1); // +1 porque los índices comienzan desde 1
 
-                //    // Mostrem un missatge d'èxit
-                //    //Console.WriteLine($"El carro del client {randomCustomer.Name} s'ha encuat a la línia de caixa {availableLine.Number}.");
+            // Encolamos el carro en la línea de caja seleccionada
+            bool success = selectedLine.CheckIn(selectedShoppingCart);
 
-                //    // Mostrem la informació actualitzada de la línia de caixa
-                //    //Console.WriteLine(availableLine);
-                //}
-                //else
-                //{
-                //    // Si no es pot fer el check-in, mostrem un missatge d'error
-                //    Console.WriteLine("No es pot fer el check-in en aquest moment.");
-                //}
+            if (success)
+            {
+                // Eliminamos el carro seleccionado de la lista de carros "paseando"
+                carros.Remove(selectedCustomer);
+                Console.WriteLine($"EL CARRO DE {selectedCustomer.ToString()} HA SIDO ENCUEADO EN LA LÍNEA DE CAJA {selectedLine.Number}");
+            }
+            else
+            {
+                Console.WriteLine($"ERROR AL ENCOLAR EL CARRO DE {selectedCustomer.ToString()} EN LA LÍNEA DE CAJA {selectedLine.Number}");
+            }
 
-                //MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-        //    }
-        //}
+            // Esperamos a que el usuario vea el mensaje antes de continuar
+            MsgNextScreen("PRESIONA UNA TECLA PARA VOLVER AL MENÚ PRINCIPAL");
+        }
+        
 
         // OPCIO 4 - CHECK OUT D'UNA CUA TRIADA PER L'USUARI
         /// <summary>

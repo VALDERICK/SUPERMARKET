@@ -17,34 +17,29 @@ namespace SUPERMARKET
         private int activeLines;
         private CheckOutLine[] lines = new CheckOutLine[MAXLINES];
         private Dictionary<Item, double> ShoppingCart;
-        private Dictionary<string, Person> Staff;
-        private Dictionary<string, Person> Customers;
-        private SortedDictionary<int, Item> Warehouse;
+        private Dictionary<string, Person> staff;
+        private Dictionary<string, Person> customers;
+        private SortedDictionary<int, Item> warehouse;
 
         #endregion
 
         //PROPIEDADES
 
-        public SortedDictionary<int, Item> warehouse { get { return Warehouse; } }
+        public SortedDictionary<int, Item> Warehouse { get { return warehouse; } }
 
         
-        public Dictionary<string, Person> staff { get { return Staff; } }
+        public Dictionary<string, Person> Staff { get { return staff; } }
 
         
-        public Dictionary<string, Person> customers { get { return Customers; } }
+        public Dictionary<string, Person> Customers { get { return customers; } }
 
         
 
 
         #region CONSTRUCTORS
-        public class CheckOutLine
-        {
-            private int number;
-            //private Queue<ShoppingCart> queue;
-            private Person cashier;
-            private bool active;
-        }
-
+        
+        
+        
         public Supermarket(string name, string address)
         {
             this.name = name;
@@ -57,9 +52,9 @@ namespace SUPERMARKET
         public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
             if (activeLines <= 0 || activeLines > MAXLINES) throw new Exception("Nombre de linies incorrecte");
-            Customers = LoadCustomers("CUSTOMERS.TXT");
-            Staff = LoadCashiers("CASHIERS.TXT");
-            Warehouse = LoadWarehouse("GROCERIES.TXT");
+            customers = LoadCustomers("CUSTOMERS.TXT");
+            staff = LoadCashiers("CASHIERS.TXT");
+            warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines; // Actualizar el número de líneas activas
             for (int i = 0; i < activeLines; i++) lines[i] = new CheckOutLine(GetAvailableCashier(), i + 1);
             this.name = name;
@@ -92,7 +87,9 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine();
+                Person cashier = GetAvailableCashier();
+
+                lines[i] = new CheckOutLine(cashier, i + 1);
             }
         }
 
@@ -259,13 +256,47 @@ namespace SUPERMARKET
 
                 return selectedCustomer;
 
-                #endregion
-
             }
         }
 
-        
+        public Person GetAvailableCashier()
+        {
 
+            Random r = new Random();
+            Person selectedCustomer = null;
+            int llargada = Staff.Count();
+
+            if (llargada == 0)
+            {
+                throw new Exception("NO HAY NINGÚN CASHIER DISPONIBLE!!");
+            }
+            else
+            {
+                List<Person> availableCashier = new List<Person>();
+
+                // Agrega clientes disponibles a la lista
+                foreach (KeyValuePair<string, Person> kvp in Staff)
+                {
+                    if (!kvp.Value.Active)
+                    {
+                        availableCashier.Add(kvp.Value);
+                    }
+                }
+
+                if (availableCashier.Count == 0)
+                {
+                    return null;
+                }
+
+                selectedCustomer = availableCashier[r.Next(availableCashier.Count)];
+
+                return selectedCustomer;
+
+
+
+            }
+        }
+        #endregion
         public CheckOutLine GetCheckOutLine(int lineNumber)
         {
             CheckOutLine line = null;
@@ -278,6 +309,7 @@ namespace SUPERMARKET
 
         public bool JoinTheQueue(ShoppingCart theCart, int line)
         {
+
             bool success = false; // Inicializamos la variable de éxito como false
 
             // Verificar si el número de línea está dentro de los límites del array
@@ -287,12 +319,22 @@ namespace SUPERMARKET
                 int lineIndex = line - 1;
 
                 // Verificar si la línea está activa
-                if (lines[lineIndex].Active)
+                if (this.lines[lineIndex].Active)
                 {
                     // Agregar el carrito a la cola de la línea
                     lines[lineIndex].CheckIn(theCart);
                     success = true; // Marcamos la operación como exitosa
                 }
+                else
+                {
+                    // La línea de caja no está activa, mostrar un mensaje de error
+                    Console.WriteLine($"La línea de caja {line} no está activa.");
+                }
+            }
+            else
+            {
+                // El número de línea está fuera de los límites, mostrar un mensaje de error
+                Console.WriteLine($"El número de línea {line} no es válido.");
             }
 
             return success; // Devolvemos el resultado de la operación
@@ -332,6 +374,7 @@ namespace SUPERMARKET
 
                 // Obtener la línea de caja actual
                 CheckOutLine currentLine = lines[i];
+                
 
                 if (currentLine != null)
                 {
