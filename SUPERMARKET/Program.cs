@@ -146,31 +146,34 @@ namespace SUPERMARKET
         {
             Console.Clear();
             Random random = new Random();
+            Person activePerson = super.GetAvailableCustomer();
 
-            // Obtener una persona inactiva de la lista de carros
-            Person inactivePerson = super.GetAvailableCustomer();
-
-            if (inactivePerson is Customer)
+            if (activePerson is Customer)
             {
-                Customer inactiveCustomer = (Customer)inactivePerson;
-                ShoppingCart randomCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+                Customer activeCustomer = (Customer)activePerson;
 
-                int randomIndex = random.Next(carros.Count);
+                // Verificar si hay algún carro de la compra asociado con el cliente inactivo
+                if (carros.ContainsKey(activeCustomer))
+                {
+                    ShoppingCart randomCart = carros[activeCustomer];
+                    Console.WriteLine($"CARRO ORIGINAL:\n{randomCart}");
 
-                // Seleccionar un artículo del supermercado al azar
-                int randomItemId = random.Next(1, super.Warehouse.Count + 1);
-                Item randomWarehouseItem = super.Warehouse[randomItemId];
+                    // Seleccionar un artículo del supermercado al azar
+                    int randomItemId = random.Next(1, super.Warehouse.Count + 1);
+                    Item randomWarehouseItem = super.Warehouse[randomItemId];
 
-                // Agregar el artículo seleccionado al carro de la compra
-                double quantity = random.Next(1, 6);
-                randomCart.AddOne(randomWarehouseItem, quantity);
+                    // Agregar el artículo seleccionado al carro de la compra
+                    double quantity = random.Next(1, 6);
+                    randomCart.AddOne(randomWarehouseItem, quantity);
 
-                // Mostrar el carro de la compra antes de agregar el artículo
-                Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
-
-                // Mostrar el carro de la compra después de agregar el artículo
-                Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
-
+                    // Mostrar el carro de la compra después de agregar el artículo
+                    Console.WriteLine($"CARRO MODIFICADO:\n{randomCart}");
+                    Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
+                }
+                else
+                {
+                    Console.WriteLine("No hay ningún carro de la compra asociado con el cliente inactivo.");
+                }
             }
             else
             {
