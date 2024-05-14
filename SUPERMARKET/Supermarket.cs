@@ -41,11 +41,11 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
-            Customers=LoadCustomers("CUSTOMERS.TXT");
-            Staff=LoadCashiers("CASHIERS.TXT");
-            Warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers = LoadCustomers("CUSTOMERS.TXT");
+            Staff = LoadCashiers("CASHIERS.TXT");
+            Warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -86,7 +86,7 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); 
+                lines[i] = new CheckOutLine();
             }
         }
 
@@ -100,21 +100,32 @@ namespace SUPERMARKET
             StreamReader sr = new StreamReader(fileName);
 
             string line;
-           
-            while ((line = sr.ReadLine()) != null)
+            line = sr.ReadLine();
+
+            while (line != null)
             {
                 string[] parts = line.Split(',');
 
                 if (parts.Length >= 2)
                 {
-                    aux.Add(parts[0], new Customer(parts[0], parts[1],Convert.ToInt32( parts[3])));
-                    
+                    if (parts[2] is not "")
+                    {
+                        cust=new Customer(parts[0], parts[1], Convert.ToInt32(parts[2]));
+                    }
+
+                    else
+                    {
+                        cust = new Customer(parts[0], parts[1], null);
+                    }
+                    aux.Add(parts[0],cust);
+
                 }
+                line = sr.ReadLine();
             }
             sr.Close();
             return aux;
-        }
-        
+       }
+
 
 
         public Dictionary<string, Person> LoadCashiers(string fileName)
@@ -143,10 +154,9 @@ namespace SUPERMARKET
         {
             SortedDictionary<int, Item> aux = new SortedDictionary<int, Item>();
             StreamReader sr = new StreamReader(fileName);
-            Packaging pack;
-            string line;
-            line = sr.ReadLine();
-            while ( line != null)
+            string line = sr.ReadLine(); 
+
+            while (line != null)
             {
                 string[] parts = line.Split(';');
                 Category category = (Category)Convert.ToInt32(parts[1]);
@@ -182,17 +192,21 @@ namespace SUPERMARKET
 
         }
 
-        /*public SortedSet<Item> GetItemByStock()
+        public SortedSet<Item> GetItemsByStock()
         {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+            // Comparador personalizado para ordenar por stock
+            IComparer<Item> stockComparer = Comparer<Item>.Create(new Comparison<Item>(CompareItemsByStock));
 
+            // Conjunto ordenado de elementos por stock
             SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
 
-            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            // Agregar todos los elementos del almacén al conjunto
+            foreach (KeyValuePair<int, Item> product in Warehouse)
             {
-                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
-                itemsByStock.Add(newItem);
+                itemsByStock.Add(product.Value);
             }
+            return itemsByStock;
+        }
 
             return itemsByStock;
         }*/
@@ -201,24 +215,37 @@ namespace SUPERMARKET
         #region EnableCshiersOrCustomers
         public Person GetAvailableCustomer()
         {
-            foreach (KeyValuePair<string, Person> pair in Customers)
+            Random r = new Random();
+            Person selectedCustomer = null; 
+            int llargada = Customers.Count();
+
+            if (llargada == 0)
             {
-                if (pair.Value is Customer customer && !customer.Active)
-                {
-                    customer.Active = true;
-                    return customer;
-                }
+                throw new Exception("NO HAY NINGÚN CLIENTE DISPONIBLE!!");
             }
+            else
+            {
+                List<Person> availableCustomers = new List<Person>();
 
-            // Si no se encuentra ning�n cliente disponible, devuelve null
-            return null;
+                // Agrega clientes disponibles a la lista
+                foreach (KeyValuePair<string, Person> kvp in Customers)
+                {
+                    if (!kvp.Value.Active)
+                    {
+                        availableCustomers.Add(kvp.Value);
+                    }
+                }
 
-        
+                // Si no se encuentra ningún cliente disponible, devuelve null
+                return null;
 
-        }
+
+            return selectedCustomer;
+
         #endregion
 
+            }
+        }
     }
-
 }
 
