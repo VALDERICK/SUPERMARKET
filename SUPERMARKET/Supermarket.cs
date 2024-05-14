@@ -27,7 +27,7 @@ namespace SUPERMARKET
         public class CheckOutLine
         {
             private int number;
-            private Queue<ShoppingCart> queue;
+            //private Queue<ShoppingCart> queue;
             private Person cashier;
             private bool active;
         }
@@ -41,11 +41,11 @@ namespace SUPERMARKET
             ShoppingCart = new Dictionary<Item, double>();
         }
 
-        public Supermarket(string name, string address, string fileCustomers, string fileItems,string fileGroceries, int activeLines) : this(name, address)
+        public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
-            Customers=LoadCustomers("CUSTOMERS.TXT");
-            Staff=LoadCashiers("CASHIERS.TXT");
-            Warehouse=LoadWarehouse("GROCERIES.TXT");
+            Customers = LoadCustomers("CUSTOMERS.TXT");
+            Staff = LoadCashiers("CASHIERS.TXT");
+            Warehouse = LoadWarehouse("GROCERIES.TXT");
             this.activeLines = activeLines;
         }
         #endregion
@@ -86,7 +86,7 @@ namespace SUPERMARKET
         {
             for (int i = 0; i < MAXLINES; i++)
             {
-                lines[i] = new CheckOutLine(); 
+                lines[i] = new CheckOutLine();
             }
         }
 
@@ -196,34 +196,28 @@ namespace SUPERMARKET
 
         }
 
-        public SortedSet<Item> GetItemsByStock()
+        public SortedSet<Item> GetItemByStock()
         {
-            // Comparador personalizado para ordenar por stock
-            IComparer<Item> stockComparer = Comparer<Item>.Create(new Comparison<Item>(CompareItemsByStock));
+            SortedSet<Item> itemsByStock = new SortedSet<Item>(Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock)));
 
-            // Conjunto ordenado de elementos por stock
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
-
-            // Agregar todos los elementos del almacén al conjunto
-            foreach (KeyValuePair<int, Item> product in Warehouse)
+            foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                itemsByStock.Add(product.Value);
+
+                Item newItem = new Item(0, product.Value.Description, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+
+                itemsByStock.Add(newItem);
             }
             return itemsByStock;
         }
 
-        // Método de comparación para ordenar los elementos por stock
-        private int CompareItemsByStock(Item item1, Item item2)
-        {
-            return item1.Stock.CompareTo(item2.Stock);
-        }
 
 
         #region EnableCshiersOrCustomers
         public Person GetAvailableCustomer()
         {
+
             Random r = new Random();
-            Person selectedCustomer = null; 
+            Person selectedCustomer = null;
             int llargada = Customers.Count();
 
             if (llargada == 0)
@@ -243,15 +237,21 @@ namespace SUPERMARKET
                     }
                 }
 
-            // Si no se encuentra ningún cliente disponible, devuelve null
-            return null;
+                if (availableCustomers.Count == 0)
+                {
+                    return null;
+                }
 
+                selectedCustomer = availableCustomers[r.Next(availableCustomers.Count)];
 
-            return selectedCustomer;
+                return selectedCustomer;
 
-        #endregion
+            }
 
+            #endregion
+
+        }   
+        
     }
-
 }
 
