@@ -1,8 +1,7 @@
-﻿namespace SUPERMARKET
+namespace SUPERMARKET
 {
     internal class Program
     {
-        
         public static void MostrarMenu()
         {
             Console.WriteLine("1- UN CLIENT ENTRA AL SUPER I OMPLE EL SEU CARRO DE LA COMPRA");
@@ -21,9 +20,9 @@
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-
+            
             Supermarket super = new Supermarket("HIPERCAR", "C/Barna 99", "CASHIERS.TXT", "CUSTOMERS.TXT", "GROCERIES.TXT", 2);
-            //
+            
             Dictionary<Customer, ShoppingCart> carrosPassejant = new Dictionary<Customer, ShoppingCart>();
 
             ConsoleKeyInfo tecla;
@@ -104,6 +103,31 @@
         {
             Console.Clear();
 
+            Person inactivePerson = super.GetAvailableCustomer();
+
+            if (inactivePerson != null && inactivePerson is Customer)
+            {
+
+                Customer inactiveCustomer = (Customer)inactivePerson;
+
+                ShoppingCart newCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+
+                super.LoadWarehouse("GROCERIES.TXT");
+
+                newCart.AddAllRandomly(super.Warehouse);
+
+                carros.Add(inactiveCustomer, newCart);
+
+                Console.WriteLine(newCart.ToString());
+
+                Console.WriteLine("Se ha creado un nuevo carro de la compra y se ha asignado al cliente inactivo.");
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
+            }
+
+
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
         }
 
@@ -121,6 +145,38 @@
         public static void DoAfegirUnArticleAlCarro(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
         {
             Console.Clear();
+            Random random = new Random();
+
+            // Obtener una persona inactiva de la lista de carros
+            Person inactivePerson = super.GetAvailableCustomer();
+
+            if (inactivePerson is Customer)
+            {
+                Customer inactiveCustomer = (Customer)inactivePerson;
+                ShoppingCart randomCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
+
+                int randomIndex = random.Next(carros.Count);
+
+                // Seleccionar un artículo del supermercado al azar
+                int randomItemId = random.Next(1, super.Warehouse.Count + 1);
+                Item randomWarehouseItem = super.Warehouse[randomItemId];
+
+                // Agregar el artículo seleccionado al carro de la compra
+                double quantity = random.Next(1, 6);
+                randomCart.AddOne(randomWarehouseItem, quantity);
+
+                // Mostrar el carro de la compra antes de agregar el artículo
+                Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
+
+                // Mostrar el carro de la compra después de agregar el artículo
+                Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
+
+            }
+            else
+            {
+                Console.WriteLine("No hay clientes inactivos disponibles para asignar un nuevo carro de la compra o el cliente no es del tipo Customer.");
+            }
+
             MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
 
         }
@@ -261,6 +317,5 @@
             Console.WriteLine(msg);
             Console.ReadKey();
         }
-
     }
 }
