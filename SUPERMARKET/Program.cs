@@ -147,6 +147,7 @@ namespace SUPERMARKET
             Console.Clear();
             Random random = new Random();
 
+            // Obtener una persona inactiva de la lista de carros
             Person inactivePerson = super.GetAvailableCustomer();
 
             if (inactivePerson is Customer)
@@ -154,8 +155,7 @@ namespace SUPERMARKET
                 Customer inactiveCustomer = (Customer)inactivePerson;
 
                 int randomIndex = random.Next(carros.Count);
-
-                ShoppingCart randomCart = carros.AddOneItem(randomIndex);
+                ShoppingCart randomCart = carros.Values.ElementAt(randomIndex);
 
                 // Seleccionar un artículo del supermercado al azar
                 int randomItemId = random.Next(1, super.Warehouse.Count + 1);
@@ -165,12 +165,12 @@ namespace SUPERMARKET
                 double quantity = random.Next(1, 6);
                 randomCart.AddOne(randomWarehouseItem, quantity);
 
-                // Mostrar el carro de la compra antes y después de agregar el artículo
+                // Mostrar el carro de la compra antes de agregar el artículo
                 Console.WriteLine($"Carro de la compra seleccionado antes de agregar el artículo:\n{randomCart.ToString()}\n");
-                // Mostrar carro después de agregar el artículo
-                Console.WriteLine($"Carro de la compra seleccionado después de agregar el artículo:\n{randomCart.ToString()}\n");
 
+                // Mostrar el carro de la compra después de agregar el artículo
                 Console.WriteLine("Se ha agregado un artículo aleatorio al carro de la compra seleccionado.");
+
             }
             else
             {
