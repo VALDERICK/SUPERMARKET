@@ -237,13 +237,11 @@ namespace SUPERMARKET
                     }
                 }
 
-                // Si no se encuentra ningún cliente disponible, devuelve null
                 if (availableCustomers.Count == 0)
                 {
                     return null;
                 }
 
-                // Selecciona un cliente aleatorio de la lista de clientes disponibles
                 selectedCustomer = availableCustomers[r.Next(availableCustomers.Count)];
 
                 return selectedCustomer;
