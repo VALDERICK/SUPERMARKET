@@ -33,17 +33,7 @@ namespace SUPERMARKET
         
         public Dictionary<string, Person> customers { get { return Customers; } }
 
-        public int ActivLines
-        {
-            get { return activeLines; }
-            set
-            {
-                if (value >= 1 && value <= MAXLINES)
-                {
-                    activeLines = value;
-                }
-            }
-        }
+        
 
 
         #region CONSTRUCTORS
@@ -66,12 +56,14 @@ namespace SUPERMARKET
 
         public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
         {
+            if (activeLines <= 0 || activeLines > MAXLINES) throw new Exception("Nombre de linies incorrecte");
             Customers = LoadCustomers("CUSTOMERS.TXT");
             Staff = LoadCashiers("CASHIERS.TXT");
             Warehouse = LoadWarehouse("GROCERIES.TXT");
-            ActiveLines = activeLines; // Actualizar el número de líneas activas
-
-            InitializeCheckOutLines(); // Inicializar las líneas de caja
+            this.activeLines = activeLines; // Actualizar el número de líneas activas
+            for (int i = 0; i < activeLines; i++) lines[i] = new CheckOutLine(GetAvailableCashier(), i + 1);
+            this.name = name;
+            this.address = address;
         }
         #endregion
 
@@ -91,17 +83,6 @@ namespace SUPERMARKET
         public int ActiveLines
         {
             get { return activeLines; }
-            set
-            {
-                if (value >= 1 && value <= MAXLINES)
-                {
-                    activeLines = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Active lines must be between 1 and MAXLINES.");
-                }
-            }
         }
         #endregion
 
@@ -276,36 +257,7 @@ namespace SUPERMARKET
             }
         }
 
-        public void OpenCheckOutLine(int line2Open)
-        {
-            // Asegurarse de que line2Open está dentro del rango válido
-            if (line2Open < 1 || line2Open > MAXLINES)
-            {
-                Console.WriteLine("Invalid line number. Must be between 1 and MAXLINES.");
-                return;
-            }
-
-            // Decrementar 1 unidad para ajustar al índice del array
-            int lineIndex = line2Open - 1;
-
-            // Verificar si la línea ya está abierta
-            if (lines[lineIndex] != null)
-            {
-                Console.WriteLine($"Line {line2Open} is already open.");
-                return;
-            }
-
-            // Crear una nueva línea de caja y asignarla al array de líneas
-            lines[lineIndex] = new CheckOutLine();
-
-            // Asignar un cajero disponible a la nueva línea de caja
-            lines[lineIndex].cashier = GetAvailableCustomer();
-
-            // Asignar un número de línea secuencial
-            lines[lineIndex].number = line2Open;
-
-            Console.WriteLine($"CheckOutLine {line2Open} has been opened with cashier {lines[lineIndex].cashier.FullName}.");
-        }
+        
 
         public CheckOutLine GetCheckOutLine(int lineNumber)
         {
@@ -328,7 +280,7 @@ namespace SUPERMARKET
                 int lineIndex = line - 1;
 
                 // Verificar si la línea está activa
-                if (lines[lineIndex].active)
+                if (lines[lineIndex].Active)
                 {
                     // Agregar el carrito a la cola de la línea
                     lines[lineIndex].CheckIn(theCart);

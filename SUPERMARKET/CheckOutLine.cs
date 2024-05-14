@@ -11,8 +11,32 @@ namespace SUPERMARKET
         //ATRIBUTS
         public int number;
         public Queue<ShoppingCart> queue;
-        public Person cashier;
-        public bool active;
+        private Person cashier;
+        private bool active;
+
+        public int Number
+        {
+            get { return number; }
+            set { number = value; }
+        }
+
+        public Queue<ShoppingCart> Queue
+        {
+            get { return queue; }
+            set { queue = value; }
+        }
+
+        public Person Cashier
+        {
+            get { return cashier; }
+            set { cashier = value; }
+        }
+
+        public bool Active
+        {
+            get { return active; }
+            set { active = value; }
+        }
 
         //CONSTRUCTOR
         public CheckOutLine(Person cashier, int number)
@@ -25,17 +49,8 @@ namespace SUPERMARKET
         //METODOS
         public bool CheckIn(ShoppingCart oneShoppingCart)
         {
-            bool hoEsta = false;
-            if (!active)
-            {
-                hoEsta = false; // La línea de caja no está activa, no se puede hacer check-in
-            }
-            else
-            {
-                queue.Enqueue(oneShoppingCart); // Agregar el carrito de compras a la cola
-                hoEsta = true;
-            }           
-            return hoEsta ;
+            if (active) queue.Enqueue(oneShoppingCart);
+            return active;
         }
 
         public bool CheckOut()
