@@ -11,8 +11,8 @@ namespace SUPERMARKET
         //ATRIBUTS
         public int number;
         public Queue<ShoppingCart> queue;
-        private Person cashier;
-        private bool active;
+        public Person cashier;
+        public bool active;
 
         public int Number
         {
