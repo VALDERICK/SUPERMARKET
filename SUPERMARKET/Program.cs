@@ -153,9 +153,9 @@ namespace SUPERMARKET
             if (inactivePerson is Customer)
             {
                 Customer inactiveCustomer = (Customer)inactivePerson;
+                ShoppingCart randomCart = new ShoppingCart(inactiveCustomer, DateTime.Now);
 
                 int randomIndex = random.Next(carros.Count);
-                ShoppingCart randomCart = carros.Values.ElementAt(randomIndex);
 
                 // Seleccionar un artículo del supermercado al azar
                 int randomItemId = random.Next(1, super.Warehouse.Count + 1);
