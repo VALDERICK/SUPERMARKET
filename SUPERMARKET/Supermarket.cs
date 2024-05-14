@@ -196,25 +196,28 @@ namespace SUPERMARKET
 
         }
 
-        /*public SortedSet<Item> GetItemByStock()
+        public SortedSet<Item> GetItemByStock()
         {
-            Comparer<Item> stockComparer = Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock));
+            SortedSet<Item> itemsByStock = new SortedSet<Item>(Comparer<Item>.Create((item1, item2) => item1.Stock.CompareTo(item2.Stock)));
 
-            SortedSet<Item> itemsByStock = new SortedSet<Item>(stockComparer);
-
-            foreach (KeyValuePair<string, Item> product in LoadWarehouse("GROCERIES.TXT"))
+            foreach (KeyValuePair<int, Item> product in LoadWarehouse("GROCERIES.TXT"))
             {
-                Item newItem = new Item(0, product.Key,false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+
+                Item newItem = new Item(0, product.Value.Description, false, 0, Category.OTHER, Packaging.Unit, 10, 0);
+
                 itemsByStock.Add(newItem);
             }
+            return itemsByStock;
+        }
 
 
 
-       #region EnableCshiersOrCustomers
-       public Person GetAvailableCustomer()
+        #region EnableCshiersOrCustomers
+        public Person GetAvailableCustomer()
         {
+
             Random r = new Random();
-            Person selectedCustomer = null; 
+            Person selectedCustomer = null;
             int llargada = Customers.Count();
 
             if (llargada == 0)
@@ -234,15 +237,23 @@ namespace SUPERMARKET
                     }
                 }
 
-            // Si no se encuentra ningún cliente disponible, devuelve null
-            return null;
+                // Si no se encuentra ningún cliente disponible, devuelve null
+                if (availableCustomers.Count == 0)
+                {
+                    return null;
+                }
 
-        
+                // Selecciona un cliente aleatorio de la lista de clientes disponibles
+                selectedCustomer = availableCustomers[r.Next(availableCustomers.Count)];
 
-        #endregion
+                return selectedCustomer;
 
             }
-        }
+
+            #endregion
+
+        }   
+        
     }
 }
 
