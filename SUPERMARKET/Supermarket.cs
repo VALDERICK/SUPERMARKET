@@ -33,7 +33,10 @@ namespace SUPERMARKET
 
         public Dictionary<string, Person> Customers { get { return customers; } }
 
-
+        public CheckOutLine[] Lines
+        {
+            get { return lines; }
+        }
 
 
         #region CONSTRUCTORS
@@ -44,7 +47,7 @@ namespace SUPERMARKET
         {
             this.name = name;
             this.address = address;
-            ActiveLines1 = 1;
+            ActiveLines = 1;
             lines = new CheckOutLine[MAXLINES];
             ShoppingCart = new Dictionary<Item, double>();
         }
@@ -55,7 +58,7 @@ namespace SUPERMARKET
             customers = LoadCustomers("CUSTOMERS.TXT");
             staff = LoadCashiers("CASHIERS.TXT");
             warehouse = LoadWarehouse("GROCERIES.TXT");
-            this.ActiveLines1 = activeLines; // Actualizar el número de líneas activas
+            this.ActiveLines = activeLines; // Actualizar el número de líneas activas
             for (int i = 0; i < activeLines; i++) lines[i] = new CheckOutLine(GetAvailableCashier(), i + 1);
             this.name = name;
             this.address = address;
@@ -74,14 +77,11 @@ namespace SUPERMARKET
             get { return address; }
             set { address = value; }
         }
+        
+        
 
-        public int ActiveLines
-        {
-            get { return ActiveLines1; }
-        }
-
-        public int ActiveLines1 { get => activeLines; set => activeLines = value; }
-        public int ActiveLines2 { get => activeLines; set => activeLines = value; }
+        public int ActiveLines { get => activeLines; set => activeLines = value; }
+        
         #endregion
 
 
@@ -307,7 +307,7 @@ namespace SUPERMARKET
         {
             if (numberOfActiveLines >= 0 && numberOfActiveLines <= MAXLINES)
             {
-                ActiveLines1 = numberOfActiveLines;
+                ActiveLines = numberOfActiveLines;
             }
             else
             {
@@ -372,6 +372,43 @@ namespace SUPERMARKET
             }
 
             return success; // Devolver el resultado de la operación de checkout
+        }
+
+
+        public static bool RemoveQueue(Supermarket super, int lineToRemove)
+        {
+            // Verificar si el número de línea a eliminar está dentro de los límites
+            bool eliminada = false;
+            if (lineToRemove >= 1 && lineToRemove <= super.ActiveLines)
+            {
+                // Obtener el índice correspondiente al número de línea
+                int lineIndex = lineToRemove - 1;
+
+                // Verificar si la cola está vacía
+                if (super.Lines[lineIndex].Empty)
+                {
+                    // Eliminar la cola
+                    for (int i = lineIndex; i < super.ActiveLines - 1; i++)
+                    {
+                        super.Lines[i] = super.Lines[i + 1];
+                    }
+
+                    super.Lines[super.ActiveLines - 1] = null;
+                    super.ActiveLines--;
+
+                    eliminada = true; // Indicar que se eliminó la cola
+                }
+                else
+                {
+                    Console.WriteLine("No se puede eliminar la cola porque hay carros pendientes de pago.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El número de línea a eliminar no es válido.");
+            }
+
+            return eliminada; // Indicar que no se pudo eliminar la cola
         }
         #endregion
 

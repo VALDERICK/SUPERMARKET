@@ -14,6 +14,8 @@ namespace SUPERMARKET
         public Person cashier;
         public bool active;
 
+        //PROPIETATS
+
         public int Number
         {
             get { return number; }
@@ -36,6 +38,22 @@ namespace SUPERMARKET
         {
             get { return active; }
             set { active = value; }
+        }
+        public bool Empty
+        {
+            get
+            {
+                bool isempty=false;
+                if (Queue.Count == 0)
+                {
+                    isempty=true;
+                }
+                else
+                {
+                    isempty=false;
+                }
+                return isempty;
+            }
         }
 
         //CONSTRUCTOR
