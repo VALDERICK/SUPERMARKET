@@ -27,17 +27,14 @@ namespace SUPERMARKET
 
         public SortedDictionary<int, Item> Warehouse { get { return warehouse; } }
 
-        
+
         public Dictionary<string, Person> Staff { get { return staff; } }
 
-        
+
         public Dictionary<string, Person> Customers { get { return customers; } }
 
 
-        public CheckOutLine[] Lines
-        {
-            get { return lines; }
-        }
+
 
         #region CONSTRUCTORS
 
@@ -49,10 +46,7 @@ namespace SUPERMARKET
             this.address = address;
             ActiveLines1 = 1;
             lines = new CheckOutLine[MAXLINES];
-            staff = new Dictionary<string, Person>();
-            InitializeCheckOutLines();
             ShoppingCart = new Dictionary<Item, double>();
-            
         }
 
         public Supermarket(string name, string address, string fileCustomers, string fileItems, string fileGroceries, int activeLines) : this(name, address)
@@ -261,28 +255,40 @@ namespace SUPERMARKET
 
         public Person GetAvailableCashier()
         {
-            if (Staff == null)
-            {
-                throw new Exception("El diccionario de cajeros no ha sido inicializado.");
-            }
 
             Random r = new Random();
-            List<Person> availableCashier = new List<Person>();
+            Person selectedCustomer = null;
+            int llargada = Staff.Count();
 
-            foreach (KeyValuePair<string, Person> kvp in Staff)
-            {
-                if (!kvp.Value.Active)
-                {
-                    availableCashier.Add(kvp.Value);
-                }
-            }
-
-            if (availableCashier.Count == 0)
+            if (llargada == 0)
             {
                 throw new Exception("NO HAY NINGÚN CASHIER DISPONIBLE!!");
             }
+            else
+            {
+                List<Person> availableCashier = new List<Person>();
 
-            return availableCashier[r.Next(availableCashier.Count)];       
+                // Agrega clientes disponibles a la lista
+                foreach (KeyValuePair<string, Person> kvp in Staff)
+                {
+                    if (!kvp.Value.Active)
+                    {
+                        availableCashier.Add(kvp.Value);
+                    }
+                }
+
+                if (availableCashier.Count == 0)
+                {
+                    return null;
+                }
+
+                selectedCustomer = availableCashier[r.Next(availableCashier.Count)];
+
+                return selectedCustomer;
+
+
+
+            }
         }
         #endregion
 
@@ -320,6 +326,7 @@ namespace SUPERMARKET
 
         public bool JoinTheQueue(ShoppingCart theCart, int line)
         {
+
             bool success = false; // Inicializamos la variable de éxito como false
 
             // Verificar si el número de línea está dentro de los límites del array
@@ -329,7 +336,7 @@ namespace SUPERMARKET
                 int lineIndex = line - 1;
 
                 // Verificar si la línea está activa
-                if (lines[lineIndex] != null && lines[lineIndex].Active)
+                if (this.lines[lineIndex].Active)
                 {
                     // Agregar el carrito a la cola de la línea
                     lines[lineIndex].CheckIn(theCart);
@@ -337,8 +344,8 @@ namespace SUPERMARKET
                 }
                 else
                 {
-                    // La línea de caja no está activa o es nula, mostrar un mensaje de error
-                    Console.WriteLine($"La línea de caja {line} no está activa o es nula.");
+                    // La línea de caja no está activa, mostrar un mensaje de error
+                    Console.WriteLine($"La línea de caja {line} no está activa.");
                 }
             }
             else
@@ -385,7 +392,7 @@ namespace SUPERMARKET
 
                 // Obtener la línea de caja actual
                 CheckOutLine currentLine = lines[i];
-                
+
 
                 if (currentLine != null)
                 {
@@ -403,13 +410,13 @@ namespace SUPERMARKET
                     }
                     else
                     {
-                        sb.AppendLine("************");
+                        sb.AppendLine("");
 
                         // Iterar sobre cada carrito de compras en la cola
                         foreach (ShoppingCart cart in queue)
                         {
                             sb.AppendLine(cart.ToString());
-                            sb.AppendLine("********************");
+                            sb.AppendLine("");
                         }
                     }
                 }
@@ -423,6 +430,3 @@ namespace SUPERMARKET
         }
     }
 }
-
-
-
