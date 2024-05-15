@@ -88,6 +88,11 @@ namespace SUPERMARKET
             sb.AppendLine($"NUMERO DE CAIXA -> {number}");
             sb.AppendLine($"CAIXER/A AL CARREC -> {cashier.FullName}");
 
+            if (active == false)
+            {
+                sb.AppendLine("CUA TANCADA");
+
+            }
             if (queue.Count == 0)
             {
                 sb.AppendLine("CUA BUIDA");

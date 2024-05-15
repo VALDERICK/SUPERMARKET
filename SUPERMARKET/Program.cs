@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SUPERMARKET
 {
@@ -42,8 +43,8 @@ namespace SUPERMARKET
                         DoAfegirUnArticleAlCarro(carrosPassejant, super);
 
                         break;
-                    //case ConsoleKey.D3:
-                    //    DoCheckIn(carrosPassejant, super);
+                    case ConsoleKey.D3:
+                        DoCheckIn(carrosPassejant, super);
 
                         break;
                     case ConsoleKey.D4:
@@ -116,7 +117,7 @@ namespace SUPERMARKET
 
                 super.LoadWarehouse("GROCERIES.TXT");
 
-                newCart.AddAllRandomly(super.warehouse);
+                newCart.AddAllRandomly(super.Warehouse);
 
                 carros.Add(inactiveCustomer, newCart);
 
@@ -156,20 +157,20 @@ namespace SUPERMARKET
 
                 if (carros.Count > 0)
                 {
-                    var randomCartEntry = carros.ElementAt(random.Next(carros.Count));
+                    KeyValuePair<Customer, ShoppingCart> randomCartEntry = carros.ElementAt(random.Next(carros.Count));
                     ShoppingCart randomCart = randomCartEntry.Value;
 
-                    Console.WriteLine($"CARRO ORIGINAL:\n{randomCart}");
+                    Console.WriteLine($"CARRO ORIGINAL:{randomCart}");
 
-                    if (super.warehouse.Count > 0)
+                    if (super.Warehouse.Count > 0)
                     {
-                        int randomItemId = random.Next(0, super.warehouse.Count);
-                        Item randomWarehouseItem = super.warehouse[randomItemId];
+                        int randomItemId = random.Next(0, super.Warehouse.Count);
+                        Item randomWarehouseItem = super.Warehouse[randomItemId];
 
                         double quantity = random.Next(1, 6);
                         randomCart.AddOne(randomWarehouseItem, quantity);
 
-                        Console.WriteLine($"CARRO MODIFICADO:\n{randomCart}");
+                        Console.WriteLine($"CARRO MODIFICADO:{randomCart}");
                     }
                     else
                     {
@@ -201,62 +202,66 @@ namespace SUPERMARKET
         /// <param name="carros">Llista de carros que encara no han entrat a cap 
         /// cua de pagament</param>
         /// <param name="super">necessari per poder encuar un carro a una linia de caixa</param>
-        //public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
-        //{
-        //    //Console.Clear();
-            //Random random = new Random();
-            //Person activePerson = super.GetAvailableCustomer();
-            //super.InitializeCheckOutLines();
+        public static void DoCheckIn(Dictionary<Customer, ShoppingCart> carros, Supermarket super)
+        {
+            Console.Clear();
+            try
+            {
+                Random random = new Random();
+                Customer selectedCustomer;
+                CheckOutLine selectedLine;
+                ShoppingCart selectedShoppingCart;
+                int selectedLineIndex = random.Next(0, super.ActiveLines);
+                int randomIndex = random.Next(0, carros.Count);
+                bool success = false;
 
-            //if (super.ActiveLines <= 0)
-            //{
-            //    Console.WriteLine("NO  HI HA CAP CUA DE PAGAMENT ACTIVA");
-            //}
-            //else if (carros.Count <= 0)
-            //{
-            //    Console.WriteLine("NO  HI HA CAP CLIENT ACTIU");
-            //}
-            //else
-            //{
-                // Obtenim una línia de caixa disponible del supermercat
-                //CheckOutLine availableLine = super.GetAvailableCheckoutLine();
+                // Verificar si no hay líneas de caja abiertas
+                if (super.ActiveLines <= 0)
+                {
+                    throw new Exception("NO HAY NINGUNA LÍNEA DE CAJA ABIERTA");
+                }
+                // Verificar si no hay carros disponibles para encolar
+                if (carros.Count == 0)
+                {
+                    throw new Exception("NO HAY NINGÚN CARRO DISPONIBLE PARA ENCOLAR");
+                }
 
-                //// Si no hi ha cap línia de caixa disponible, mostrem un missatge
-                ////if (availableLine == null)
-                //{
-                //    Console.WriteLine("NO HI HA CAP CAIXA DE PAGAMENT DISPONIBLE");
-                //    MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-                //    return;
-                //}
+                selectedCustomer = carros.Keys.ElementAt(randomIndex);
+                selectedShoppingCart = carros[selectedCustomer];
 
-                //// Seleccionem un carro aleatori de la llista de carros que passegen
-                //List<Customer> activeCustomers = new List<Customer>(carros.Keys);
-                //Customer randomCustomer = activeCustomers[random.Next(activeCustomers.Count)];
-                //ShoppingCart randomCart = carros[randomCustomer];
+                // Verificar si el cliente seleccionado está activo (no ha sido atendido todavía)
+                if (!selectedCustomer.Active)
+                {
+                    throw new Exception("EL CLIENTE SELECCIONADO YA HA SIDO ATENDIDO");
+                }
 
-                //// Encuem el carro a la línia de caixa disponible
-                ////bool checkedIn = availableLine.CheckIn(randomCart);
+                // Seleccionar aleatoriamente una línea de caja activa
+                selectedLine = super.GetCheckOutLine(selectedLineIndex + 1);  
 
-                ////if (checkedIn)
-                //{
-                //    // Eliminem el carro seleccionat de la llista de carros que passegen
-                //    carros.Remove(randomCustomer);
+        
+                // Encolar el carro en la línea de caja seleccionada
+                success = selectedLine.CheckIn(selectedShoppingCart);
 
-                //    // Mostrem un missatge d'èxit
-                //    //Console.WriteLine($"El carro del client {randomCustomer.Name} s'ha encuat a la línia de caixa {availableLine.Number}.");
+                if (success)
+                {
+                    carros.Remove(selectedCustomer);
+                    Console.WriteLine(super.ToString());
+                }
+                else
+                {
+                    Console.WriteLine($"ERROR AL ENCOLAR EL CARRO DE {selectedCustomer} EN LA LÍNEA DE CAJA {selectedLine.Number}");
+                }
 
-                //    // Mostrem la informació actualitzada de la línia de caixa
-                //    //Console.WriteLine(availableLine);
-                //}
-                //else
-                //{
-                //    // Si no es pot fer el check-in, mostrem un missatge d'error
-                //    Console.WriteLine("No es pot fer el check-in en aquest moment.");
-                //}
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+            }
+            MsgNextScreen("PRESIONA UNA TECLA PARA VOLVER AL MENÚ PRINCIPAL");
 
-                //MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-        //    }
-        //}
+        }
+
+
 
         // OPCIO 4 - CHECK OUT D'UNA CUA TRIADA PER L'USUARI
         /// <summary>
@@ -269,9 +274,49 @@ namespace SUPERMARKET
 
         public static bool DoCheckOut(Supermarket super)
         {
-            bool fet = true;
             Console.Clear();
-            MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
+            bool fet = false;
+            string input;
+            // Verificar si hay colas activas
+            if (super.ActiveLines <= 0)
+            {
+                Console.WriteLine("NO HAY NINGUNA LÍNEA DE CAJA ABIERTA");
+            }
+
+            // Mostrar las colas activas y la información de la caja
+            Console.WriteLine("Colas activas:");
+            for (int i = 0; i < super.ActiveLines; i++)
+            {
+                CheckOutLine currentLine = super.GetCheckOutLine(i + 1); // +1 porque los índices comienzan desde 1
+                if (currentLine.Active)
+                {
+                    Console.WriteLine($"Caja {currentLine.Number}: {currentLine}");
+                }
+            }
+
+            // Pedir al usuario que seleccione una cola para hacer el checkout
+            Console.Write("Selecciona el número de la cola para hacer el checkout: ");
+            input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int selectedLine) || selectedLine < 1 || selectedLine > super.ActiveLines)
+            {
+                Console.WriteLine("Número de cola no válido.");
+            }
+            else
+            {
+                fet = super.Checkout(selectedLine);
+
+                if (fet)
+                {
+                    Console.WriteLine("Checkout realizado con éxito.");
+                }
+                else
+                {
+                    Console.WriteLine("No se pudo realizar el checkout en la cola seleccionada.");
+                }
+            }
+
+             MsgNextScreen("PRESIONA UNA TECLA PARA VOLVER AL MENÚ PRINCIPAL");
             return fet;
         }
         /// <summary>
@@ -283,9 +328,22 @@ namespace SUPERMARKET
         // OPCIO 5 : Obrir la següent cua disponible (si n'hi ha)
         public static bool DoOpenCua(Supermarket super)
         {
-            bool fet = true;
-            MsgNextScreen("PREM UNA TECLA PER ANAR AL MENÚ PRINCIPAL");
-            return fet;
+            Console.Clear();
+
+            if (super.ActiveLines >= Supermarket.MAXLINES)
+            {
+                Console.WriteLine("No hay más líneas de caja disponibles para abrir.");
+                MsgNextScreen("Presiona una tecla para volver al menú principal");
+                return false; // No se puede abrir más colas
+            }
+
+            // Incrementar el número de líneas activas
+            super.SetNumberOfActiveLines(super.ActiveLines + 1);
+
+            Console.WriteLine("Se abrió la siguiente línea de caja disponible.");
+            MsgNextScreen("Presiona una tecla para volver al menú principal");
+            return true; // Se abrió una nueva cola con éxito
+
         }
 
         //OPCIO 6 : Llistar les cues actives
@@ -298,7 +356,22 @@ namespace SUPERMARKET
         {
             Console.Clear();
 
-            MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
+            // Iterar sobre cada línea de caja activa
+            for (int i = 0; i < super.ActiveLines; i++)
+            {
+                // Obtener el número de la línea actual
+                int lineNumber = i + 1;
+
+                // Obtener la línea de caja actual
+                CheckOutLine currentLine = super.GetCheckOutLine(lineNumber);
+
+                // Mostrar información sobre la línea de caja actual
+                Console.WriteLine($"Información de la línea de caja {lineNumber}:");
+                Console.WriteLine(currentLine.ToString());
+
+            }
+
+            MsgNextScreen("Presiona una tecla para volver al menú principal");
 
         }
 
@@ -312,9 +385,27 @@ namespace SUPERMARKET
         /// <param name="carros"></param>
         public static void DoClientsComprant(Dictionary<Customer, ShoppingCart> carros)
         {
-            Console.Clear();
-            Console.WriteLine("CARROS VOLTANT PEL SUPER (PENDENTS D'ANAR A PAGAR): ");
-            MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
+            //Console.Clear();
+            //Console.WriteLine("CARROS VOLTANT PEL SUPER (PENDENTS D'ANAR A PAGAR): ");
+            //bool success = false;
+
+            //// Verificar si hay colas disponibles para abrir
+            //if (super.ActiveLines < Supermarket.MAXLINES)
+            //{
+            //    // Incrementar el número de líneas activas y abrir la siguiente cola disponible
+            //    super.activeLines++;
+            //    super.InitializeCheckOutLines();
+            //    Console.WriteLine("Se ha abierto la siguiente cola disponible.");
+            //    success = true;
+            //}
+            //else
+            //{
+            //    Console.WriteLine("No hay más colas disponibles para abrir.");
+            //}
+
+            //MsgNextScreen("Presiona una tecla para volver al menú principal.");
+            //return success;
+            //MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
 
         }
 
@@ -331,6 +422,18 @@ namespace SUPERMARKET
         {
 
             Console.Clear();
+
+            // Filtrar clientes con rating mayor que 0 y ordenarlos por rating de forma descendente
+            var sortedCustomers = super.Customers.Values
+                .Where(c => c.GetRating > 0)
+                .OrderByDescending(c => c.GetRating);
+
+            // Mostrar la lista de clientes ordenados por rating
+            Console.WriteLine("Lista de clientes ordenados por rating:");
+            foreach (var customer in sortedCustomers)
+            {
+                Console.WriteLine(customer.ToString());
+            }
 
             MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
 
