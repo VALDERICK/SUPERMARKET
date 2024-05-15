@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SUPERMARKET
 {
@@ -42,8 +43,8 @@ namespace SUPERMARKET
                         DoAfegirUnArticleAlCarro(carrosPassejant, super);
 
                         break;
-                    //case ConsoleKey.D3:
-                    //    DoCheckIn(carrosPassejant, super);
+                    case ConsoleKey.D3:
+                        DoCheckIn(carrosPassejant, super);
 
                         break;
                     case ConsoleKey.D4:
@@ -116,7 +117,7 @@ namespace SUPERMARKET
 
                 super.LoadWarehouse("GROCERIES.TXT");
 
-                newCart.AddAllRandomly(super.warehouse);
+                newCart.AddAllRandomly(super.Warehouse);
 
                 carros.Add(inactiveCustomer, newCart);
 
@@ -161,10 +162,10 @@ namespace SUPERMARKET
 
                     Console.WriteLine($"CARRO ORIGINAL:\n{randomCart}");
 
-                    if (super.warehouse.Count > 0)
+                    if (super.Warehouse.Count > 0)
                     {
-                        int randomItemId = random.Next(0, super.warehouse.Count);
-                        Item randomWarehouseItem = super.warehouse[randomItemId];
+                        int randomItemId = random.Next(0, super.Warehouse.Count);
+                        Item randomWarehouseItem = super.Warehouse[randomItemId];
 
                         double quantity = random.Next(1, 6);
                         randomCart.AddOne(randomWarehouseItem, quantity);
@@ -205,55 +206,61 @@ namespace SUPERMARKET
         {
             Console.Clear();
 
-            // Verificamos si hay líneas de caja activas
-            if (super.ActiveLines <= 0)
-            {
-                Console.WriteLine("NO HAY NINGUNA LÍNEA DE CAJA ACTIVA");
-                return; // Salimos del método si no hay líneas de caja activas
-            }
-
-            // Verificamos si hay carros que aún no han sido encuados en ninguna cola de pago
+            // Verificar si hay carros disponibles para ser asignados a una cola de pago
             if (carros.Count == 0)
             {
-                Console.WriteLine("NO HAY NINGÚN CARRO DISPONIBLE PARA ENCOLAR");
-                return; // Salimos del método si no hay carros disponibles
+                Console.WriteLine("No hay carros disponibles para check-in.");
+                return;
             }
 
-            // Seleccionamos aleatoriamente un carro y su cliente asociado
+            // Obtener una lista de las colas de pago activas
+            List<CheckOutLine> activeLines = new List<CheckOutLine>();
+            foreach (CheckOutLine line in super.Lines)
+            {
+                if (line.Active)
+                {
+                    activeLines.Add(line);
+                }
+            }
+
+            // Verificar si hay colas de pago activas disponibles
+            if (activeLines.Count == 0)
+            {
+                Console.WriteLine("No hay colas de pago activas disponibles.");
+                return;
+            }
+
+            // Seleccionar un carro aleatorio de la lista de carros que aún no han entrado en ninguna cola de pago
             Random random = new Random();
-            var randomIndex = random.Next(0, carros.Count);
-            var selectedCustomer = carros.Keys.ElementAt(randomIndex);
-            var selectedShoppingCart = carros[selectedCustomer];
+            int index = random.Next(0, carros.Count);
+            Customer selectedCustomer = carros.ElementAt(index).Key;
+            ShoppingCart selectedShoppingCart = carros.ElementAt(index).Value;
 
-            // Verificamos si el cliente seleccionado está activo (no ha sido atendido todavía)
-            if (!selectedCustomer.Active)
+            // Seleccionar aleatoriamente una cola de pago activa
+            int lineIndex = random.Next(0, activeLines.Count);
+            CheckOutLine selectedLine = activeLines[lineIndex];
+
+            // Encolar el carro seleccionado en la cola de pago seleccionada
+            bool checkInSuccess = super.JoinTheQueue(selectedShoppingCart, selectedLine.Number);
+
+            // Eliminar el carro seleccionado de la lista de carros que aún no han entrado en ninguna cola de pago
+            carros.Remove(selectedCustomer);
+
+            // Mostrar mensaje de éxito o error según el resultado del check-in
+            if (checkInSuccess)
             {
-                Console.WriteLine("EL CLIENTE SELECCIONADO YA HA SIDO ATENDIDO");
-                return; // Salimos del método si el cliente seleccionado ya ha sido atendido
-            }
-
-            // Seleccionamos aleatoriamente una línea de caja activa
-            var selectedLineIndex = random.Next(0, super.ActiveLines);
-            var selectedLine = super.GetCheckOutLine(selectedLineIndex + 1); // +1 porque los índices comienzan desde 1
-
-            // Encolamos el carro en la línea de caja seleccionada
-            bool success = selectedLine.CheckIn(selectedShoppingCart);
-
-            if (success)
-            {
-                // Eliminamos el carro seleccionado de la lista de carros "paseando"
-                carros.Remove(selectedCustomer);
-                Console.WriteLine($"EL CARRO DE {selectedCustomer.ToString()} HA SIDO ENCUEADO EN LA LÍNEA DE CAJA {selectedLine.Number}");
+                Console.WriteLine($"El carro de {selectedCustomer.FullName} ha sido asignado a la cola de pago {selectedLine.Number}.");
             }
             else
             {
-                Console.WriteLine($"ERROR AL ENCOLAR EL CARRO DE {selectedCustomer.ToString()} EN LA LÍNEA DE CAJA {selectedLine.Number}");
+                Console.WriteLine($"No se pudo asignar el carro de {selectedCustomer.FullName} a ninguna cola de pago.");
             }
 
             // Esperamos a que el usuario vea el mensaje antes de continuar
             MsgNextScreen("PRESIONA UNA TECLA PARA VOLVER AL MENÚ PRINCIPAL");
         }
-        
+
+
 
         // OPCIO 4 - CHECK OUT D'UNA CUA TRIADA PER L'USUARI
         /// <summary>
