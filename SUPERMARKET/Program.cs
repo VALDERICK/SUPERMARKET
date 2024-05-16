@@ -385,28 +385,22 @@ namespace SUPERMARKET
         /// <param name="carros"></param>
         public static void DoClientsComprant(Dictionary<Customer, ShoppingCart> carros)
         {
-            //Console.Clear();
-            //Console.WriteLine("CARROS VOLTANT PEL SUPER (PENDENTS D'ANAR A PAGAR): ");
-            //bool success = false;
+            Console.Clear();
+            Console.WriteLine("Carros de la compra en movimiento por el supermercado:");
 
-            //// Verificar si hay colas disponibles para abrir
-            //if (super.ActiveLines < Supermarket.MAXLINES)
-            //{
-            //    // Incrementar el número de líneas activas y abrir la siguiente cola disponible
-            //    super.activeLines++;
-            //    super.InitializeCheckOutLines();
-            //    Console.WriteLine("Se ha abierto la siguiente cola disponible.");
-            //    success = true;
-            //}
-            //else
-            //{
-            //    Console.WriteLine("No hay más colas disponibles para abrir.");
-            //}
+            if (carros.Count == 0)
+            {
+                Console.WriteLine("No hay carros de la compra en movimiento en este momento.");
+            }
+            else
+            {
+                foreach (KeyValuePair<Customer, ShoppingCart> kvp in carros)
+                {
+                    Console.WriteLine($"Cliente: {kvp.Key.FullName}, Carro: {kvp.Value}");
+                }
+            }
 
-            //MsgNextScreen("Presiona una tecla para volver al menú principal.");
-            //return success;
-            //MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
-
+            MsgNextScreen("Presiona cualquier tecla para volver al menú principal");
         }
 
         //OPCIO 8 : LListat de clients per rating
@@ -424,13 +418,18 @@ namespace SUPERMARKET
             Console.Clear();
 
             // Filtrar clientes con rating mayor que 0 y ordenarlos por rating de forma descendente
-            var sortedCustomers = super.Customers.Values
-                .Where(c => c.GetRating > 0)
-                .OrderByDescending(c => c.GetRating);
+            List<Customer> filteredCustomers = new List<Customer>();
+            foreach (Customer customer in super.Customers.Values)
+            {
+                if (customer.GetRating > 0)
+                {
+                    filteredCustomers.Add(customer);
+                }
+            }
 
             // Mostrar la lista de clientes ordenados por rating
             Console.WriteLine("Lista de clientes ordenados por rating:");
-            foreach (var customer in sortedCustomers)
+            foreach (Customer customer in filteredCustomers)
             {
                 Console.WriteLine(customer.ToString());
             }

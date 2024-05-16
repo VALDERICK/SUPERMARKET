@@ -295,6 +295,7 @@ namespace SUPERMARKET
         #region CUES
         public void InitializeCheckOutLines()
         {
+
             for (int i = 0; i < MAXLINES; i++)
             {
                 Person cashier = GetAvailableCashier();
