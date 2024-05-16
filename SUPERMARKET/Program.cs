@@ -330,21 +330,31 @@ namespace SUPERMARKET
         {
             Console.Clear();
 
-            if (super.ActiveLines >= Supermarket.MAXLINES)
+            bool success = false; // Variable para indicar si se pudo abrir la siguiente cola disponible
+
+            // Verificar si hay colas disponibles para abrir
+            if (super.ActiveLines < Supermarket.MAXLINES)
             {
-                Console.WriteLine("No hay más líneas de caja disponibles para abrir.");
-                MsgNextScreen("Presiona una tecla para volver al menú principal");
-                return false; // No se puede abrir más colas
+                // Incrementar el número de líneas activas
+                super.ActiveLines++;
+
+                // Abrir la siguiente cola disponible
+                int newLineIndex = super.ActiveLines - 1; // Índice de la nueva línea de caja
+                super.Lines[newLineIndex] = new CheckOutLine(super.GetAvailableCashier(), super.ActiveLines);
+
+                Console.WriteLine("Se ha abierto la siguiente cola disponible.");
+                success = true;
+            }
+            else
+            {
+                Console.WriteLine("No hay más colas disponibles para abrir.");
             }
 
-            // Incrementar el número de líneas activas
-            super.SetNumberOfActiveLines(super.ActiveLines + 1);
-
-            Console.WriteLine("Se abrió la siguiente línea de caja disponible.");
             MsgNextScreen("Presiona una tecla para volver al menú principal");
-            return true; // Se abrió una nueva cola con éxito
 
+            return success;
         }
+
 
         //OPCIO 6 : Llistar les cues actives
         /// <summary>
@@ -472,9 +482,33 @@ namespace SUPERMARKET
         {
             Console.Clear();
 
+            bool queueClosed = false;
 
+            // Iterar desde la última cola disponible hasta la primera
+            for (int i = super.ActiveLines - 1; i >= 0; i--)
+            {
+                CheckOutLine line = super.GetCheckOutLine(i + 1); // Obtener la línea de caja actual
 
-            MsgNextScreen("PREM UNA TECLA PER CONTINUAR");
+                // Verificar si la cola está vacía (sin carros pendientes)
+                if (line.Empty)
+                {
+                    // Eliminar la cola
+                    bool removed = Supermarket.RemoveQueue(super, i + 1);
+                    if (removed)
+                    {
+                        Console.WriteLine($"Se ha cerrado la cola {i + 1}.");
+                        queueClosed = true;
+                        break; // Salir del bucle una vez que se cierre la primera cola vacía
+                    }
+                }
+            }
+
+            if (!queueClosed)
+            {
+                Console.WriteLine("No se encontró ninguna cola vacía para cerrar.");
+            }
+
+            MsgNextScreen("Pulsa una tecla para continuar.");
         }
 
 
